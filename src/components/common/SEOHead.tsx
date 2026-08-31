@@ -1,63 +1,105 @@
 import React, { useEffect } from 'react';
-import { CalculatorDefinition } from '../../types/calculator';
+import { CalculatorDefinition, CategoryInfo } from '../../types/calculator';
+import { 
+  SITE_URL, 
+  SITE_NAME, 
+  SITE_TAGLINE, 
+  SITE_DESCRIPTION, 
+  CONTACT_EMAIL, 
+  getCanonicalUrl, 
+  getCalculatorPath, 
+  getCategoryPath 
+} from '../../config/site';
 
 interface SEOHeadProps {
   calculator?: CalculatorDefinition | null;
+  category?: CategoryInfo | null;
+  legalType?: 'contact' | 'privacy' | 'terms' | 'about' | 'methodology' | null;
+  pathname?: string;
 }
 
-export const SEOHead: React.FC<SEOHeadProps> = ({ calculator }) => {
+export const SEOHead: React.FC<SEOHeadProps> = ({ 
+  calculator, 
+  category, 
+  legalType, 
+  pathname = '/' 
+}) => {
+  // Determine title, description, and canonical
+  let pageTitle = `${SITE_NAME} — ${SITE_TAGLINE}`;
+  let metaDesc = SITE_DESCRIPTION;
+  let canonicalUrl = getCanonicalUrl(pathname);
+
+  if (calculator) {
+    pageTitle = `${calculator.title} — ${SITE_NAME}`;
+    metaDesc = `${calculator.shortDescription} Accurate materials, quantities, and financial formulas on ArchEstate Pro.`;
+    canonicalUrl = getCanonicalUrl(getCalculatorPath(calculator.slug));
+  } else if (category) {
+    pageTitle = `${category.name} Calculators — ${SITE_NAME}`;
+    metaDesc = `${category.description} Free online engineering and architectural calculation tools.`;
+    canonicalUrl = getCanonicalUrl(getCategoryPath(category.id));
+  } else if (legalType) {
+    const titles: Record<string, string> = {
+      about: `About Us — ${SITE_NAME}`,
+      contact: `Contact Engineering & Support — ${SITE_NAME}`,
+      privacy: `Privacy Policy — ${SITE_NAME}`,
+      terms: `Terms of Service & Disclaimers — ${SITE_NAME}`,
+      methodology: `Engineering & Calculation Methodology — ${SITE_NAME}`,
+    };
+    pageTitle = titles[legalType] || pageTitle;
+    canonicalUrl = getCanonicalUrl(`/${legalType}`);
+  }
+
+  // Client-side DOM update for SPA transitions
   useEffect(() => {
-    if (calculator) {
-      document.title = `${calculator.title} — ArchEstate Pro`;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute(
-          'content',
-          `${calculator.shortDescription} Accurate materials, quantities, and financial formulas on ArchEstate Pro.`
-        );
-      }
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) {
-        ogTitle.setAttribute('content', `${calculator.title} — ArchEstate Pro`);
-      }
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) {
-        ogDesc.setAttribute('content', calculator.shortDescription);
-      }
-    } else {
-      document.title = 'ArchEstate Pro — Architectural, Construction & Real Estate Calculators';
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute(
-          'content',
-          'Precision Architecture, Construction, False Ceiling & Real Estate PropTech calculator suite for contractors, architects, remodelers, and property investors.'
-        );
-      }
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) {
-        ogTitle.setAttribute('content', 'ArchEstate Pro — Architectural, Construction & Real Estate Calculators');
-      }
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) {
-        ogDesc.setAttribute(
-          'content',
-          'Precision Architecture, Construction, False Ceiling & Real Estate PropTech calculator suite for contractors, architects, remodelers, and property investors.'
-        );
-      }
+    document.title = pageTitle;
+    
+    // Update description
+    let descElem = document.querySelector('meta[name="description"]');
+    if (!descElem) {
+      descElem = document.createElement('meta');
+      descElem.setAttribute('name', 'description');
+      document.head.appendChild(descElem);
     }
-  }, [calculator]);
+    descElem.setAttribute('content', metaDesc);
+
+    // Update canonical link
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', canonicalUrl);
+
+    // OpenGraph
+    const updateMeta = (attr: string, val: string, content: string) => {
+      let elem = document.querySelector(`meta[${attr}="${val}"]`);
+      if (!elem) {
+        elem = document.createElement('meta');
+        elem.setAttribute(attr, val);
+        document.head.appendChild(elem);
+      }
+      elem.setAttribute('content', content);
+    };
+
+    updateMeta('property', 'og:title', pageTitle);
+    updateMeta('property', 'og:description', metaDesc);
+    updateMeta('property', 'og:url', canonicalUrl);
+    updateMeta('property', 'og:site_name', SITE_NAME);
+    updateMeta('name', 'twitter:title', pageTitle);
+    updateMeta('name', 'twitter:description', metaDesc);
+  }, [pageTitle, metaDesc, canonicalUrl]);
 
   // Generate JSON-LD SoftwareApplication / WebApplication Schema
   const webAppSchema = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    'name': calculator ? `${calculator.title} | ArchEstate Pro` : 'ArchEstate Pro Computational Suite',
+    'name': calculator ? `${calculator.title} | ${SITE_NAME}` : `${SITE_NAME} Computational Suite`,
     'applicationCategory': 'UtilitiesApplication',
     'operatingSystem': 'All',
     'browserRequirements': 'Requires JavaScript. Requires HTML5.',
-    'description': calculator 
-      ? calculator.shortDescription 
-      : 'Precision Architecture, Construction, False Ceiling & Real Estate PropTech calculator suite for contractors, architects, remodelers, and property investors.',
+    'url': canonicalUrl,
+    'description': metaDesc,
     'offers': {
       '@type': 'Offer',
       'price': '0',
@@ -65,8 +107,9 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ calculator }) => {
     },
     'author': {
       '@type': 'Organization',
-      'name': 'ArchEstate Pro',
-      'email': 'contact.archestate@gmail.com',
+      'name': SITE_NAME,
+      'email': CONTACT_EMAIL,
+      'url': SITE_URL,
     },
   };
 
@@ -78,25 +121,42 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ calculator }) => {
       {
         '@type': 'ListItem',
         'position': 1,
-        'name': 'ArchEstate Pro',
-        'item': 'https://archestatepro.app/',
+        'name': SITE_NAME,
+        'item': `${SITE_URL}/`,
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': calculator.categoryName,
-        'item': `https://archestatepro.app/#${calculator.category}`,
+        'item': getCanonicalUrl(getCategoryPath(calculator.category)),
       },
       {
         '@type': 'ListItem',
         'position': 3,
         'name': calculator.title,
-        'item': `https://archestatepro.app/#${calculator.slug}`,
+        'item': canonicalUrl,
+      },
+    ],
+  } : category ? {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': SITE_NAME,
+        'item': `${SITE_URL}/`,
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': category.name,
+        'item': canonicalUrl,
       },
     ],
   } : null;
 
-  const faqSchema = calculator && calculator.faqs.length > 0 ? {
+  const faqSchema = calculator && calculator.faqs && calculator.faqs.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     'mainEntity': calculator.faqs.map(faq => ({

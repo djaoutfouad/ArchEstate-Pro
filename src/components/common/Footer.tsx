@@ -1,18 +1,16 @@
 import React from 'react';
-import { Compass, ShieldCheck, CheckCircle2, Mail, ExternalLink } from 'lucide-react';
+import { Compass, ShieldCheck, CheckCircle2, Mail } from 'lucide-react';
 import { CATEGORIES } from '../../data/calculatorsData';
+import { Link } from '../../utils/router';
+import { getCategoryPath, CONTACT_EMAIL } from '../../config/site';
 
 interface FooterProps {
-  onSelectCategory: (categoryId: string) => void;
-  onNavigateHome: () => void;
-  onOpenLegal: (type: 'contact' | 'privacy' | 'terms' | 'about' | 'methodology') => void;
+  onSelectCategory?: (categoryId: string) => void;
+  onNavigateHome?: () => void;
+  onOpenLegal?: (type: 'contact' | 'privacy' | 'terms' | 'about' | 'methodology') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({
-  onSelectCategory,
-  onNavigateHome,
-  onOpenLegal,
-}) => {
+export const Footer: React.FC<FooterProps> = () => {
   return (
     <footer className="mt-20 border-t border-slate-200 bg-slate-50/90 text-slate-600 transition-colors">
       {/* Top Banner */}
@@ -20,14 +18,14 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Col 1: Brand & Positioning */}
           <div className="md:col-span-1 space-y-3.5">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-700 flex items-center justify-center text-white shadow-md shadow-emerald-700/20">
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="w-9 h-9 rounded-xl bg-emerald-700 flex items-center justify-center text-white shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform">
                 <Compass className="w-5 h-5" />
               </div>
               <span className="text-xl font-extrabold tracking-tight text-slate-900">
                 ArchEstate<span className="text-emerald-700">Pro</span>
               </span>
-            </div>
+            </Link>
             <p className="text-xs text-slate-600 leading-relaxed font-medium">
               Architecture + Construction + Real Estate Technology Platform. Computational planning tools for contractors, architects, remodelers, and property investors.
             </p>
@@ -51,14 +49,13 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2 text-xs">
               {CATEGORIES.map((cat) => (
                 <li key={cat.id}>
-                  <button
-                    type="button"
-                    onClick={() => onSelectCategory(cat.id)}
+                  <Link
+                    to={getCategoryPath(cat.id)}
                     className="hover:text-emerald-700 hover:underline transition-colors flex items-center gap-1 text-slate-600"
                   >
                     <span>{cat.name}</span>
                     <span className="text-[10px] text-slate-500 font-mono">({cat.count})</span>
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -71,49 +68,44 @@ export const Footer: React.FC<FooterProps> = ({
             </h3>
             <ul className="space-y-2 text-xs">
               <li>
-                <button
-                  type="button"
-                  onClick={() => onOpenLegal('methodology')}
+                <Link
+                  to="/methodology"
                   className="hover:text-emerald-700 hover:underline transition-colors text-slate-600"
                 >
                   Calculation Methodology
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onOpenLegal('privacy')}
+                <Link
+                  to="/privacy"
                   className="hover:text-emerald-700 hover:underline transition-colors text-slate-600"
                 >
                   Privacy Policy & Security
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onOpenLegal('terms')}
+                <Link
+                  to="/terms"
                   className="hover:text-emerald-700 hover:underline transition-colors text-slate-600"
                 >
                   Terms of Service & Disclaimer
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onOpenLegal('about')}
+                <Link
+                  to="/about"
                   className="hover:text-emerald-700 hover:underline transition-colors text-slate-600"
                 >
                   About ArchEstate Pro
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onOpenLegal('contact')}
+                <Link
+                  to="/contact"
                   className="hover:text-emerald-700 hover:underline transition-colors text-slate-600 font-semibold text-emerald-800"
                 >
                   Contact Us
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -126,14 +118,13 @@ export const Footer: React.FC<FooterProps> = ({
             <p className="text-xs text-slate-600 leading-relaxed">
               Questions, technical inquiries, or partnership opportunities:
             </p>
-            <button
-              type="button"
-              onClick={() => onOpenLegal('contact')}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
               className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl transition-colors text-left"
             >
               <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
-              <span>contact.archestate@gmail.com</span>
-            </button>
+              <span>{CONTACT_EMAIL}</span>
+            </a>
           </div>
         </div>
 

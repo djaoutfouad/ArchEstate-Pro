@@ -3,27 +3,20 @@ import {
   Building2, 
   Grid3X3, 
   TrendingUp, 
-  Search, 
-  ShieldCheck, 
-  Zap, 
-  Layers, 
-  CheckCircle2,
   Compass
 } from 'lucide-react';
-import { CalculatorCategory } from '../../types/calculator';
+import { Link } from '../../utils/router';
+import { getCategoryPath } from '../../config/site';
 
 interface HeroSectionProps {
-  onSelectCategory: (cat: CalculatorCategory) => void;
-  selectedCategory: string;
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
+  onSelectCategory?: (cat: string) => void;
+  selectedCategory?: string;
+  searchQuery?: string;
+  setSearchQuery?: (query: string) => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
-  onSelectCategory,
-  selectedCategory,
-  searchQuery,
-  setSearchQuery,
+  selectedCategory = 'all',
 }) => {
   return (
     <section className="relative overflow-hidden pt-12 pb-14 border-b border-slate-200/80 bg-gradient-to-b from-slate-50/80 via-white to-white architectural-grid">
@@ -35,7 +28,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold shadow-xs">
             <Compass className="w-3.5 h-3.5 text-emerald-600 animate-spin-slow" />
-            <span>Architecture &bull; Construction &bull; Real Estate</span>
+            <span>Architecture • Construction • Real Estate</span>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             <span className="font-mono text-[11px] text-emerald-700">15 Real-Time Calculators</span>
           </div>
@@ -55,9 +48,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Quick Category Filter Pills */}
           <div className="pt-2 flex flex-wrap items-center justify-center gap-2">
-            <button
-              type="button"
-              onClick={() => onSelectCategory('all' as any)}
+            <Link
+              to="/"
               id="filter-all-btn"
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 selectedCategory === 'all'
@@ -66,11 +58,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               }`}
             >
               <span>All 15 Calculators</span>
-            </button>
+            </Link>
 
-            <button
-              type="button"
-              onClick={() => onSelectCategory('ceilings')}
+            <Link
+              to={getCategoryPath('ceilings')}
               id="filter-ceilings-btn"
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 selectedCategory === 'ceilings'
@@ -80,11 +71,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <Grid3X3 className="w-3.5 h-3.5 text-emerald-600" />
               <span>False Ceilings &amp; Drywall</span>
-            </button>
+            </Link>
 
-            <button
-              type="button"
-              onClick={() => onSelectCategory('construction')}
+            <Link
+              to={getCategoryPath('construction')}
               id="filter-construction-btn"
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 selectedCategory === 'construction'
@@ -94,11 +84,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <Building2 className="w-3.5 h-3.5 text-slate-700" />
               <span>Construction &amp; Finishes</span>
-            </button>
+            </Link>
 
-            <button
-              type="button"
-              onClick={() => onSelectCategory('real-estate')}
+            <Link
+              to={getCategoryPath('real-estate')}
               id="filter-real-estate-btn"
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 selectedCategory === 'real-estate'
@@ -108,7 +97,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <TrendingUp className="w-3.5 h-3.5 text-amber-600" />
               <span>Real Estate &amp; Finance</span>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

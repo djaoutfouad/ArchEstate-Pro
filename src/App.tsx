@@ -7,72 +7,62 @@ import { CalculatorEngine } from './components/calculator/CalculatorEngine';
 import { AdvertisementPlaceholder } from './components/common/AdvertisementPlaceholder';
 import { SEOHead } from './components/common/SEOHead';
 import { LegalModal } from './components/common/LegalModals';
+import { Breadcrumbs } from './components/common/Breadcrumbs';
 import { CALCULATORS, CATEGORIES } from './data/calculatorsData';
-import { CalculatorCategory } from './types/calculator';
+import { useRouter } from './utils/router';
 
 export default function App() {
-  // Navigation state: null = dashboard, string = active calculator id
-  const [activeCalculatorId, setActiveCalculatorId] = useState<string | null>(null);
-  
-  // Dashboard category filter: 'all' or specific Category ID
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const { 
+    pathname, 
+    calculatorSlug, 
+    categoryId, 
+    legalType, 
+    navigateToHome, 
+    navigateToCategory, 
+    navigateToCalculator, 
+    navigateToLegal 
+  } = useRouter();
+
+  // Search filter query state
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Legal & Contact modal state
-  const [legalModalType, setLegalModalType] = useState<'contact' | 'privacy' | 'terms' | 'about' | 'methodology' | null>(null);
-
-  // Active calculator object
-  const activeCalculator = activeCalculatorId 
-    ? CALCULATORS.find((c) => c.id === activeCalculatorId) || null 
+  // Active calculator object matching the route slug
+  const activeCalculator = calculatorSlug 
+    ? CALCULATORS.find((c) => c.slug === calculatorSlug || c.id === calculatorSlug) || null 
     : null;
 
-  // Scroll to top on calculator switch
+  // Active category object matching the route category ID
+  const activeCategory = categoryId
+    ? CATEGORIES.find((cat) => cat.id === categoryId) || null
+    : null;
+
+  // Scroll to top on route change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeCalculatorId]);
+  }, [pathname]);
 
-  const handleSelectCalculator = (id: string) => {
-    setActiveCalculatorId(id);
-  };
-
-  const handleNavigateHome = () => {
-    setActiveCalculatorId(null);
-    setSelectedCategory('all');
-  };
-
-  const handleSelectCategoryFromNav = (catId: string) => {
-    if (activeCalculatorId) {
-      setActiveCalculatorId(null);
-    }
-    setSelectedCategory(catId);
-    
-    // Smooth scroll to category section
-    setTimeout(() => {
-      const el = document.getElementById(`category-section-${catId}`);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 50);
-  };
-
-  // Filter calculators on dashboard
-  const filteredCategories = CATEGORIES.filter((cat) => {
-    if (selectedCategory === 'all') return true;
-    return cat.id === selectedCategory;
-  });
+  // Categories to display on dashboard
+  const displayedCategories = activeCategory 
+    ? [activeCategory]
+    : CATEGORIES;
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-slate-900 selection:bg-emerald-100 selection:text-emerald-900 font-sans">
       {/* Dynamic SEO & JSON-LD Structured Data */}
-      <SEOHead calculator={activeCalculator} />
+      <SEOHead 
+        calculator={activeCalculator} 
+        category={activeCategory} 
+        legalType={legalType} 
+        pathname={pathname}
+      />
 
       {/* Global Application Header */}
       <Header
-        onSelectCalculator={handleSelectCalculator}
-        onSelectCategory={handleSelectCategoryFromNav}
-        onNavigateHome={handleNavigateHome}
-        activeCalculatorId={activeCalculatorId}
-        onOpenLegal={setLegalModalType}
+        onSelectCalculator={navigateToCalculator}
+        onSelectCategory={navigateToCategory}
+        onNavigateHome={navigateToHome}
+        activeCalculatorId={activeCalculator?.id || null}
+        onOpenLegal={navigateToLegal}
       />
 
       {/* Global 3-Column Layout Container (Left Rail, Main Content, Right Rail) */}
@@ -91,17 +81,26 @@ export default function App() {
             // Single Calculator Execution View
             <CalculatorEngine
               calculator={activeCalculator}
-              onNavigateHome={handleNavigateHome}
-              onNavigateCategory={handleSelectCategoryFromNav}
-              onSelectRelated={handleSelectCalculator}
+              onNavigateHome={navigateToHome}
+              onNavigateCategory={navigateToCategory}
+              onSelectRelated={navigateToCalculator}
             />
           ) : (
-            // Main Dashboard View
+            // Main Dashboard or Category Filter View
             <div className="space-y-8 animate-in fade-in duration-300">
+              {/* Category Breadcrumbs if on dedicated Category URL */}
+              {activeCategory && (
+                <div className="pt-4">
+                  <Breadcrumbs
+                    categoryName={activeCategory.name}
+                    categoryId={activeCategory.id}
+                  />
+                </div>
+              )}
+
               {/* Hero Section */}
               <HeroSection
-                selectedCategory={selectedCategory}
-                onSelectCategory={(cat) => setSelectedCategory(cat as string)}
+                selectedCategory={activeCategory ? activeCategory.id : 'all'}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
               />
@@ -114,7 +113,7 @@ export default function App() {
 
                 {/* Calculator Categories Grid */}
                 <div className="space-y-16">
-                  {filteredCategories.map((category) => {
+                  {displayedCategories.map((category) => {
                     const categoryCalcs = CALCULATORS.filter(
                       (calc) => calc.category === category.id
                     );
@@ -124,7 +123,7 @@ export default function App() {
                         key={category.id}
                         category={category}
                         calculators={categoryCalcs}
-                        onOpenCalculator={handleSelectCalculator}
+                        onOpenCalculator={navigateToCalculator}
                       />
                     );
                   })}
@@ -150,16 +149,16 @@ export default function App() {
 
       {/* Legal & Informational Modals */}
       <LegalModal
-        isOpen={legalModalType !== null}
-        type={legalModalType}
-        onClose={() => setLegalModalType(null)}
+        isOpen={legalType !== null}
+        type={legalType}
+        onClose={() => navigateToLegal(null)}
       />
 
       {/* Comprehensive Application Footer */}
       <Footer
-        onSelectCategory={handleSelectCategoryFromNav}
-        onNavigateHome={handleNavigateHome}
-        onOpenLegal={setLegalModalType}
+        onSelectCategory={navigateToCategory}
+        onNavigateHome={navigateToHome}
+        onOpenLegal={navigateToLegal}
       />
     </div>
   );

@@ -5,34 +5,28 @@ import {
   X, 
   ChevronRight, 
   Compass,
-  SlidersHorizontal,
   Grid3X3,
   TrendingUp,
-  ExternalLink,
   Mail
 } from 'lucide-react';
-import { CALCULATORS, CATEGORIES } from '../../data/calculatorsData';
+import { CALCULATORS } from '../../data/calculatorsData';
 import { DynamicIcon } from './DynamicIcon';
-import { CalculatorDefinition } from '../../types/calculator';
+import { Link, useRouter } from '../../utils/router';
+import { getCalculatorPath, getCategoryPath } from '../../config/site';
 
 interface HeaderProps {
-  onSelectCalculator: (id: string) => void;
-  onSelectCategory: (categoryId: string) => void;
-  onNavigateHome: () => void;
+  onSelectCalculator?: (id: string) => void;
+  onSelectCategory?: (categoryId: string) => void;
+  onNavigateHome?: () => void;
   activeCalculatorId?: string | null;
-  onOpenLegal: (type: 'contact' | 'privacy' | 'terms' | 'about' | 'methodology') => void;
+  onOpenLegal?: (type: 'contact' | 'privacy' | 'terms' | 'about' | 'methodology') => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  onSelectCalculator,
-  onSelectCategory,
-  onNavigateHome,
-  activeCalculatorId,
-  onOpenLegal,
-}) => {
+export const Header: React.FC<HeaderProps> = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const { navigateToCalculator } = useRouter();
 
   // Search filter
   const searchResults = searchQuery.trim() === '' 
@@ -57,8 +51,8 @@ export const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSelectFromSearch = (calcId: string) => {
-    onSelectCalculator(calcId);
+  const handleSelectFromSearch = (slug: string) => {
+    navigateToCalculator(slug);
     setSearchQuery('');
     setIsSearchOpen(false);
   };
@@ -69,9 +63,8 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between h-18 gap-4">
           {/* Logo & Tagline */}
           <div className="flex items-center gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={onNavigateHome}
+            <Link
+              to="/"
               id="header-logo-btn"
               className="flex items-center gap-3 text-left group focus:outline-hidden focus:ring-2 focus:ring-emerald-600 rounded-lg p-1"
             >
@@ -91,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
                   Architecture • Construction • Real Estate Technology
                 </p>
               </div>
-            </button>
+            </Link>
           </div>
 
           {/* Search Bar - Center */}
@@ -144,7 +137,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <button
                         key={calc.id}
                         type="button"
-                        onClick={() => handleSelectFromSearch(calc.id)}
+                        onClick={() => handleSelectFromSearch(calc.slug)}
                         id={`search-item-${calc.id}`}
                         className="w-full px-4 py-3 text-left hover:bg-emerald-50/60 transition-colors flex items-center justify-between group"
                       >
@@ -172,42 +165,38 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Quick Categories & Contact Navigation */}
           <nav className="hidden lg:flex items-center gap-1.5" aria-label="Main Navigation">
-            <button
-              type="button"
-              onClick={() => onSelectCategory('ceilings')}
+            <Link
+              to={getCategoryPath('ceilings')}
               id="nav-cat-ceilings"
               className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors flex items-center gap-1.5"
             >
               <Grid3X3 className="w-3.5 h-3.5 text-emerald-700" />
               <span>False Ceilings</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => onSelectCategory('construction')}
+            </Link>
+            <Link
+              to={getCategoryPath('construction')}
               id="nav-cat-construction"
               className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors flex items-center gap-1.5"
             >
               <Building2 className="w-3.5 h-3.5 text-slate-700" />
               <span>Construction</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => onSelectCategory('real-estate')}
+            </Link>
+            <Link
+              to={getCategoryPath('real-estate')}
               id="nav-cat-real-estate"
               className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors flex items-center gap-1.5"
             >
               <TrendingUp className="w-3.5 h-3.5 text-amber-700" />
               <span>Real Estate</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => onOpenLegal('contact')}
+            </Link>
+            <Link
+              to="/contact"
               id="nav-contact-btn"
               className="ml-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/80 hover:bg-emerald-100 hover:text-emerald-900 transition-colors flex items-center gap-1.5 shadow-2xs"
             >
               <Mail className="w-3.5 h-3.5 text-emerald-700" />
               <span>Contact</span>
-            </button>
+            </Link>
           </nav>
         </div>
       </div>
