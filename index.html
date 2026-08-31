@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Defensive polyfill/shim to ensure window.fetch is assignable in iframe/sandbox environments
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          var currentFetch = typeof originalFetch === 'function' ? originalFetch.bind(window) : originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return currentFetch;
+            },
+            set: function(fn) {
+              currentFetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          // Ignore if already defined or restricted
+        }
+      })();
+    </script>
+    <title>ArchEstate Pro — Architectural, Construction & Real Estate Calculators</title>
+    <meta name="description" content="Precision Architecture, Construction, False Ceiling & Real Estate PropTech calculator suite for contractors, architects, remodelers, and property investors." />
+    <meta property="og:title" content="ArchEstate Pro — Architectural, Construction & Real Estate Calculators" />
+    <meta property="og:description" content="Precision Architecture, Construction, False Ceiling & Real Estate PropTech calculator suite for contractors, architects, remodelers, and property investors." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#ffffff] text-[#0f172a] font-sans antialiased selection:bg-emerald-100 selection:text-emerald-900">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
