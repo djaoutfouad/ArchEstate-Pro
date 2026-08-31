@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { X, Shield, FileText, CheckCircle, Mail, Send, Copy, Check, MessageSquare, HelpCircle } from 'lucide-react';
+import { X, Shield, FileText, CheckCircle, Mail, Send, Copy, Check, AlertCircle, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
+const EMAILJS_SERVICE_ID = 'service_ihh81up';
+const EMAILJS_TEMPLATE_ID = 'template_78vfjg';
+
+const getEmailJsPublicKey = (): string => {
+  if (typeof import.meta !== 'undefined' && (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env?.VITE_EMAILJS_PUBLIC_KEY) {
+    return (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env!.VITE_EMAILJS_PUBLIC_KEY || '';
+  }
+  if (typeof process !== 'undefined' && process.env?.VITE_EMAILJS_PUBLIC_KEY) {
+    return process.env.VITE_EMAILJS_PUBLIC_KEY || '';
+  }
+  return '';
+};
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -13,7 +27,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
   const [contactEmail, setContactEmail] = useState('');
   const [contactSubject, setContactSubject] = useState('General Inquiry');
   const [contactMessage, setContactMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!isOpen || !type) return null;
 
@@ -23,10 +39,63 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactName || !contactEmail || !contactMessage) return;
-    setIsSubmitted(true);
+    if (isSubmitting) return;
+
+    const trimmedName = contactName.trim();
+    const trimmedEmail = contactEmail.trim();
+    const trimmedMessage = contactMessage.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      setErrorMessage('Please complete all required fields.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    const templateParams = {
+      name: trimmedName,
+      from_name: trimmedName,
+      user_name: trimmedName,
+      email: trimmedEmail,
+      from_email: trimmedEmail,
+      user_email: trimmedEmail,
+      reply_to: trimmedEmail,
+      subject: contactSubject,
+      inquiry_category: contactSubject,
+      message: trimmedMessage,
+    };
+
+    try {
+      const publicKey = getEmailJsPublicKey();
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        publicKey || undefined
+      );
+
+      setIsSubmitted(true);
+      setContactName('');
+      setContactEmail('');
+      setContactMessage('');
+      setErrorMessage(null);
+    } catch (err) {
+      console.error('EmailJS submit error:', err);
+      setErrorMessage(
+        'Unable to send your message right now. Please try again or contact us directly at contact.archestate@gmail.com.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -114,15 +183,15 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
                   <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto">
                     <Check className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-bold text-slate-900">Message Received!</h3>
+                  <h3 className="text-base font-bold text-slate-900">Message sent successfully</h3>
                   <p className="text-xs text-slate-600 max-w-md mx-auto">
-                    Thank you for reaching out. Your inquiry has been logged, and our team will get back to you at <strong>{contactEmail}</strong> shortly.
+                    Thank you for contacting ArchEstate Pro. Your inquiry has been sent to our desk, and our team will get back to you shortly.
                   </p>
                   <button
                     type="button"
                     onClick={() => {
                       setIsSubmitted(false);
-                      setContactMessage('');
+                      setErrorMessage(null);
                     }}
                     className="mt-2 text-xs font-semibold text-emerald-700 hover:underline"
                   >
@@ -131,6 +200,15 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit} className="space-y-3.5 pt-1">
+                  {errorMessage && (
+                    <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2 animate-in fade-in">
+                      <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-600" />
+                      <div className="flex-1">
+                        <p className="font-semibold">{errorMessage}</p>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">
@@ -138,11 +216,13 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
                       </label>
                       <input
                         type="text"
+                        name="name"
                         required
+                        disabled={isSubmitting}
                         value={contactName}
                         onChange={(e) => setContactName(e.target.value)}
                         placeholder="e.g., Alex Miller"
-                        className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-emerald-600 focus:outline-hidden"
+                        className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-emerald-600 focus:outline-hidden disabled:opacity-60"
                       />
                     </div>
                     <div>
@@ -151,11 +231,13 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
                       </label>
                       <input
                         type="email"
+                        name="email"
                         required
+                        disabled={isSubmitting}
                         value={contactEmail}
                         onChange={(e) => setContactEmail(e.target.value)}
                         placeholder="you@domain.com"
-                        className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-emerald-600 focus:outline-hidden"
+                        className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-emerald-600 focus:outline-hidden disabled:opacity-60"
                       />
                     </div>
                   </div>
@@ -165,9 +247,11 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
                       Inquiry Category
                     </label>
                     <select
+                      name="subject"
+                      disabled={isSubmitting}
                       value={contactSubject}
                       onChange={(e) => setContactSubject(e.target.value)}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-emerald-600 focus:outline-hidden"
+                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-emerald-600 focus:outline-hidden disabled:opacity-60"
                     >
                       <option value="General Inquiry">General Inquiry</option>
                       <option value="Technical Feedback & Formula Verification">Technical Feedback &amp; Formula Verification</option>
@@ -181,21 +265,33 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
                       Your Message *
                     </label>
                     <textarea
+                      name="message"
                       required
+                      disabled={isSubmitting}
                       rows={4}
                       value={contactMessage}
                       onChange={(e) => setContactMessage(e.target.value)}
                       placeholder="Describe your question, project specifications, or feedback in detail..."
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-emerald-600 focus:outline-hidden"
+                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-emerald-600 focus:outline-hidden disabled:opacity-60"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2 shadow-xs"
+                    disabled={isSubmitting}
+                    className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 disabled:bg-emerald-600/70 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2 shadow-xs"
                   >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>Send Message to ArchEstate Pro</span>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Sending Message...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Send Message to ArchEstate Pro</span>
+                      </>
+                    )}
                   </button>
                 </form>
               )}
