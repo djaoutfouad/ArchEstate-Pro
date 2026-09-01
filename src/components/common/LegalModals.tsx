@@ -87,12 +87,24 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
 
     try {
       const publicKey = getEmailJsPublicKey();
-      await emailjs.send(
+      console.info('[EmailJS Diagnostic] Sending contact form payload...', {
+        serviceId: EMAILJS_SERVICE_ID,
+        templateId: EMAILJS_TEMPLATE_ID,
+        hasPublicKey: Boolean(publicKey),
+        paramsKeys: Object.keys(templateParams)
+      });
+
+      const response = await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         templateParams,
         { publicKey }
       );
+
+      console.info('[EmailJS Success]', {
+        status: response?.status,
+        text: response?.text
+      });
 
       setIsSubmitted(true);
       setContactName('');
@@ -100,10 +112,16 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
       setContactMessage('');
       setErrorMessage(null);
     } catch (err: unknown) {
-      console.error('EmailJS submit error:', err);
+      console.error('[EmailJS Failure]', err);
       if (err && typeof err === 'object') {
         const errorObj = err as Record<string, unknown>;
-        console.error('EmailJS details -> Status:', errorObj.status, 'Text/Message:', errorObj.text || errorObj.message);
+        console.error('[EmailJS Failure Details]', {
+          status: errorObj.status,
+          text: errorObj.text,
+          message: errorObj.message,
+          serviceId: EMAILJS_SERVICE_ID,
+          templateId: EMAILJS_TEMPLATE_ID
+        });
       }
       setErrorMessage(
         'Unable to send your message right now. Please try again or contact us directly at contact15archestate@gmail.com.'
