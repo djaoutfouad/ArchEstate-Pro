@@ -38,9 +38,9 @@ export const CATEGORIES: CategoryInfo[] = [
     shortName: 'Construction & Finishes',
     tagline: 'Structural Slabs, Masonry, Paint, Tiles & HVAC',
     description: 'Engineering-grade estimators for concrete volumes, masonry units, tiling grids, surface coatings, and thermal BTU cooling requirements.',
-    badge: '5 Calculators',
+    badge: '6 Calculators',
     iconName: 'Building2',
-    count: 5,
+    count: 6,
   },
   {
     id: 'real-estate',
@@ -48,9 +48,9 @@ export const CATEGORIES: CategoryInfo[] = [
     shortName: 'Real Estate & Finance',
     tagline: 'Mortgages, Cap Rates, Affordability & Closing Costs',
     description: 'Underwriting models for amortization schedules, rental capitalization rates, 28/36 qualifying ratios, and conveyance closing costs.',
-    badge: '5 Calculators',
+    badge: '4 Calculators',
     iconName: 'TrendingUp',
-    count: 5,
+    count: 4,
   },
 ];
 
