@@ -50,6 +50,123 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#039;');
 }
 
+function getStaticFooterHtml(): string {
+  const currentYear = new Date().getFullYear();
+  return `
+  <footer class="mt-20 border-t border-slate-200 bg-slate-50/90 text-slate-600 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Col 1: Brand & Positioning -->
+        <div class="md:col-span-1 space-y-3.5">
+          <a href="/" class="flex items-center gap-3 group">
+            <div class="w-9 h-9 rounded-xl bg-emerald-700 flex items-center justify-center text-white font-bold shadow-md shadow-emerald-700/20">
+              AP
+            </div>
+            <span class="text-xl font-extrabold tracking-tight text-slate-900">
+              ArchEstate<span class="text-emerald-700">Pro</span>
+            </span>
+          </a>
+          <p class="text-xs text-slate-600 leading-relaxed font-medium">
+            Architecture + Construction + Real Estate Technology Platform. Computational planning tools for contractors, architects, remodelers, and property investors.
+          </p>
+          <div class="flex flex-col gap-1.5 text-xs font-mono text-slate-600 pt-1">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+              100% Client-Side Engine
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+              Zero Latency Calculations
+            </span>
+          </div>
+        </div>
+
+        <!-- Col 2: Calculator Suites -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">
+            Calculator Suites
+          </h3>
+          <ul class="space-y-2 text-xs">
+            ${CATEGORIES.map(cat => `
+              <li>
+                <a href="${getCategoryPath(cat.id)}" class="hover:text-emerald-700 hover:underline transition-colors flex items-center gap-1 text-slate-600">
+                  <span>${escapeHtml(cat.name)}</span>
+                  <span class="text-[10px] text-slate-500 font-mono">(${cat.count})</span>
+                </a>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <!-- Col 3: Legal & Standards -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">
+            Governance &amp; Policies
+          </h3>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a href="/methodology" class="hover:text-emerald-700 hover:underline transition-colors text-slate-600">
+                Calculation Methodology
+              </a>
+            </li>
+            <li>
+              <a href="/privacy" class="hover:text-emerald-700 hover:underline transition-colors text-slate-600">
+                Privacy Policy &amp; Security
+              </a>
+            </li>
+            <li>
+              <a href="/terms" class="hover:text-emerald-700 hover:underline transition-colors text-slate-600">
+                Terms of Service &amp; Disclaimer
+              </a>
+            </li>
+            <li>
+              <a href="/about" class="hover:text-emerald-700 hover:underline transition-colors text-slate-600">
+                About ArchEstate Pro
+              </a>
+            </li>
+            <li>
+              <a href="/contact" class="hover:text-emerald-700 hover:underline transition-colors font-semibold text-emerald-800">
+                Contact Us
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Official Contact -->
+        <div class="space-y-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">
+            Official Contact
+          </h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Questions, technical inquiries, or partnership opportunities:
+          </p>
+          <a href="mailto:${CONTACT_EMAIL}" class="inline-flex items-center gap-2 text-xs font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl transition-colors text-left">
+            <span>${CONTACT_EMAIL}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Global Safety Note -->
+      <div class="mt-10 pt-6 border-t border-slate-200 text-[11px] text-slate-600 leading-relaxed">
+        <p>
+          <strong>Professional Notice:</strong> ArchEstate Pro provides planning estimates only. Actual material quantities, structural requirements, HVAC sizing, taxes, fees, and financing terms vary by project, product, jurisdiction, and site conditions. Always verify critical measurements and financial/legal assumptions with a qualified professional.
+        </p>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 gap-4">
+        <p>&copy; ${currentYear} ${SITE_NAME}. All rights reserved. English edition.</p>
+        <div class="flex items-center gap-4 text-xs">
+          <span class="text-emerald-800 font-semibold">15 Active Calculators</span>
+          <span>•</span>
+          <span>Client-Side Standard Edition</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+  `;
+}
+
 // Generate static pre-rendered routes
 const routes: RouteMeta[] = [];
 
@@ -148,11 +265,7 @@ const homeHtml = `
     </div>
   </main>
 
-  <footer class="mt-20 border-t border-slate-200 bg-slate-50 py-12">
-    <div class="max-w-7xl mx-auto px-4 text-xs text-slate-600 text-center space-y-2">
-      <p>&copy; ${new Date().getFullYear()} ${SITE_NAME}. All rights reserved. Official contact: <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 underline">${CONTACT_EMAIL}</a></p>
-    </div>
-  </footer>
+  ${getStaticFooterHtml()}
 </div>
 `;
 
@@ -226,11 +339,7 @@ for (const cat of CATEGORIES) {
       </div>
     </main>
 
-    <footer class="mt-20 border-t border-slate-200 bg-slate-50 py-12">
-      <div class="max-w-7xl mx-auto px-4 text-xs text-slate-600 text-center">
-        <p>&copy; ${new Date().getFullYear()} ${SITE_NAME}. Official contact: <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 underline">${CONTACT_EMAIL}</a></p>
-      </div>
-    </footer>
+    ${getStaticFooterHtml()}
   </div>
   `;
 
@@ -474,11 +583,7 @@ for (const calc of CALCULATORS) {
       ` : ''}
     </main>
 
-    <footer class="mt-20 border-t border-slate-200 bg-slate-50 py-12">
-      <div class="max-w-7xl mx-auto px-4 text-xs text-slate-600 text-center">
-        <p>&copy; ${new Date().getFullYear()} ${SITE_NAME}. Official contact: <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 underline">${CONTACT_EMAIL}</a></p>
-      </div>
-    </footer>
+    ${getStaticFooterHtml()}
   </div>
   `;
 
@@ -792,11 +897,7 @@ for (const leg of legalPages) {
         </div>
       </main>
 
-      <footer class="mt-20 border-t border-slate-200 bg-slate-50 py-10">
-        <div class="max-w-5xl mx-auto px-4 text-xs text-slate-600 text-center space-y-2">
-          <p>&copy; ${new Date().getFullYear()} ${SITE_NAME}. All rights reserved. Official contact: <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 underline">${CONTACT_EMAIL}</a></p>
-        </div>
-      </footer>
+      ${getStaticFooterHtml()}
     </div>
     `,
   });
