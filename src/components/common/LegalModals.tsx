@@ -34,7 +34,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
   if (!isOpen || !type) return null;
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('contact.archestate@gmail.com');
+    navigator.clipboard.writeText('contact15archestate@gmail.com');
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2500);
   };
@@ -91,7 +91,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
     } catch (err) {
       console.error('EmailJS submit error:', err);
       setErrorMessage(
-        'Unable to send your message right now. Please try again or contact us directly at contact.archestate@gmail.com.'
+        'Unable to send your message right now. Please try again or contact us directly at contact15archestate@gmail.com.'
       );
     } finally {
       setIsSubmitting(false);
@@ -147,7 +147,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
                       Official Email
                     </span>
                     <p className="text-sm font-bold text-slate-900">
-                      contact.archestate@gmail.com
+                      contact15archestate@gmail.com
                     </p>
                   </div>
                 </div>
@@ -303,7 +303,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
               <p><strong>1. Zero Data Collection:</strong> ArchEstate Pro operates 100% client-side in your web browser. We do not store, transmit, or monetize your project dimensions, property financial values, or calculation logs on remote servers.</p>
               <p><strong>2. Local Browser Memory:</strong> Temporary saved calculations, active inputs, and presets remain strictly inside your browser’s local session state.</p>
               <p><strong>3. Advertising Disclosure:</strong> We adhere to standard Google AdSense publisher privacy guidelines. Contextual advertisements are clearly delineated and non-intrusive.</p>
-              <p><strong>4. Privacy Inquiries:</strong> Contact our privacy officer directly at <a href="mailto:contact.archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact.archestate@gmail.com</a>.</p>
+              <p><strong>4. Privacy Inquiries:</strong> Contact our privacy officer directly at <a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a>.</p>
             </>
           )}
 
@@ -312,7 +312,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
               <p><strong>1. Planning Estimates Only:</strong> All calculations provided by ArchEstate Pro are intended strictly as mathematical planning tools. They do not constitute formal architectural blueprints, licensed structural engineering stamps, formal mortgage underwriting approvals, or legal tax advice.</p>
               <p><strong>2. Limitation of Liability:</strong> ArchEstate Pro and its contributors accept no liability for discrepancies between computed planning quantities and actual on-site contractor purchase orders, supplier shortages, or financial terms.</p>
               <p><strong>3. Verification Requirement:</strong> Always verify dimensions, material specifications, load-bearing requirements, and legal tax rates with certified professionals before committing capital or purchasing inventory.</p>
-              <p><strong>4. Contact:</strong> For inquiries regarding terms or usage: <a href="mailto:contact.archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact.archestate@gmail.com</a>.</p>
+              <p><strong>4. Contact:</strong> For inquiries regarding terms or usage: <a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a>.</p>
             </>
           )}
 
@@ -321,7 +321,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
               <p><strong>ArchEstate Pro</strong> is an international Architecture + Construction + Real Estate Technology Platform engineered for architects, general contractors, interior remodelers, quantity surveyors, property developers, and homeowners.</p>
               <p>Our platform unites 15 precision calculators across 3 core disciplines: <strong>False Ceilings &amp; Drywall</strong>, <strong>Construction &amp; Finishes</strong>, and <strong>Real Estate &amp; Financial Analytics</strong>.</p>
               <p>All computational models calculate instantly on the client side with zero latency, zero sign-ups, and zero paywalls.</p>
-              <p><strong>Official Contact:</strong> <a href="mailto:contact.archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact.archestate@gmail.com</a></p>
+              <p><strong>Official Contact:</strong> <a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a></p>
             </>
           )}
 
@@ -329,7 +329,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
             <>
               <p><strong>Mathematical Rigor:</strong> Every calculator in ArchEstate Pro utilizes peer-reviewed construction geometry, manufacturer standard formulas (e.g., Knauf/USG drywall standards, ASTM/EN concrete curing constants), and conventional real estate underwriting algorithms (e.g., Fannie Mae 28/36 ratio frameworks).</p>
               <p><strong>Wastage Modeling:</strong> Real construction requires cut-and-fit tolerances. Each construction tool includes adjustable wastage factors (typically 5% to 15%) calibrated to actual site handling standards.</p>
-              <p><strong>Methodology Review:</strong> If you have technical feedback or suggested formula refinements, contact our engineering team at <a href="mailto:contact.archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact.archestate@gmail.com</a>.</p>
+              <p><strong>Methodology Review:</strong> If you have technical feedback or suggested formula refinements, contact our engineering team at <a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a>.</p>
             </>
           )}
         </div>

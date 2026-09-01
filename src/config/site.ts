@@ -14,7 +14,7 @@ export const SITE_URL = (
 export const SITE_NAME = 'ArchEstate Pro';
 export const SITE_TAGLINE = 'Architectural, Construction & Real Estate Calculators';
 export const SITE_DESCRIPTION = 'Precision Architecture, Construction, False Ceiling & Real Estate PropTech calculator suite for contractors, architects, remodelers, and property investors.';
-export const CONTACT_EMAIL = 'contact.archestate@gmail.com';
+export const CONTACT_EMAIL = 'contact15archestate@gmail.com';
 
 // Category route mapping
 export const CATEGORY_ROUTES: Record<string, string> = {
