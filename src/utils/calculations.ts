@@ -41,14 +41,14 @@ export const formatPercent = (val: number, decimals: number = 2): string => {
 
 // 1. BA13 Drywall Ceiling Calculator
 export const calculateBA13Ceiling = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.roomLength || 5.0);
-  const width = Math.max(0.1, inputs.roomWidth || 4.0);
-  const boardW = Math.max(0.1, inputs.boardWidth || 1.2);
-  const boardL = Math.max(0.1, inputs.boardLength || 2.5);
-  const wastage = Math.max(0, inputs.wastagePct || 10);
-  const channelSpacing = Math.max(0.1, inputs.channelSpacing || 0.5);
-  const hangerSpacing = Math.max(0.1, inputs.hangerSpacing || 1.0);
-  const compoundRate = Math.max(0.01, inputs.compoundRate || 0.55);
+  const length = Math.max(0.1, inputs.roomLength ?? 5.0);
+  const width = Math.max(0.1, inputs.roomWidth ?? 4.0);
+  const boardW = Math.max(0.1, inputs.boardWidth ?? 1.2);
+  const boardL = Math.max(0.1, inputs.boardLength ?? 2.5);
+  const wastage = Math.max(0, inputs.wastagePct ?? 10);
+  const channelSpacing = Math.max(0.1, inputs.channelSpacing ?? 0.5);
+  const hangerSpacing = Math.max(0.1, inputs.hangerSpacing ?? 1.0);
+  const compoundRate = Math.max(0.01, inputs.compoundRate ?? 0.55);
 
   const ceilingArea = length * width;
   const boardArea = boardW * boardL;
@@ -155,12 +155,12 @@ export const calculateBA13Ceiling = (inputs: Record<string, number>) => {
 
 // 2. PVC Panel Ceiling Calculator
 export const calculatePVCCeiling = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.roomLength || 4.5);
-  const width = Math.max(0.1, inputs.roomWidth || 3.2);
-  const panelW = Math.max(0.05, (inputs.panelWidth || 250) / 1000); // mm to m
-  const panelL = Math.max(0.5, inputs.panelLength || 3.95);
-  const wastage = Math.max(0, inputs.wastagePct || 8);
-  const battenSpacing = Math.max(0.1, inputs.battenSpacing || 0.4);
+  const length = Math.max(0.1, inputs.roomLength ?? 4.5);
+  const width = Math.max(0.1, inputs.roomWidth ?? 3.2);
+  const panelW = Math.max(0.05, (inputs.panelWidth ?? 250) / 1000); // mm to m
+  const panelL = Math.max(0.5, inputs.panelLength ?? 3.95);
+  const wastage = Math.max(0, inputs.wastagePct ?? 8);
+  const battenSpacing = Math.max(0.1, inputs.battenSpacing ?? 0.4);
 
   const ceilingArea = length * width;
   const panelArea = panelW * panelL;
@@ -241,12 +241,12 @@ export const calculatePVCCeiling = (inputs: Record<string, number>) => {
 
 // 3. 60x60 Acoustic Grid Ceiling Estimator
 export const calculateAcousticGridCeiling = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.roomLength || 6.0);
-  const width = Math.max(0.1, inputs.roomWidth || 4.8);
-  const tileSize = Math.max(0.3, inputs.tileSize || 0.60); // 600mm = 0.6m
-  const wastage = Math.max(0, inputs.wastagePct || 8);
-  const mainRunnerSpacing = Math.max(0.6, inputs.mainRunnerSpacing || 1.2);
-  const crossTeeSpacing = Math.max(0.3, inputs.crossTeeSpacing || 0.6);
+  const length = Math.max(0.1, inputs.roomLength ?? 6.0);
+  const width = Math.max(0.1, inputs.roomWidth ?? 4.8);
+  const tileSize = Math.max(0.3, inputs.tileSize ?? 0.60); // 600mm = 0.6m
+  const wastage = Math.max(0, inputs.wastagePct ?? 8);
+  const mainRunnerSpacing = Math.max(0.6, inputs.mainRunnerSpacing ?? 1.2);
+  const crossTeeSpacing = Math.max(0.3, inputs.crossTeeSpacing ?? 0.6);
 
   const ceilingArea = length * width;
   const tileArea = tileSize * tileSize;
@@ -358,13 +358,13 @@ export const calculateAcousticGridCeiling = (inputs: Record<string, number>) => 
 
 // 4. Multi-Level & LED Cove Ceiling Estimator
 export const calculateCoveCeiling = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.roomLength || 5.5);
-  const width = Math.max(0.1, inputs.roomWidth || 4.2);
-  const dropDepth = Math.max(0.05, (inputs.dropDepth || 18) / 100); // cm to m
-  const framingSpacing = Math.max(0.1, inputs.framingSpacing || 0.4);
-  const wastage = Math.max(0, inputs.wastagePct || 10);
-  const coveRun = Math.max(1, inputs.covePerimeter || 2 * (length + width) - 1.6);
-  const stripWastage = Math.max(0, inputs.stripWastage || 8);
+  const length = Math.max(0.1, inputs.roomLength ?? 5.5);
+  const width = Math.max(0.1, inputs.roomWidth ?? 4.2);
+  const dropDepth = Math.max(0.05, (inputs.dropDepth ?? 18) / 100); // cm to m
+  const framingSpacing = Math.max(0.1, inputs.framingSpacing ?? 0.4);
+  const wastage = Math.max(0, inputs.wastagePct ?? 10);
+  const coveRun = Math.max(1, inputs.covePerimeter ?? (2 * (length + width) - 1.6));
+  const stripWastage = Math.max(0, inputs.stripWastage ?? 8);
 
   const baseCeilingArea = length * width;
   const wastageFactor = 1 + wastage / 100;
@@ -455,12 +455,12 @@ export const calculateCoveCeiling = (inputs: Record<string, number>) => {
 
 // 5. Traditional Plaster & Staff Ceiling Estimator
 export const calculatePlasterCeiling = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.roomLength || 5.0);
-  const width = Math.max(0.1, inputs.roomWidth || 4.0);
-  const plasterCoverage = Math.max(1, inputs.plasterCoverage || 11.5); // kg per m²
-  const fiberRate = Math.max(0.05, inputs.fiberRate || 0.35); // kg per m²
-  const cornicePieceLength = Math.max(0.5, inputs.cornicePieceLength || 2.0); // 2m standard
-  const wastage = Math.max(0, inputs.wastagePct || 10);
+  const length = Math.max(0.1, inputs.roomLength ?? 5.0);
+  const width = Math.max(0.1, inputs.roomWidth ?? 4.0);
+  const plasterCoverage = Math.max(1, inputs.plasterCoverage ?? 11.5); // kg per m²
+  const fiberRate = Math.max(0.05, inputs.fiberRate ?? 0.35); // kg per m²
+  const cornicePieceLength = Math.max(0.5, inputs.cornicePieceLength ?? 2.0); // 2m standard
+  const wastage = Math.max(0, inputs.wastagePct ?? 10);
 
   const ceilingArea = length * width;
   const wastageFactor = 1 + wastage / 100;
@@ -539,14 +539,14 @@ export const calculatePlasterCeiling = (inputs: Record<string, number>) => {
 
 // 6. Room Paint & Primer Calculator
 export const calculatePaintPrimer = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.roomLength || 4.5);
-  const width = Math.max(0.1, inputs.roomWidth || 3.5);
-  const wallHeight = Math.max(0.5, inputs.wallHeight || 2.7);
-  const openingsArea = Math.max(0, inputs.openingsArea || 4.2);
-  const finishCoats = Math.max(1, inputs.finishCoats || 2);
-  const paintCoverage = Math.max(1, inputs.paintCoverage || 10.5); // m²/liter
-  const primerCoats = Math.max(0, inputs.primerCoats || 1);
-  const primerCoverage = Math.max(1, inputs.primerCoverage || 11.0); // m²/liter
+  const length = Math.max(0.1, inputs.roomLength ?? 4.5);
+  const width = Math.max(0.1, inputs.roomWidth ?? 3.5);
+  const wallHeight = Math.max(0.5, inputs.wallHeight ?? 2.7);
+  const openingsArea = Math.max(0, inputs.openingsArea ?? 4.2);
+  const finishCoats = Math.max(1, inputs.finishCoats ?? 2);
+  const paintCoverage = Math.max(1, inputs.paintCoverage ?? 10.5); // m²/liter
+  const primerCoats = Math.max(0, inputs.primerCoats ?? 1);
+  const primerCoverage = Math.max(1, inputs.primerCoverage ?? 11.0); // m²/liter
   const includeCeiling = inputs.includeCeiling !== 0;
 
   const grossWallArea = 2 * (length + width) * wallHeight;
@@ -634,12 +634,12 @@ export const calculatePaintPrimer = (inputs: Record<string, number>) => {
 
 // 7. Floor & Wall Tile Estimator
 export const calculateTiles = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.surfaceLength || 5.0);
-  const width = Math.max(0.1, inputs.surfaceWidth || 3.8);
-  const tileW = Math.max(1, inputs.tileWidth || 60); // cm
-  const tileL = Math.max(1, inputs.tileLength || 60); // cm
-  const wastage = Math.max(0, inputs.wastagePct || 10);
-  const groutRate = Math.max(0.05, inputs.groutRate || 0.45); // kg/m²
+  const length = Math.max(0.1, inputs.surfaceLength ?? 5.0);
+  const width = Math.max(0.1, inputs.surfaceWidth ?? 3.8);
+  const tileW = Math.max(1, inputs.tileWidth ?? 60); // cm
+  const tileL = Math.max(1, inputs.tileLength ?? 60); // cm
+  const wastage = Math.max(0, inputs.wastagePct ?? 10);
+  const groutRate = Math.max(0.05, inputs.groutRate ?? 0.45); // kg/m²
 
   const surfaceArea = length * width;
   const tileAreaM2 = (tileW / 100) * (tileL / 100);
@@ -716,11 +716,11 @@ export const calculateTiles = (inputs: Record<string, number>) => {
 
 // 8. Concrete Volume & Slab Calculator
 export const calculateConcrete = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.length || 6.0);
-  const width = Math.max(0.1, inputs.width || 4.0);
-  const thicknessCm = Math.max(1, inputs.thickness || 12); // cm
-  const wastage = Math.max(0, inputs.wastagePct || 8);
-  const bagSize = Math.max(10, inputs.bagSize || 25); // kg (25kg or 40kg)
+  const length = Math.max(0.1, inputs.length ?? 6.0);
+  const width = Math.max(0.1, inputs.width ?? 4.0);
+  const thicknessCm = Math.max(1, inputs.thickness ?? 12); // cm
+  const wastage = Math.max(0, inputs.wastagePct ?? 8);
+  const bagSize = Math.max(10, inputs.bagSize ?? 25); // kg (25kg or 40kg)
 
   const thicknessM = thicknessCm / 100;
   const baseVolumeM3 = length * width * thicknessM;
@@ -794,12 +794,12 @@ export const calculateConcrete = (inputs: Record<string, number>) => {
 
 // 9. Brick & Block Wall Calculator
 export const calculateBricks = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.wallLength || 8.0);
-  const height = Math.max(0.1, inputs.wallHeight || 2.6);
-  const unitLengthCm = Math.max(5, inputs.unitLength || 20); // cm
-  const unitHeightCm = Math.max(3, inputs.unitHeight || 10); // cm
-  const mortarFactorMm = Math.max(0, inputs.mortarJoint || 10); // 10mm standard joint
-  const wastage = Math.max(0, inputs.wastagePct || 5);
+  const length = Math.max(0.1, inputs.wallLength ?? 8.0);
+  const height = Math.max(0.1, inputs.wallHeight ?? 2.6);
+  const unitLengthCm = Math.max(5, inputs.unitLength ?? 20); // cm
+  const unitHeightCm = Math.max(3, inputs.unitHeight ?? 10); // cm
+  const mortarFactorMm = Math.max(0, inputs.mortarJoint ?? 10); // 10mm standard joint
+  const wastage = Math.max(0, inputs.wastagePct ?? 5);
 
   const wallArea = length * height;
   const effectiveLengthM = (unitLengthCm + mortarFactorMm / 10) / 100;
@@ -876,13 +876,13 @@ export const calculateBricks = (inputs: Record<string, number>) => {
 
 // 10. Air Conditioner BTU Size Calculator
 export const calculateACSize = (inputs: Record<string, number>) => {
-  const length = Math.max(0.1, inputs.roomLength || 5.0);
-  const width = Math.max(0.1, inputs.roomWidth || 4.0);
-  const height = Math.max(1.8, inputs.roomHeight || 2.7);
-  const climateMultiplier = inputs.climateMultiplier || 1.15; // 1.0 moderate, 1.15 warm, 1.30 tropical
-  const occupants = Math.max(1, inputs.occupants || 2);
-  const sunExposure = inputs.sunExposure || 1.0; // 0.9 shade, 1.0 normal, 1.15 heavy sun
-  const insulationFactor = inputs.insulationFactor || 1.0; // 0.9 modern, 1.0 standard, 1.2 poor
+  const length = Math.max(0.1, inputs.roomLength ?? 5.0);
+  const width = Math.max(0.1, inputs.roomWidth ?? 4.0);
+  const height = Math.max(1.8, inputs.roomHeight ?? 2.7);
+  const climateMultiplier = inputs.climateMultiplier ?? 1.15; // 1.0 moderate, 1.15 warm, 1.30 tropical
+  const occupants = Math.max(1, inputs.occupants ?? 2);
+  const sunExposure = inputs.sunExposure ?? 1.0; // 0.9 shade, 1.0 normal, 1.15 heavy sun
+  const insulationFactor = inputs.insulationFactor ?? 1.0; // 0.9 modern, 1.0 standard, 1.2 poor
 
   const roomArea = length * width;
   const roomVolume = roomArea * height;
@@ -900,13 +900,13 @@ export const calculateACSize = (inputs: Record<string, number>) => {
 
   const primaryResult: ResultItem = {
     id: 'btu',
-    label: 'Recommended Cooling Capacity',
+    label: 'Estimated Cooling Capacity',
     value: recommendedBTU,
     formatted: `${formatNumber(recommendedBTU, 0)} BTU/h`,
     unit: 'BTU/h',
     isPrimary: true,
     highlight: 'emerald',
-    description: `Approx ${formatNumber(tons, 2)} Tons (${formatNumber(coolingKW, 2)} kW electrical thermal power).`,
+    description: `Approx ${formatNumber(tons, 2)} Tons (${formatNumber(coolingKW, 2)} kW thermal cooling capacity).`,
   };
 
   const secondaryResults: ResultItem[] = [
@@ -930,7 +930,7 @@ export const calculateACSize = (inputs: Record<string, number>) => {
     },
     {
       id: 'coolingKW',
-      label: 'Output Power Equivalent',
+      label: 'Thermal Cooling Capacity (kW)',
       value: coolingKW,
       formatted: `${formatNumber(coolingKW, 2)} kW`,
       unit: 'kW',
@@ -939,12 +939,12 @@ export const calculateACSize = (inputs: Record<string, number>) => {
     },
     {
       id: 'disclaimer',
-      label: 'Engineering Verification',
-      value: 'Required',
-      formatted: 'Manual J Required',
+      label: 'Planning Estimate Notice',
+      value: 'Planning Estimate',
+      formatted: 'Field Verification',
       unit: '',
       highlight: 'amber',
-      description: `Planning estimate only. Complex ducting, window glazing U-values, and equipment loads require certified HVAC engineering verification.`,
+      description: `Provides a planning estimate based on room volume, climate, sun exposure, insulation, and occupancy assumptions. Complex ducting, window glazing U-values, and equipment loads require certified HVAC engineering verification.`,
     },
   ];
 
@@ -960,13 +960,13 @@ export const calculateACSize = (inputs: Record<string, number>) => {
 
 // 11. Mortgage Amortization & PITI Calculator
 export const calculateMortgagePITI = (inputs: Record<string, number>) => {
-  const purchasePrice = Math.max(1000, inputs.purchasePrice || 450000);
-  const downPayment = Math.max(0, Math.min(purchasePrice, inputs.downPayment || 90000));
-  const interestRate = Math.max(0.01, inputs.interestRate || 6.5); // %
-  const loanTermYears = Math.max(1, inputs.loanTerm || 30);
-  const propertyTaxPct = Math.max(0, inputs.propertyTaxRate || 1.2); // % per year
-  const annualInsurance = Math.max(0, inputs.annualInsurance || 1400);
-  const monthlyHOA = Math.max(0, inputs.monthlyHOA || 150);
+  const purchasePrice = Math.max(1000, inputs.purchasePrice ?? 450000);
+  const downPayment = Math.max(0, Math.min(purchasePrice, inputs.downPayment ?? 90000));
+  const interestRate = Math.max(0.01, inputs.interestRate ?? 6.5); // %
+  const loanTermYears = Math.max(1, inputs.loanTerm ?? 30);
+  const propertyTaxPct = Math.max(0, inputs.propertyTaxRate ?? 1.2); // % per year
+  const annualInsurance = Math.max(0, inputs.annualInsurance ?? 1400);
+  const monthlyHOA = Math.max(0, inputs.monthlyHOA ?? 150);
 
   const loanAmount = Math.max(0, purchasePrice - downPayment);
   const monthlyRate = (interestRate / 100) / 12;
@@ -1080,12 +1080,12 @@ export const calculateMortgagePITI = (inputs: Record<string, number>) => {
 
 // 12. Rental Yield, Cap Rate & ROI Estimator
 export const calculateRentalYield = (inputs: Record<string, number>) => {
-  const purchasePrice = Math.max(1000, inputs.purchasePrice || 360000);
-  const downPayment = Math.max(1000, inputs.downPayment || 72000);
-  const monthlyRent = Math.max(0, inputs.monthlyRent || 2500);
-  const vacancyPct = Math.max(0, inputs.vacancyPct || 5);
-  const annualOpex = Math.max(0, inputs.annualOpex || 5800);
-  const appreciationPct = Math.max(0, inputs.appreciationPct || 3.5);
+  const purchasePrice = Math.max(1000, inputs.purchasePrice ?? 360000);
+  const downPayment = Math.max(0, inputs.downPayment ?? 72000);
+  const monthlyRent = Math.max(0, inputs.monthlyRent ?? 2500);
+  const vacancyPct = Math.max(0, inputs.vacancyPct ?? 5);
+  const annualOpex = Math.max(0, inputs.annualOpex ?? 5800);
+  const appreciationPct = Math.max(0, inputs.appreciationPct ?? 3.5);
 
   const annualGrossRent = monthlyRent * 12;
   const vacancyAllowance = annualGrossRent * (vacancyPct / 100);
@@ -1175,14 +1175,14 @@ export const calculateRentalYield = (inputs: Record<string, number>) => {
 
 // 13. Home Affordability & Maximum Purchase Calculator
 export const calculateAffordability = (inputs: Record<string, number>) => {
-  const grossIncome = Math.max(1000, inputs.grossAnnualIncome || 115000);
-  const monthlyDebts = Math.max(0, inputs.monthlyDebts || 450);
-  const interestRate = Math.max(0.1, inputs.interestRate || 6.5);
-  const loanTermYears = Math.max(5, inputs.loanTerm || 30);
-  const downPayment = Math.max(0, inputs.downPayment || 65000);
-  const propertyTaxPct = Math.max(0, inputs.propertyTaxRate || 1.2);
-  const annualInsurance = Math.max(0, inputs.annualInsurance || 1350);
-  const monthlyHOA = Math.max(0, inputs.monthlyHOA || 100);
+  const grossIncome = Math.max(1000, inputs.grossAnnualIncome ?? 115000);
+  const monthlyDebts = Math.max(0, inputs.monthlyDebts ?? 450);
+  const interestRate = Math.max(0.1, inputs.interestRate ?? 6.5);
+  const loanTermYears = Math.max(5, inputs.loanTerm ?? 30);
+  const downPayment = Math.max(0, inputs.downPayment ?? 65000);
+  const propertyTaxPct = Math.max(0, inputs.propertyTaxRate ?? 1.2);
+  const annualInsurance = Math.max(0, inputs.annualInsurance ?? 1350);
+  const monthlyHOA = Math.max(0, inputs.monthlyHOA ?? 100);
 
   const monthlyGrossIncome = grossIncome / 12;
   
@@ -1293,12 +1293,12 @@ export const calculateAffordability = (inputs: Record<string, number>) => {
 
 // 14. Real Estate Closing Costs & Notary Estimator
 export const calculateClosingCosts = (inputs: Record<string, number>) => {
-  const propertyPrice = Math.max(1000, inputs.propertyPrice || 420000);
-  const transferTaxPct = Math.max(0, inputs.transferTaxPct || 3.5); // 3.5% default assumption
-  const titleClosingPct = Math.max(0, inputs.titleClosingPct || 0.75); // %
-  const notaryLegalPct = Math.max(0, inputs.notaryLegalPct || 1.10); // %
-  const otherClosingPct = Math.max(0, inputs.otherClosingPct || 0.65); // %
-  const downPayment = Math.max(0, inputs.downPayment || 84000);
+  const propertyPrice = Math.max(1000, inputs.propertyPrice ?? 420000);
+  const transferTaxPct = Math.max(0, inputs.transferTaxPct ?? 3.5); // 3.5% default assumption
+  const titleClosingPct = Math.max(0, inputs.titleClosingPct ?? 0.75); // %
+  const notaryLegalPct = Math.max(0, inputs.notaryLegalPct ?? 1.10); // %
+  const otherClosingPct = Math.max(0, inputs.otherClosingPct ?? 0.65); // %
+  const downPayment = Math.max(0, inputs.downPayment ?? 84000);
 
   const transferTax = propertyPrice * (transferTaxPct / 100);
   const titleClosing = propertyPrice * (titleClosingPct / 100);
@@ -1389,12 +1389,12 @@ export const calculateClosingCosts = (inputs: Record<string, number>) => {
 
 // 15. Wallpaper Roll & Pattern Calculator
 export const calculateWallpaper = (inputs: Record<string, number>) => {
-  const wallWidth = Math.max(0.1, inputs.wallWidth || 4.8);
-  const wallHeight = Math.max(0.5, inputs.wallHeight || 2.6);
-  const rollWidthCm = Math.max(10, inputs.rollWidth || 53); // cm (standard 53cm)
-  const rollLengthM = Math.max(1, inputs.rollLength || 10.05); // m (standard 10.05m)
-  const wastage = Math.max(0, inputs.wastagePct || 10);
-  const patternRepeatCm = Math.max(0, inputs.patternRepeat || 32); // cm (0 for random/plain match)
+  const wallWidth = Math.max(0.1, inputs.wallWidth ?? 4.8);
+  const wallHeight = Math.max(0.5, inputs.wallHeight ?? 2.6);
+  const rollWidthCm = Math.max(10, inputs.rollWidth ?? 53); // cm (standard 53cm)
+  const rollLengthM = Math.max(1, inputs.rollLength ?? 10.05); // m (standard 10.05m)
+  const wastage = Math.max(0, inputs.wastagePct ?? 10);
+  const patternRepeatCm = Math.max(0, inputs.patternRepeat ?? 32); // cm (0 for random/plain match)
 
   const rollWidthM = rollWidthCm / 100;
   const patternRepeatM = patternRepeatCm / 100;

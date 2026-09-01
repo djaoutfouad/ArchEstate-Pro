@@ -157,8 +157,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
         answer: 'Panels are traditionally installed parallel to the incoming natural light from windows or along the longest room dimension to reduce joint visibility and minimize scrap offcuts.',
       },
       {
-        question: 'Are PVC ceilings completely waterproof?',
-        answer: 'Yes, 100% waterproof. PVC tongue-and-groove ceilings will not rot, warp, or support mold growth, making them ideal for bathrooms, laundry rooms, and sheltered outdoor eaves.',
+        question: 'Are PVC ceilings moisture-resistant?',
+        answer: 'Yes. PVC tongue-and-groove ceilings are moisture-resistant and suitable for many humid applications when properly installed, making them well-suited for bathrooms, laundry rooms, and sheltered outdoor eaves.',
       },
       {
         question: 'How do I secure PVC panels to the framing?',
@@ -641,19 +641,19 @@ export const CALCULATORS: CalculatorDefinition[] = [
       },
     ],
     methodology: {
-      howItWorks: 'Computes sensible and latent cooling demands based on room cubic volume, base area load (~350–400 BTU/m²), ambient climate zone coefficients, building envelope insulation efficiency, occupant metabolic heat dissipation (+600 BTU/h per extra person), and solar radiation factors. Rounds to standard commercial split-system capacities (9k, 12k, 18k, 24k, 30k, 36k BTU/h).',
+      howItWorks: 'Provides a planning estimate based on room volume, climate, sun exposure, insulation, and occupancy assumptions. Calculates base area load (~350–400 BTU/m²), ambient climate zone coefficients, building envelope insulation efficiency, occupant metabolic heat dissipation (+600 BTU/h per extra person), and solar radiation factors. Rounds to standard commercial split-system capacities (9k, 12k, 18k, 24k, 30k, 36k BTU/h).',
       whatIsIncluded: [
-        'Recommended commercial cooling capacity in BTU/h',
+        'Estimated commercial cooling capacity in BTU/h',
         'Refrigeration capacity in standard Tonnage (1 Ton = 12,000 BTU/h)',
         'Thermal cooling output in metric Kilowatts (kW)',
         'Total conditioned air volume in cubic meters (m³)',
       ],
       importantAssumptions: [
         'Calculations assume a standard residential living space or bedroom application.',
-        '1 Ton of refrigeration equals 12,000 BTU/hr (approx 3.517 kW thermal).',
+        '1 Ton of refrigeration equals 12,000 BTU/hr (approx 3.517 kW thermal cooling capacity).',
         'Ceiling heights exceeding 2.5m include volumetric compensation factors.',
       ],
-      professionalNote: 'This tool provides a sizing estimate for preliminary planning. Final HVAC equipment selection, multi-split zone design, and commercial ducting require a certified Manual J / ASHRAE load calculation by a licensed mechanical engineer.',
+      professionalNote: 'This tool provides a sizing estimate for preliminary planning. Final HVAC equipment selection, multi-split zone design, and commercial ducting require a certified on-site load calculation by a licensed mechanical engineer.',
     },
     faqs: [
       {
@@ -805,11 +805,11 @@ export const CALCULATORS: CalculatorDefinition[] = [
     id: 'affordability-calc',
     slug: 'affordability-calc',
     title: 'Home Affordability & Maximum Purchase Calculator',
-    subtitle: 'Conventional 28/36 Underwriting Ratio & Maximum Borrowing Capacity Engine',
+    subtitle: 'Conventional 28/36 Debt-to-Income Planning Benchmark & Maximum Borrowing Capacity Engine',
     category: 'real-estate',
     categoryName: 'Real Estate & Financial Analytics',
     iconName: 'BadgeDollarSign',
-    shortDescription: 'Estimate your maximum home purchase price and loan ceiling based on the standard 28% front-end and 36% back-end debt underwriting rules.',
+    shortDescription: 'Estimate your maximum home purchase price and loan ceiling using 28% front-end and 36% back-end debt ratios as a conventional planning benchmark.',
     keywords: ['affordability', 'maximum purchase', '28 36 rule', 'qualifying income', 'dti', 'debt to income', 'home buying'],
     inputs: [
       { id: 'grossAnnualIncome', label: 'Gross Annual Household Income', unit: '$/yr', defaultValue: 115000, min: 10000, max: 2000000, step: 2500, category: 'financial' },
@@ -822,7 +822,7 @@ export const CALCULATORS: CalculatorDefinition[] = [
       { id: 'monthlyHOA', label: 'Estimated Monthly HOA', unit: '$/mo', defaultValue: 100, min: 0, max: 2000, step: 25, category: 'financial' },
     ],
     methodology: {
-      howItWorks: 'Applies conventional underwriting debt-to-income (DTI) constraints: the 28% Front-End Ceiling (housing payment cannot exceed 28% of gross monthly income) and the 36% Back-End Ceiling (housing payment + existing car loans, student debt, credit cards cannot exceed 36% of gross income). Solves the algebraic amortization and tax escrow equilibrium to determine maximum supported mortgage debt and total purchase price.',
+      howItWorks: 'Uses 28% / 36% as a conventional planning benchmark: the 28% Front-End Ceiling (housing payment planned at up to 28% of gross monthly income) and the 36% Back-End Ceiling (housing payment + existing recurring debts planned at up to 36% of gross income). Solves the algebraic amortization and tax escrow equilibrium to determine maximum supported mortgage debt and total purchase price for planning purposes.',
       whatIsIncluded: [
         'Estimated Maximum Supported Purchase Price',
         'Estimated Maximum Mortgage Loan Borrowing Capacity',
@@ -830,16 +830,16 @@ export const CALCULATORS: CalculatorDefinition[] = [
         '28% Front-End and 36% Back-End underwriting caps comparison',
       ],
       importantAssumptions: [
-        'Follows conventional Fannie Mae / Freddie Mac standard 28/36 qualifying guidelines.',
+        'Uses 28% / 36% as a conventional planning benchmark based on standard debt-to-income framework guidelines.',
         'Monthly debt includes minimum credit card payments, student loans, auto loans, and personal loans.',
         'Down payment funds are assumed separate from closing cost cash reserves.',
       ],
-      professionalNote: 'This tool provides a mathematical planning estimate and does not constitute a loan pre-approval. Some loan programs (such as FHA or VA loans) permit higher DTI ratios up to 43% to 50% with strong compensating factors.',
+      professionalNote: 'This tool provides a mathematical planning estimate and does not constitute a loan pre-approval or lender underwriting decision. Actual lender qualifications vary based on credit scores, loan programs (such as FHA or VA loans permitting higher DTI ratios), and automated underwriting system findings.',
     },
     faqs: [
       {
-        question: 'What is the 28/36 rule in mortgage qualifying?',
-        answer: 'The 28/36 rule is a standard lending guideline where no more than 28% of your gross monthly income should go toward housing expenses (PITI), and no more than 36% toward total recurring debt obligations.',
+        question: 'What is the 28/36 rule in mortgage planning?',
+        answer: 'The 28/36 rule is a conventional planning benchmark where no more than 28% of your gross monthly income is allocated toward housing expenses (PITI + HOA), and no more than 36% toward total recurring debt obligations.',
       },
       {
         question: 'How do existing car loans or student debts impact my buying power?',

@@ -4,7 +4,7 @@ import emailjs from '@emailjs/browser';
 
 const EMAILJS_PUBLIC_KEY = 'W8ZJS348A46uem5Gv';
 const EMAILJS_SERVICE_ID = 'service_ihh81up';
-const EMAILJS_TEMPLATE_ID = 'template_78vfjig';
+const EMAILJS_TEMPLATE_ID = 'template_78vfjg';
 
 const getEmailJsPublicKey = (): string => {
   const envKey = (typeof import.meta !== 'undefined' && (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env?.VITE_EMAILJS_PUBLIC_KEY) ||
