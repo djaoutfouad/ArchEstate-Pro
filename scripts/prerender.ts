@@ -494,11 +494,234 @@ for (const calc of CALCULATORS) {
 
 // 4. Legal & Informational Pages
 const legalPages = [
-  { slug: 'about', title: `About Us — ${SITE_NAME}`, desc: 'About ArchEstate Pro architectural, construction, and real estate computational suite.' },
-  { slug: 'contact', title: `Contact Us — ${SITE_NAME}`, desc: 'Contact the ArchEstate Pro engineering, support, and technical feedback desk.' },
-  { slug: 'privacy', title: `Privacy Policy — ${SITE_NAME}`, desc: 'ArchEstate Pro client-side data security and privacy policy statement.' },
-  { slug: 'terms', title: `Terms of Service — ${SITE_NAME}`, desc: 'Terms of service, mathematical planning limitations, and liability disclaimers.' },
-  { slug: 'methodology', title: `Calculation Methodology — ${SITE_NAME}`, desc: 'Mathematical standards, peer-reviewed engineering formulas, and tolerance frameworks.' },
+  { 
+    slug: 'about', 
+    title: `About Us — ${SITE_NAME}`, 
+    desc: 'About ArchEstate Pro architectural, construction, and real estate computational suite.',
+    heading: 'About ArchEstate Pro',
+    bodyHtml: `
+      <div class="space-y-8 text-sm text-slate-700 leading-relaxed">
+        <section class="space-y-3">
+          <h2 class="text-xl font-black text-slate-900">Architecture, Construction &amp; Real Estate Technology</h2>
+          <p>
+            <strong>ArchEstate Pro</strong> is a specialized computational platform engineered for architects, general contractors, interior remodelers, quantity surveyors, property developers, and real estate professionals.
+          </p>
+          <p>
+            Our mission is to provide instantaneous, transparent, and accurate estimating models without requiring account registration, cloud sign-in, or software paywalls.
+          </p>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-xl font-black text-slate-900">Three Comprehensive Engineering Disciplines</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <h3 class="font-bold text-slate-900 mb-1">1. False Ceilings &amp; Drywall</h3>
+              <p class="text-xs text-slate-600 mb-3">Gypsum board systems, acoustic T24 grids, multi-level LED coves, traditional staff plaster, and metal framing estimators.</p>
+              <a href="${getCategoryPath('ceilings')}" class="text-xs font-bold text-emerald-700 hover:underline">Explore Ceilings Suite &rarr;</a>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <h3 class="font-bold text-slate-900 mb-1">2. Construction &amp; Finishes</h3>
+              <p class="text-xs text-slate-600 mb-3">Concrete mix volumes, masonry brickwork, ceramic tile flooring, architectural paint coverage, and HVAC cooling sizing.</p>
+              <a href="${getCategoryPath('construction')}" class="text-xs font-bold text-emerald-700 hover:underline">Explore Construction Suite &rarr;</a>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <h3 class="font-bold text-slate-900 mb-1">3. Real Estate &amp; Financial</h3>
+              <p class="text-xs text-slate-600 mb-3">Fixed-rate mortgage amortizations (PITI + HOA), cap rate &amp; net rental yields, affordability underwriting, and construction loan interest.</p>
+              <a href="${getCategoryPath('real-estate')}" class="text-xs font-bold text-emerald-700 hover:underline">Explore Real Estate Suite &rarr;</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-xl font-black text-slate-900">Instantaneous Client-Side Computation</h2>
+          <p>
+            Every calculator in the ArchEstate Pro suite operates entirely client-side within your browser. Calculations execute in real time as you adjust dimension sliders and input parameters, offering instantaneous feedback for jobsite planning, client meetings, and financial modeling.
+          </p>
+        </section>
+
+        <section class="p-5 rounded-xl bg-emerald-50 border border-emerald-200 space-y-2">
+          <h3 class="font-bold text-slate-900">Official Contact &amp; Technical Desk</h3>
+          <p class="text-xs text-slate-600">
+            For partnership inquiries, formula feedback, or general questions, contact us directly at:
+            <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-800 font-bold underline ml-1">${CONTACT_EMAIL}</a>
+          </p>
+        </section>
+      </div>
+    `
+  },
+  { 
+    slug: 'contact', 
+    title: `Contact Us — ${SITE_NAME}`, 
+    desc: 'Contact the ArchEstate Pro engineering, support, and technical feedback desk.',
+    heading: 'Contact ArchEstate Pro',
+    bodyHtml: `
+      <div class="space-y-8 text-sm text-slate-700 leading-relaxed">
+        <section class="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-800">Official Support &amp; Engineering Inbox</span>
+            <p class="text-lg font-extrabold text-slate-900 mt-0.5">${CONTACT_EMAIL}</p>
+            <p class="text-xs text-slate-600 mt-1">Our technical and engineering desk actively reviews inquiries and feedback.</p>
+          </div>
+          <a href="mailto:${CONTACT_EMAIL}" class="px-4 py-2.5 bg-emerald-700 text-white rounded-xl text-xs font-bold hover:bg-emerald-800 transition-colors shrink-0">
+            Email Us Directly
+          </a>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-xl font-black text-slate-900">Inquiry Channels</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <h3 class="font-bold text-slate-900 text-sm">General Support</h3>
+              <p class="text-xs text-slate-600 mt-1">General platform questions, calculator navigation, and general assistance.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <h3 class="font-bold text-slate-900 text-sm">Technical Feedback</h3>
+              <p class="text-xs text-slate-600 mt-1">Mathematical formula reviews, regional building standards, and custom tool requests.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <h3 class="font-bold text-slate-900 text-sm">Partnerships &amp; Media</h3>
+              <p class="text-xs text-slate-600 mt-1">Sponsorships, editorial inquiries, and industry collaborations.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-xl font-black text-slate-900">Interactive Contact Form</h2>
+          <p class="text-xs text-slate-600">
+            When browsing ArchEstate Pro with JavaScript enabled, you can also use our integrated Contact modal form to submit inquiries directly to our team. Messages are transmitted securely via our configured EmailJS service directly to <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 underline font-semibold">${CONTACT_EMAIL}</a>.
+          </p>
+        </section>
+      </div>
+    `
+  },
+  { 
+    slug: 'privacy', 
+    title: `Privacy Policy — ${SITE_NAME}`, 
+    desc: 'ArchEstate Pro client-side data security and privacy policy statement.',
+    heading: 'Privacy Policy & Data Handling',
+    bodyHtml: `
+      <div class="space-y-6 text-sm text-slate-700 leading-relaxed">
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">1. Client-Side Calculation Processing</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            ArchEstate Pro processes calculator inputs client-side within your web browser for real-time calculation purposes. We do not operate a user account system or store your project dimensions, property financial values, or calculation logs in a remote calculation database.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">2. Contact Form &amp; Communications</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            When you submit a message through our Contact Us form, your inquiry details (name, email, subject, and message) are transmitted securely via our configured third-party email service (EmailJS) directly to our official support inbox (<a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 font-semibold underline">${CONTACT_EMAIL}</a>) so our team can review and reply. Users are advised not to submit sensitive personal, banking, or proprietary confidential information via the contact form.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">3. Local Browser Storage</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Any temporary saved calculations, active inputs, or user preference presets remain strictly inside your browser’s local session state and can be cleared at any time by resetting your browser storage or cache.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">4. Contextual Advertising &amp; Cookies</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            ArchEstate Pro adheres to standard Google AdSense publisher privacy frameworks. Third-party advertising partners may serve contextual advertisements based on general non-personally identifiable browser interactions.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">5. Privacy Inquiries</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            If you have questions regarding our privacy practices or data handling, reach out to our privacy desk at:
+            <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 font-semibold underline ml-1">${CONTACT_EMAIL}</a>.
+          </p>
+        </section>
+      </div>
+    `
+  },
+  { 
+    slug: 'terms', 
+    title: `Terms of Service — ${SITE_NAME}`, 
+    desc: 'Terms of service, mathematical planning limitations, and liability disclaimers.',
+    heading: 'Terms of Service & Usage Agreement',
+    bodyHtml: `
+      <div class="space-y-6 text-sm text-slate-700 leading-relaxed">
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">1. Planning Estimates Only</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            All calculations, formulas, material schedules, and financial outputs provided by ArchEstate Pro are intended strictly as mathematical planning tools. They do not constitute formal architectural blueprints, licensed structural engineering stamps, formal mortgage underwriting approvals, or legal tax advice.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">2. Limitation of Liability</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            ArchEstate Pro and its contributors accept no liability for discrepancies between computed planning quantities and actual on-site contractor purchase orders, supplier material shortages, structural settling, or financial lending terms.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">3. Verification Requirement</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Always verify physical dimensions, local building code requirements, material specifications, load-bearing engineering requirements, and legal tax rates with certified professionals before committing capital or purchasing inventory.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">4. Terms Inquiries</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            For inquiries regarding terms of use or permissions:
+            <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 font-semibold underline ml-1">${CONTACT_EMAIL}</a>.
+          </p>
+        </section>
+      </div>
+    `
+  },
+  { 
+    slug: 'methodology', 
+    title: `Calculation Methodology — ${SITE_NAME}`, 
+    desc: 'Mathematical standards, documented engineering-style formulas, and tolerance frameworks.',
+    heading: 'Calculation Methodology Standard',
+    bodyHtml: `
+      <div class="space-y-6 text-sm text-slate-700 leading-relaxed">
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">1. Engineering &amp; Computational Formulas</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            ArchEstate Pro uses documented engineering-style formulas, conventional construction quantity methods, manufacturer-oriented planning assumptions, and standard real estate financial formulas where applicable.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">2. Conventional Geometric &amp; Financial Frameworks</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Our models incorporate standardized geometric volume and surface area equations, standard fixed-rate amortizing debt models, and conventional debt-to-income planning frameworks across 15 specialized tools.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">3. Material Wastage &amp; Tolerance Modeling</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Real-world construction requires cut-and-fit allowances. Each construction and ceiling calculation model includes adjustable wastage factors (typically configurable between 5% and 15%) calibrated to conventional site handling and edge trim practices.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">4. Planning Disclaimers &amp; Field Verification</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Computational outputs are generated for preliminary estimating and conceptual planning. They do not replace on-site licensed surveyor measurements, structural engineering stamps, or official mortgage lender underwriting.
+          </p>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-base font-bold text-slate-900">5. Formula Feedback &amp; Review</h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            If you have technical feedback or suggested formula refinements, contact our engineering desk at:
+            <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 font-semibold underline ml-1">${CONTACT_EMAIL}</a>.
+          </p>
+        </section>
+      </div>
+    `
+  },
 ];
 
 for (const leg of legalPages) {
@@ -510,20 +733,70 @@ for (const leg of legalPages) {
     title: leg.title,
     description: leg.desc,
     canonical: legCanonical,
-    schemaJson: [],
+    schemaJson: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        'name': leg.heading,
+        'url': legCanonical,
+        'description': leg.desc,
+        'publisher': {
+          '@type': 'Organization',
+          'name': SITE_NAME,
+          'email': CONTACT_EMAIL,
+          'url': SITE_URL,
+        },
+      }
+    ],
     prerenderedHtml: `
     <div class="min-h-screen flex flex-col bg-white text-slate-900 font-sans">
-      <header class="w-full border-b border-slate-200 bg-white/90 p-4">
-        <div class="max-w-4xl mx-auto flex items-center justify-between">
-          <a href="/" class="text-lg font-bold text-slate-900">${SITE_NAME}</a>
-          <a href="/" class="text-xs text-emerald-700">&larr; Home</a>
+      <header class="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/90 shadow-xs">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+          <a href="/" class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-bold">AP</div>
+            <div>
+              <span class="text-xl font-extrabold text-slate-900">${SITE_NAME}</span>
+              <p class="text-[11px] text-slate-600 font-medium">Architecture • Construction • Real Estate</p>
+            </div>
+          </a>
+          <nav class="flex items-center gap-3 text-xs font-semibold">
+            <a href="/" class="text-slate-600 hover:text-emerald-700">&larr; Back to Suite</a>
+            <a href="/contact" class="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">Contact Us</a>
+          </nav>
         </div>
       </header>
-      <main class="flex-1 max-w-3xl mx-auto px-4 py-12 space-y-6">
-        <h1 class="text-2xl font-bold text-slate-900">${escapeHtml(leg.title)}</h1>
-        <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(leg.desc)}</p>
-        <p class="text-xs text-slate-600">For direct support, contact: <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 underline">${CONTACT_EMAIL}</a></p>
+
+      <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full space-y-8">
+        <div class="border-b border-slate-200 pb-5">
+          <div class="text-xs text-slate-500 mb-2">
+            <a href="/" class="hover:text-emerald-700">Home</a> &gt; <span class="text-slate-800">${escapeHtml(leg.heading)}</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">${escapeHtml(leg.heading)}</h1>
+          <p class="text-xs sm:text-sm text-slate-600 mt-2">${escapeHtml(leg.desc)}</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs">
+          ${leg.bodyHtml}
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
+          <div>
+            <span>Direct contact: </span>
+            <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 font-semibold underline">${CONTACT_EMAIL}</a>
+          </div>
+          <div class="flex gap-4">
+            <a href="${getCategoryPath('ceilings')}" class="hover:text-emerald-700">False Ceilings</a>
+            <a href="${getCategoryPath('construction')}" class="hover:text-emerald-700">Construction</a>
+            <a href="${getCategoryPath('real-estate')}" class="hover:text-emerald-700">Real Estate</a>
+          </div>
+        </div>
       </main>
+
+      <footer class="mt-20 border-t border-slate-200 bg-slate-50 py-10">
+        <div class="max-w-5xl mx-auto px-4 text-xs text-slate-600 text-center space-y-2">
+          <p>&copy; ${new Date().getFullYear()} ${SITE_NAME}. All rights reserved. Official contact: <a href="mailto:${CONTACT_EMAIL}" class="text-emerald-700 underline">${CONTACT_EMAIL}</a></p>
+        </div>
+      </footer>
     </div>
     `,
   });

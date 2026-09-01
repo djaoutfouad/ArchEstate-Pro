@@ -260,9 +260,15 @@ export const calculateAcousticGridCeiling = (inputs: Record<string, number>) => 
   const totalRunnerMeters = runnerRuns * length * 1.05;
   const mainRunners = Math.ceil(totalRunnerMeters / 3.6);
   
-  // Cross Tees 1.2m & 0.6m
-  const crossTees120 = Math.ceil((ceilingArea / 0.72) * 1.05);
-  const crossTees60 = Math.ceil((ceilingArea / 0.72) * 1.05);
+  // Cross Tees 1.2m: Spanning perpendicular between main runner lines every crossTeeSpacing (0.6m)
+  const baysAcross = Math.ceil(width / mainRunnerSpacing);
+  const rowsAlong = Math.ceil(length / crossTeeSpacing);
+  const crossTees120 = Math.ceil(baysAcross * rowsAlong * wastageFactor);
+
+  // Cross Tees 0.6m: Sub-dividing each 1.2m bay into two 0.6m modules plus perimeter cross ties
+  const subTeesPerBay = Math.max(1, Math.round(mainRunnerSpacing / tileSize) - 1);
+  const gridColumns = Math.ceil(width / tileSize);
+  const crossTees60 = Math.ceil((baysAcross * (rowsAlong - 1) * subTeesPerBay + gridColumns) * wastageFactor);
   
   // Perimeter Wall Angle (3.0m)
   const perimeter = 2 * (length + width) * 1.05;
@@ -308,7 +314,7 @@ export const calculateAcousticGridCeiling = (inputs: Record<string, number>) => 
       formatted: `${crossTees120} pcs`,
       unit: 'pcs (1.2m)',
       highlight: 'neutral',
-      description: `Primary interlocking cross members.`,
+      description: `Primary 1.2m interlocking cross members spanning between main runners. Final suspended-grid quantities may vary with edge cuts and manufacturer layout.`,
     },
     {
       id: 'crossTees60',
@@ -317,7 +323,7 @@ export const calculateAcousticGridCeiling = (inputs: Record<string, number>) => 
       formatted: `${crossTees60} pcs`,
       unit: 'pcs (0.6m)',
       highlight: 'neutral',
-      description: `Sub-dividing modules to form standard 600×600mm pockets.`,
+      description: `Secondary 0.6m cross tees subdividing 1.2m bays into 600×600mm pockets. Final suspended-grid quantities may vary with edge cuts and manufacturer layout.`,
     },
     {
       id: 'wallAngle',
@@ -343,6 +349,7 @@ export const calculateAcousticGridCeiling = (inputs: Record<string, number>) => 
     { label: 'Room Net Footprint', formula: `${length}m × ${width}m`, value: `${formatNumber(ceilingArea, 2)} m²` },
     { label: 'Tile Quantities', formula: `(${formatNumber(ceilingArea, 2)} m² × ${wastageFactor.toFixed(2)}) ÷ 0.36 m²`, value: `${tilesCount} tiles (${boxes} boxes)` },
     { label: 'Main Runners (3.6m)', formula: `${runnerRuns} runs × ${length}m ÷ 3.6m`, value: `${mainRunners} pcs` },
+    { label: 'Cross Tees 1.2m & 0.6m', formula: `${baysAcross} bays × ${rowsAlong} rows (1.2m) & sub-grid modules (0.6m)`, value: `${crossTees120} pcs (1.2m) / ${crossTees60} pcs (0.6m)` },
     { label: 'Wall Trim Line', formula: `2 × (${length}m + ${width}m) ÷ 3m`, value: `${wallAngle} pcs` },
   ];
 
@@ -362,14 +369,19 @@ export const calculateCoveCeiling = (inputs: Record<string, number>) => {
   const baseCeilingArea = length * width;
   const wastageFactor = 1 + wastage / 100;
   
-  // Vertical fascia and light trough drywall area
-  const verticalFasciaArea = coveRun * (dropDepth + 0.12) * wastageFactor; // drop face + light shelf
-  const totalDrywallArea = (baseCeilingArea + verticalFasciaArea) * wastageFactor;
-  const drywallSheets = Math.ceil(totalDrywallArea / 3.0); // 2.5m x 1.2m = 3m²
+  // Vertical fascia and light trough drywall area (net area before single wastage application)
+  const netFasciaArea = coveRun * (dropDepth + 0.12); // drop face + light shelf
+  const netTotalDrywallArea = baseCeilingArea + netFasciaArea;
+  const grossDrywallArea = netTotalDrywallArea * wastageFactor; // Single wastage application
+  const drywallSheets = Math.ceil(grossDrywallArea / 3.0); // 2.5m x 1.2m = 3.0 m² standard sheet
   
-  // Framing metal profiles (studs + track for bulkheads)
-  const bulkheadFramingMeters = coveRun * 3.6 * 1.08;
-  const framingProfiles = Math.ceil(bulkheadFramingMeters / 3.0);
+  // Framing metal profiles dynamically calculated using user-configured Bulkhead Stud Spacing
+  const perimeterTracks = 2 * coveRun; // Top track + bottom track
+  const studCount = Math.ceil(coveRun / framingSpacing) + 1; // Studs positioned along bulkhead run
+  const studLengthPerPost = dropDepth + 0.15; // Vertical drop + horizontal bracket projection
+  const totalStudMeters = studCount * studLengthPerPost * 1.05;
+  const bulkheadFramingMeters = (perimeterTracks + totalStudMeters) * 1.08;
+  const framingProfiles = Math.ceil(bulkheadFramingMeters / 3.0); // 3.0m standard profiles
   
   // Aluminum LED channel and Diffuser (2m pieces standard)
   const ledChannelMeters = coveRun * 1.05;
@@ -408,7 +420,7 @@ export const calculateCoveCeiling = (inputs: Record<string, number>) => {
       formatted: `${drywallSheets} sheets`,
       unit: 'sheets (2.5×1.2m)',
       highlight: 'neutral',
-      description: `Covers ${formatNumber(baseCeilingArea, 1)} m² soffit + ${formatNumber(verticalFasciaArea, 1)} m² stepped fascia.`,
+      description: `Covers ${formatNumber(baseCeilingArea, 1)} m² soffit + ${formatNumber(netFasciaArea, 1)} m² stepped fascia (single ${wastage}% combined wastage).`,
     },
     {
       id: 'framing',
@@ -417,7 +429,7 @@ export const calculateCoveCeiling = (inputs: Record<string, number>) => {
       formatted: `${framingProfiles} pcs`,
       unit: 'pcs (3m)',
       highlight: 'neutral',
-      description: `${formatNumber(bulkheadFramingMeters, 1)}m reinforced framing for drop shelf.`,
+      description: `${formatNumber(bulkheadFramingMeters, 1)}m framing based on ${studCount} studs @ ${framingSpacing}m spacing plus perimeter tracks.`,
     },
     {
       id: 'dropArea',
@@ -432,6 +444,8 @@ export const calculateCoveCeiling = (inputs: Record<string, number>) => {
 
   const summarySteps: CalculationSummaryStep[] = [
     { label: 'Cove Perimeter Run', formula: `Configured continuous run`, value: `${formatNumber(coveRun, 2)} linear meters` },
+    { label: 'Combined Drywall Area', formula: `(${formatNumber(baseCeilingArea, 1)} m² soffit + ${formatNumber(netFasciaArea, 1)} m² fascia) × ${wastageFactor.toFixed(2)} wastage`, value: `${formatNumber(grossDrywallArea, 1)} m² (${drywallSheets} sheets)` },
+    { label: 'Bulkhead Framing (3m)', formula: `Tracks (${formatNumber(perimeterTracks, 1)}m) + ${studCount} studs @ ${framingSpacing}m spacing`, value: `${framingProfiles} pcs (3m)` },
     { label: 'LED Channel & Strip', formula: `${formatNumber(coveRun, 1)}m × ${(1 + stripWastage / 100).toFixed(2)} buffer`, value: `${formatNumber(ledStripLength, 1)}m (${ledRolls5m} × 5m reels)` },
     { label: 'Power Supply Sizing', formula: `${formatNumber(ledStripLength, 1)}m × 14.4W/m × 1.25 factor`, value: `${driverWattage} Watts (24V DC)` },
   ];
@@ -997,13 +1011,13 @@ export const calculateMortgagePITI = (inputs: Record<string, number>) => {
 
   const primaryResult: ResultItem = {
     id: 'piti',
-    label: 'Total Monthly PITI Payment',
+    label: 'Total Monthly Housing Payment',
     value: monthlyPITI,
     formatted: formatCurrencyExact(monthlyPITI),
     unit: '/month',
     isPrimary: true,
     highlight: 'emerald',
-    description: `Principal, Interest, Property Tax, Homeowners Insurance, and HOA dues.`,
+    description: `PITI (Principal, Interest, Property Tax, and Homeowners Insurance) plus HOA dues.`,
   };
 
   const secondaryResults: ResultItem[] = [
@@ -1122,12 +1136,12 @@ export const calculateRentalYield = (inputs: Record<string, number>) => {
     },
     {
       id: 'cashOnCash',
-      label: 'Cash-on-Cash Return (Est)',
+      label: 'Leveraged Cash-on-Cash Return (Proxy)',
       value: cashOnCashROI,
       formatted: formatPercent(cashOnCashROI, 2),
       unit: '%',
       highlight: cashOnCashROI >= 0 ? 'emerald' : 'amber',
-      description: `Annual net cash flow (${formatCurrency(annualCashFlow)}) divided by ${formatCurrency(downPayment)} initial equity.`,
+      description: `Estimated cash flow (${formatCurrency(annualCashFlow)}) divided by ${formatCurrency(downPayment)} initial equity using an assumed 30-year 6.5% financing proxy.`,
     },
     {
       id: 'appreciation',

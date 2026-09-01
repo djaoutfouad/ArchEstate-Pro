@@ -686,7 +686,7 @@ export const CALCULATORS: CalculatorDefinition[] = [
     category: 'real-estate',
     categoryName: 'Real Estate & Financial Analytics',
     iconName: 'Calculator',
-    shortDescription: 'Calculate monthly PITI payments, loan principal vs. interest breakdown, total lifetime borrowing costs, and interactive monthly amortization schedule table.',
+    shortDescription: 'Calculate total monthly housing payments (PITI plus HOA dues), loan principal vs. interest breakdown, total lifetime borrowing costs, and interactive monthly amortization schedule table.',
     badge: 'Underwriting',
     keywords: ['mortgage', 'piti', 'amortization', 'loan', 'interest', 'real estate', 'financing', 'property tax'],
     inputs: [
@@ -699,25 +699,31 @@ export const CALCULATORS: CalculatorDefinition[] = [
       { id: 'monthlyHOA', label: 'Monthly HOA / Condo Dues', unit: '$/mo', defaultValue: 150, min: 0, max: 5000, step: 25, category: 'financial' },
     ],
     methodology: {
-      howItWorks: 'Uses the standard fixed-rate compound amortization formula ($P \times \frac{r(1+r)^N}{(1+r)^N - 1}$) to compute monthly debt service. Accurately stacks escrow lines: assessed property tax (annual rate converted to monthly), hazard homeowners insurance, and mandatory HOA dues to determine the total monthly PITI outlay. Generates a month-by-month debt paydown schedule.',
+      howItWorks: 'Uses the standard fixed-rate compound amortization formula ($P \\times \\frac{r(1+r)^N}{(1+r)^N - 1}$) to compute monthly debt service. Stacks escrow lines: assessed property tax (annual rate converted to monthly), hazard homeowners insurance, and mandatory HOA dues to determine the total monthly housing payment (PITI + HOA). Generates a month-by-month debt paydown schedule.',
       whatIsIncluded: [
-        'Total all-in Monthly PITI Payment',
+        'Total Monthly Housing Payment (PITI + HOA)',
         'Principal & Interest (P&I) monthly debt service',
         'Monthly Property Tax and Hazard Insurance escrow breakdown',
+        'Monthly HOA / Condo association dues',
         'Total lifetime interest paid over full loan maturity',
         'Full interactive month-by-month Amortization Schedule table',
       ],
       importantAssumptions: [
         'Calculations assume a standard fixed-rate fully amortizing mortgage loan.',
         'Property taxes are calculated against the purchase price assessment value.',
+        'Total Monthly Housing Payment encompasses PITI plus HOA dues where applicable.',
         'Private Mortgage Insurance (PMI) is not included in baseline P&I and applies if down payment is under 20%.',
       ],
       professionalNote: 'This calculation is a financial model for planning purposes. Actual mortgage offers depend on borrower credit scores, debt-to-income (DTI) underwriting, escrow reserves, and lender origination points.',
     },
     faqs: [
       {
+        question: 'What is included in the Total Monthly Housing Payment?',
+        answer: 'The total monthly housing payment includes PITI (Principal, Interest, Property Taxes, and Homeowners Insurance) as well as recurring Homeowners Association (HOA) or condominium dues.',
+      },
+      {
         question: 'What does PITI stand for in real estate financing?',
-        answer: 'PITI stands for Principal, Interest, Taxes, and Insurance. It represents the complete recurring monthly housing expense that mortgage lenders evaluate during underwriting.',
+        answer: 'PITI stands for Principal, Interest, Taxes, and Insurance. It represents the primary components evaluated during standard mortgage loan underwriting.',
       },
       {
         question: 'How does loan term affect total lifetime interest?',
@@ -757,25 +763,25 @@ export const CALCULATORS: CalculatorDefinition[] = [
       { id: 'appreciationPct', label: 'Projected Annual Capital Growth', unit: '%', defaultValue: 3.5, min: 0, max: 15, step: 0.5, category: 'parameters' },
     ],
     methodology: {
-      howItWorks: 'Evaluates real estate investment performance. Calculates Annual Gross Rent ($Rent \times 12$), deducts expected vacancy loss to find Effective Gross Income (EGI), and subtracts non-mortgage Operating Expenses (taxes, insurance, management, maintenance, reserves) to yield Net Operating Income (NOI). Derives un-leveraged Cap Rate ($NOI / Price$) and estimated Cash-on-Cash equity return.',
+      howItWorks: 'Evaluates real estate investment performance. Calculates Annual Gross Rent ($Rent \\times 12$), deducts expected vacancy loss to find Effective Gross Income (EGI), and subtracts non-mortgage Operating Expenses (taxes, insurance, management, maintenance, reserves) to yield Net Operating Income (NOI). Derives un-leveraged Cap Rate ($NOI / Price$), Net Yield, and a Leveraged Cash-on-Cash Return proxy based on assumed baseline financing.',
       whatIsIncluded: [
         'Capitalization Rate (Cap Rate %)',
         'Net Operating Income (NOI)',
         'Gross Rental Yield vs. Net Rental Yield',
-        'Estimated Cash-on-Cash ROI proxy on invested equity',
+        'Leveraged Cash-on-Cash Return (Proxy based on standard 30-year 6.5% financing constant)',
         'Projected annual capital appreciation growth',
       ],
       importantAssumptions: [
-        'Cap rate measures unleveraged property performance independent of individual financing structure.',
-        'Operating expenses (Opex) include property taxes, insurance, repairs, and management, but exclude debt service.',
-        'Cash-on-Cash proxy assumes standard amortized debt service on non-equity balance.',
+        'Cap rate measures unleveraged property performance independent of individual financing structure (NOI divided by Asset Purchase Price).',
+        'Operating expenses (Opex) include property taxes, insurance, repairs, and management, but exclude mortgage debt service.',
+        'Leveraged Cash-on-Cash is calculated as a proxy using an assumed 30-year fixed 6.5% interest rate constant on the financed balance because specific loan terms are not directly entered in this tool.',
       ],
       professionalNote: 'A higher Cap Rate indicates higher yield but often reflects higher market risk or deferred maintenance. Always stress-test investment properties against higher vacancy spikes and major capital expenditure (CapEx) events.',
     },
     faqs: [
       {
-        question: 'What is the difference between Cap Rate and Cash-on-Cash ROI?',
-        answer: 'Cap Rate measures the property’s unleveraged operating yield relative to total purchase price. Cash-on-Cash ROI measures the actual annual cash return relative to your specific cash equity invested after paying debt service.',
+        question: 'What is the difference between Cap Rate and Cash-on-Cash Return?',
+        answer: 'Cap Rate is an unleveraged metric (Net Operating Income divided by total Purchase Price). Cash-on-Cash Return measures net cash flow after debt service relative to your initial cash equity. In this calculator, Cash-on-Cash is provided as a proxy assuming standard 30-year 6.5% financing.',
       },
       {
         question: 'What is considered a good Cap Rate for rental real estate?',

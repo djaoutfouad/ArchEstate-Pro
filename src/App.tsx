@@ -41,6 +41,9 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname]);
 
+  // Determine if current view is a legal or informational route
+  const isLegalRoute = Boolean(legalType) || ['/contact', '/privacy', '/terms', '/about', '/methodology'].includes(pathname);
+
   // Categories to display on dashboard
   const displayedCategories = activeCategory 
     ? [activeCategory]
@@ -68,12 +71,14 @@ export default function App() {
       {/* Global 3-Column Layout Container (Left Rail, Main Content, Right Rail) */}
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-center gap-6 lg:gap-8 relative flex-1">
         {/* Left Rail: Vertical Skyscraper Ad Slot (160x600) - Sticky on xl+ */}
-        <aside 
-          aria-label="Sidebar Advertisement Left"
-          className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-24 self-start no-print"
-        >
-          <AdvertisementPlaceholder variant="skyscraper" slotId="rail-left-skyscraper" />
-        </aside>
+        {!isLegalRoute && (
+          <aside 
+            aria-label="Sidebar Advertisement Left"
+            className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-24 self-start no-print"
+          >
+            <AdvertisementPlaceholder variant="skyscraper" slotId="rail-left-skyscraper" />
+          </aside>
+        )}
 
         {/* Main Center Content: Fluid max-w-5xl */}
         <main className="flex-1 max-w-5xl mx-auto w-full min-w-0" id="main-content">
@@ -107,9 +112,11 @@ export default function App() {
 
               <div className="max-w-5xl mx-auto space-y-12">
                 {/* 1. ADVERTISEMENT: Below Hero Safe Zone Leaderboard (728x90) */}
-                <div className="no-print">
-                  <AdvertisementPlaceholder variant="leaderboard" slotId="home-hero-bottom" />
-                </div>
+                {!isLegalRoute && (
+                  <div className="no-print">
+                    <AdvertisementPlaceholder variant="leaderboard" slotId="home-hero-bottom" />
+                  </div>
+                )}
 
                 {/* Calculator Categories Grid */}
                 <div className="space-y-16">
@@ -134,18 +141,22 @@ export default function App() {
         </main>
 
         {/* Right Rail: Vertical Skyscraper Ad Slot (160x600) - Sticky on xl+ */}
-        <aside 
-          aria-label="Sidebar Advertisement Right"
-          className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-24 self-start no-print"
-        >
-          <AdvertisementPlaceholder variant="skyscraper" slotId="rail-right-skyscraper" />
-        </aside>
+        {!isLegalRoute && (
+          <aside 
+            aria-label="Sidebar Advertisement Right"
+            className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-24 self-start no-print"
+          >
+            <AdvertisementPlaceholder variant="skyscraper" slotId="rail-right-skyscraper" />
+          </aside>
+        )}
       </div>
 
       {/* Pre-Footer Banner (728x90) */}
-      <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-8 no-print">
-        <AdvertisementPlaceholder variant="leaderboard" slotId="pre-footer-leaderboard" />
-      </div>
+      {!isLegalRoute && (
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-8 no-print">
+          <AdvertisementPlaceholder variant="leaderboard" slotId="pre-footer-leaderboard" />
+        </div>
+      )}
 
       {/* Legal & Informational Modals */}
       <LegalModal

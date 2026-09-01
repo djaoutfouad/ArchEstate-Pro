@@ -333,10 +333,11 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
 
           {type === 'privacy' && (
             <>
-              <p><strong>1. Zero Data Collection:</strong> ArchEstate Pro operates 100% client-side in your web browser. We do not store, transmit, or monetize your project dimensions, property financial values, or calculation logs on remote servers.</p>
-              <p><strong>2. Local Browser Memory:</strong> Temporary saved calculations, active inputs, and presets remain strictly inside your browser’s local session state.</p>
-              <p><strong>3. Advertising Disclosure:</strong> We adhere to standard Google AdSense publisher privacy guidelines. Contextual advertisements are clearly delineated and non-intrusive.</p>
-              <p><strong>4. Privacy Inquiries:</strong> Contact our privacy officer directly at <a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a>.</p>
+              <p><strong>1. Client-Side Calculation Processing:</strong> ArchEstate Pro processes calculator inputs client-side within your web browser for real-time calculation purposes. We do not operate a user account system or store your project dimensions and financial parameters in a remote calculation database.</p>
+              <p><strong>2. Contact Form & Communications:</strong> When you submit a message through our Contact Us form, your inquiry details (name, email, subject, and message) are transmitted securely via our configured third-party email service (EmailJS) directly to our official support inbox (<a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a>) to enable our team to review and reply. Users are advised not to submit sensitive personal, banking, or proprietary confidential information via the contact form.</p>
+              <p><strong>3. Local Browser Storage:</strong> Any temporary saved calculations, active inputs, or user preference presets remain strictly inside your browser’s local session state and can be cleared by resetting your browser cache or storage.</p>
+              <p><strong>4. Contextual Advertising & Cookies:</strong> ArchEstate Pro adheres to standard Google AdSense publisher privacy frameworks. Third-party advertising partners may serve contextual advertisements based on general non-personally identifiable browser interactions.</p>
+              <p><strong>5. Privacy Inquiries:</strong> If you have questions regarding data handling, reach out to our team at <a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a>.</p>
             </>
           )}
 
@@ -360,9 +361,10 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
 
           {type === 'methodology' && (
             <>
-              <p><strong>Mathematical Rigor:</strong> Every calculator in ArchEstate Pro utilizes peer-reviewed construction geometry, manufacturer standard formulas (e.g., Knauf/USG drywall standards, ASTM/EN concrete curing constants), and conventional real estate underwriting algorithms (e.g., Fannie Mae 28/36 ratio frameworks).</p>
-              <p><strong>Wastage Modeling:</strong> Real construction requires cut-and-fit tolerances. Each construction tool includes adjustable wastage factors (typically 5% to 15%) calibrated to actual site handling standards.</p>
-              <p><strong>Methodology Review:</strong> If you have technical feedback or suggested formula refinements, contact our engineering team at <a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a>.</p>
+              <p><strong>Engineering &amp; Computational Formulas:</strong> ArchEstate Pro uses documented engineering-style formulas, conventional construction quantity methods, manufacturer-oriented planning assumptions, and standard real estate financial formulas where applicable.</p>
+              <p><strong>Conventional Geometric &amp; Financial Frameworks:</strong> Our models incorporate standardized geometric volume/area formulas, conventional material wastage allowances (adjustable from 5% to 15%), standard fixed-rate amortizing debt models, and conventional debt-to-income planning frameworks.</p>
+              <p><strong>Planning Disclaimers:</strong> Computational outputs are generated for preliminary estimating and conceptual planning. They do not replace on-site licensed surveyor measurements, structural engineering stamps, or official loan underwriting.</p>
+              <p><strong>Formula Inquiries &amp; Feedback:</strong> If you have technical feedback or suggested formula refinements, contact our engineering desk at <a href="mailto:contact15archestate@gmail.com" className="text-emerald-700 font-semibold underline">contact15archestate@gmail.com</a>.</p>
             </>
           )}
         </div>
