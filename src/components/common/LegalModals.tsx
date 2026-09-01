@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { X, Shield, FileText, CheckCircle, Mail, Send, Copy, Check, AlertCircle, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
+const EMAILJS_PUBLIC_KEY = 'W8ZJS348A46uem5Gv';
 const EMAILJS_SERVICE_ID = 'service_ihh81up';
 const EMAILJS_TEMPLATE_ID = 'template_78vfjg';
 
 const getEmailJsPublicKey = (): string => {
   if (typeof import.meta !== 'undefined' && (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env?.VITE_EMAILJS_PUBLIC_KEY) {
-    return (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env!.VITE_EMAILJS_PUBLIC_KEY || '';
+    return (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env!.VITE_EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY;
   }
   if (typeof process !== 'undefined' && process.env?.VITE_EMAILJS_PUBLIC_KEY) {
-    return process.env.VITE_EMAILJS_PUBLIC_KEY || '';
+    return process.env.VITE_EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY;
   }
-  return '';
+  return EMAILJS_PUBLIC_KEY;
 };
 
 interface LegalModalProps {
@@ -88,8 +89,12 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
       setContactEmail('');
       setContactMessage('');
       setErrorMessage(null);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('EmailJS submit error:', err);
+      if (err && typeof err === 'object') {
+        const errorObj = err as Record<string, unknown>;
+        console.error('EmailJS details -> Status:', errorObj.status, 'Text/Message:', errorObj.text || errorObj.message);
+      }
       setErrorMessage(
         'Unable to send your message right now. Please try again or contact us directly at contact15archestate@gmail.com.'
       );
