@@ -76,9 +76,6 @@ export const Header: React.FC<HeaderProps> = () => {
                   <span className="text-xl font-extrabold tracking-tight text-slate-900">
                     ArchEstate<span className="text-emerald-700">Pro</span>
                   </span>
-                  <span className="px-1.5 py-0.5 text-[10px] font-mono font-bold uppercase bg-emerald-100/80 text-emerald-800 rounded border border-emerald-300/60">
-                    v2.4
-                  </span>
                 </div>
                 <p className="text-[11px] text-slate-600 hidden sm:block font-medium tracking-tight">
                   Architecture • Construction • Real Estate Technology
