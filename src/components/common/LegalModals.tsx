@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Shield, FileText, CheckCircle, Mail, Send, Copy, Check, AlertCircle, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
@@ -7,11 +7,10 @@ const EMAILJS_SERVICE_ID = 'service_ihh81up';
 const EMAILJS_TEMPLATE_ID = 'template_78vfjg';
 
 const getEmailJsPublicKey = (): string => {
-  if (typeof import.meta !== 'undefined' && (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env?.VITE_EMAILJS_PUBLIC_KEY) {
-    return (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env!.VITE_EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY;
-  }
-  if (typeof process !== 'undefined' && process.env?.VITE_EMAILJS_PUBLIC_KEY) {
-    return process.env.VITE_EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY;
+  const envKey = (typeof import.meta !== 'undefined' && (import.meta as unknown as { env?: { VITE_EMAILJS_PUBLIC_KEY?: string } }).env?.VITE_EMAILJS_PUBLIC_KEY) ||
+                 (typeof process !== 'undefined' && process.env?.VITE_EMAILJS_PUBLIC_KEY);
+  if (envKey && typeof envKey === 'string' && envKey.trim().length > 0) {
+    return envKey.trim();
   }
   return EMAILJS_PUBLIC_KEY;
 };
@@ -31,6 +30,17 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const key = getEmailJsPublicKey();
+      if (key) {
+        emailjs.init({ publicKey: key });
+      }
+    } catch (e) {
+      console.warn('EmailJS initialization note:', e);
+    }
+  }, []);
 
   if (!isOpen || !type) return null;
 
@@ -81,7 +91,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         templateParams,
-        publicKey || undefined
+        { publicKey }
       );
 
       setIsSubmitted(true);
