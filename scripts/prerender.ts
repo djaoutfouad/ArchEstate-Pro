@@ -447,13 +447,6 @@ for (const calc of CALCULATORS) {
         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-3xl">${escapeHtml(calc.shortDescription)}</p>
       </header>
 
-      <!-- Top Ad Slot Banner (728x90) -->
-      <div class="mb-8">
-        <div class="w-full max-w-[728px] mx-auto min-h-[90px] rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center">
-          <span class="text-[11px] font-bold uppercase tracking-widest text-slate-400">ADVERTISEMENT</span>
-        </div>
-      </div>
-
       <!-- Live Calculation Layout -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
         <!-- Inputs Column -->
