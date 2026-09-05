@@ -245,7 +245,14 @@ const homeHtml = `
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               ${calcs.map(calc => `
-                <div class="rounded-2xl border border-slate-200 p-6 bg-white shadow-xs flex flex-col justify-between">
+                <div class="rounded-2xl border border-slate-200 p-6 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
+                  ${calc.personaImageUrl ? `
+                    <div class="relative h-40 w-full overflow-hidden rounded-t-xl bg-slate-900 -mt-6 -mx-6 mb-4">
+                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" class="w-full h-full object-cover object-top" />
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+                      ${calc.personaRole ? `<div class="absolute bottom-2 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2 py-0.5 rounded border border-emerald-500/30">${escapeHtml(calc.personaRole)}</span></div>` : ''}
+                    </div>
+                  ` : ''}
                   <div>
                     <span class="text-[10px] font-mono font-bold uppercase text-slate-600 bg-slate-100 px-2 py-0.5 rounded">${escapeHtml(calc.categoryName)}</span>
                     <h3 class="text-lg font-bold text-slate-900 mt-2 mb-1">
@@ -322,20 +329,27 @@ for (const cat of CATEGORIES) {
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        ${catCalcs.map(calc => `
-          <div class="rounded-2xl border border-slate-200 p-6 bg-white shadow-xs flex flex-col justify-between">
-            <div>
-              <span class="text-[10px] font-mono font-bold uppercase text-slate-600 bg-slate-100 px-2 py-0.5 rounded">${escapeHtml(calc.categoryName)}</span>
-              <h2 class="text-lg font-bold text-slate-900 mt-2 mb-1">
-                <a href="${getCalculatorPath(calc.slug)}" class="hover:text-emerald-700">${escapeHtml(calc.title)}</a>
-              </h2>
-              <p class="text-xs text-slate-600 mb-4">${escapeHtml(calc.shortDescription)}</p>
-            </div>
-            <a href="${getCalculatorPath(calc.slug)}" class="w-full py-2.5 px-4 rounded-xl text-center font-bold text-xs bg-slate-900 text-white hover:bg-emerald-700 transition-colors">
-              Open Calculator &rarr;
-            </a>
-          </div>
-        `).join('')}
+              ${catCalcs.map(calc => `
+                <div class="rounded-2xl border border-slate-200 p-6 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
+                  ${calc.personaImageUrl ? `
+                    <div class="relative h-40 w-full overflow-hidden rounded-t-xl bg-slate-900 -mt-6 -mx-6 mb-4">
+                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" class="w-full h-full object-cover object-top" />
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+                      ${calc.personaRole ? `<div class="absolute bottom-2 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2 py-0.5 rounded border border-emerald-500/30">${escapeHtml(calc.personaRole)}</span></div>` : ''}
+                    </div>
+                  ` : ''}
+                  <div>
+                    <span class="text-[10px] font-mono font-bold uppercase text-slate-600 bg-slate-100 px-2 py-0.5 rounded">${escapeHtml(calc.categoryName)}</span>
+                    <h2 class="text-lg font-bold text-slate-900 mt-2 mb-1">
+                      <a href="${getCalculatorPath(calc.slug)}" class="hover:text-emerald-700">${escapeHtml(calc.title)}</a>
+                    </h2>
+                    <p class="text-xs text-slate-600 mb-4">${escapeHtml(calc.shortDescription)}</p>
+                  </div>
+                  <a href="${getCalculatorPath(calc.slug)}" class="w-full py-2.5 px-4 rounded-xl text-center font-bold text-xs bg-slate-900 text-white hover:bg-emerald-700 transition-colors">
+                    Open Calculator &rarr;
+                  </a>
+                </div>
+              `).join('')}
       </div>
     </main>
 

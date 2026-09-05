@@ -67,6 +67,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Calculate BA13 plasterboard sheets, F530 furring channels, perimeter wall angles, suspension hangers, and joint compound with cut wastage.',
     badge: 'Most Popular',
     keywords: ['drywall', 'ba13', 'plasterboard', 'gypsum', 'f530', 'ceiling', 'furring', 'hanger'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Drywall Systems & Metal Framing Specialist',
     inputs: [
       { id: 'roomLength', label: 'Room Length', unit: 'm', defaultValue: 5.0, min: 0.5, max: 50, step: 0.1, category: 'dimensions' },
       { id: 'roomWidth', label: 'Room Width', unit: 'm', defaultValue: 4.0, min: 0.5, max: 50, step: 0.1, category: 'dimensions' },
@@ -128,6 +130,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     iconName: 'LayoutGrid',
     shortDescription: 'Estimate interlocking PVC ceiling panels, perimeter U-channels, timber or metal sub-battens, and concealed fastener clips.',
     keywords: ['pvc', 'panel', 'ceiling', 'soffit', 'plastic', 'waterproof', 'u-trim', 'batten'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Suspended Ceiling & PVC Fitting Contractor',
     inputs: [
       { id: 'roomLength', label: 'Room Length', unit: 'm', defaultValue: 4.5, min: 0.5, max: 40, step: 0.1, category: 'dimensions' },
       { id: 'roomWidth', label: 'Room Width', unit: 'm', defaultValue: 3.2, min: 0.5, max: 40, step: 0.1, category: 'dimensions' },
@@ -184,6 +188,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     iconName: 'Grid',
     shortDescription: 'Calculate 600×600mm acoustic tiles, cartons, T24 main runners (3.6m), 1.2m cross tees, 0.6m cross tees, and perimeter wall angle.',
     keywords: ['acoustic', 'grid', '60x60', 't24', 'tiles', 'suspended', 'mineral fiber', 'office ceiling'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Commercial Acoustic & T-Bar Ceiling Specialist',
     inputs: [
       { id: 'roomLength', label: 'Room Length', unit: 'm', defaultValue: 6.0, min: 1.0, max: 60, step: 0.2, category: 'dimensions' },
       { id: 'roomWidth', label: 'Room Width', unit: 'm', defaultValue: 4.8, min: 1.0, max: 60, step: 0.2, category: 'dimensions' },
@@ -243,6 +249,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Estimate drop fascia drywall, light shelf framing, aluminum LED extrusion channels, diffusers, continuous LED strip reels, and driver wattage.',
     badge: 'Luxury',
     keywords: ['cove', 'led', 'multi-level', 'drop ceiling', 'bulkhead', 'ambient lighting', 'architectural'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Interior Architect & Lighting Cove Designer',
     inputs: [
       { id: 'roomLength', label: 'Room Length', unit: 'm', defaultValue: 5.5, min: 1.0, max: 40, step: 0.1, category: 'dimensions' },
       { id: 'roomWidth', label: 'Room Width', unit: 'm', defaultValue: 4.2, min: 1.0, max: 40, step: 0.1, category: 'dimensions' },
@@ -301,6 +309,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     iconName: 'Scroll',
     shortDescription: 'Estimate fine casting plaster 25kg bags, vegetal hemp reinforcement (filasse), mixing water ratio, and decorative plaster cornices.',
     keywords: ['plaster', 'staff', 'cornice', 'gypsum', 'filasse', 'moulding', 'ornamental', 'traditional ceiling'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Ornamental Plaster & Staff Moulding Artisan',
     inputs: [
       { id: 'roomLength', label: 'Room Length', unit: 'm', defaultValue: 5.0, min: 1.0, max: 40, step: 0.1, category: 'dimensions' },
       { id: 'roomWidth', label: 'Room Width', unit: 'm', defaultValue: 4.0, min: 1.0, max: 40, step: 0.1, category: 'dimensions' },
@@ -358,6 +368,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Calculate net paintable wall and ceiling areas with window/door opening deductions, multi-coat paint liters, and dedicated primer sealer volumes.',
     badge: 'Essential',
     keywords: ['paint', 'primer', 'room', 'walls', 'ceiling', 'coating', 'liters', 'decorating'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Architectural Coatings & Paint Estimator',
     inputs: [
       { id: 'roomLength', label: 'Room Length', unit: 'm', defaultValue: 4.5, min: 1.0, max: 40, step: 0.1, category: 'dimensions' },
       { id: 'roomWidth', label: 'Room Width', unit: 'm', defaultValue: 3.5, min: 1.0, max: 40, step: 0.1, category: 'dimensions' },
@@ -418,6 +430,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Calculate tile piece quantities, total purchased square meters with cutting wastage, carton boxes, tile adhesive bags, and joint grout compound.',
     badge: 'Popular',
     keywords: ['tile', 'floor', 'wall', 'porcelain', 'ceramic', 'grout', 'adhesive', 'tiling'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Master Tiler & Surface Finishes Estimator',
     inputs: [
       { id: 'surfaceLength', label: 'Surface Length', unit: 'm', defaultValue: 5.0, min: 0.5, max: 40, step: 0.1, category: 'dimensions' },
       { id: 'surfaceWidth', label: 'Surface Width', unit: 'm', defaultValue: 3.8, min: 0.5, max: 40, step: 0.1, category: 'dimensions' },
@@ -475,6 +489,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     iconName: 'Boxes',
     shortDescription: 'Calculate slab and foundation concrete volumes in cubic meters (m³) and cubic yards (yd³), weight in tonnes, and approximate premix dry bags.',
     keywords: ['concrete', 'slab', 'volume', 'cubic meters', 'cubic yards', 'foundation', 'premix', 'cement'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Civil Concrete & Structural Slab Engineer',
     inputs: [
       { id: 'length', label: 'Slab Length', unit: 'm', defaultValue: 6.0, min: 0.5, max: 100, step: 0.1, category: 'dimensions' },
       { id: 'width', label: 'Slab Width', unit: 'm', defaultValue: 4.0, min: 0.5, max: 100, step: 0.1, category: 'dimensions' },
@@ -531,6 +547,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     iconName: 'Wall',
     shortDescription: 'Calculate brick or concrete cinder block counts, effective mortar joint allowance, cement bags, and building sand for masonry walls.',
     keywords: ['brick', 'block', 'wall', 'masonry', 'cinder block', 'mortar', 'cement', 'sand'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Structural Masonry & Brickwork Estimator',
     inputs: [
       { id: 'wallLength', label: 'Wall Length', unit: 'm', defaultValue: 8.0, min: 0.5, max: 100, step: 0.2, category: 'dimensions' },
       { id: 'wallHeight', label: 'Wall Height', unit: 'm', defaultValue: 2.6, min: 0.5, max: 20, step: 0.1, category: 'dimensions' },
@@ -589,6 +607,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Estimate room thermal load in BTU/h, refrigeration tonnage, and metric kW cooling capacity based on dimensions, climate, sun exposure, and occupancy.',
     badge: 'HVAC',
     keywords: ['ac', 'air conditioner', 'btu', 'cooling', 'hvac', 'tonnage', 'climate', 'thermal load'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'HVAC Thermal Sizing & Climate Engineer',
     inputs: [
       { id: 'roomLength', label: 'Room Length', unit: 'm', defaultValue: 5.0, min: 1.0, max: 30, step: 0.1, category: 'dimensions' },
       { id: 'roomWidth', label: 'Room Width', unit: 'm', defaultValue: 4.0, min: 1.0, max: 30, step: 0.1, category: 'dimensions' },
@@ -689,6 +709,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Calculate total monthly housing payments (PITI plus HOA dues), loan principal vs. interest breakdown, total lifetime borrowing costs, and interactive monthly amortization schedule table.',
     badge: 'Underwriting',
     keywords: ['mortgage', 'piti', 'amortization', 'loan', 'interest', 'real estate', 'financing', 'property tax'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Real Estate Underwriter & Mortgage Specialist',
     inputs: [
       { id: 'purchasePrice', label: 'Purchase Price', unit: '$', defaultValue: 450000, min: 10000, max: 10000000, step: 5000, category: 'financial' },
       { id: 'downPayment', label: 'Down Payment', unit: '$', defaultValue: 90000, min: 0, max: 10000000, step: 5000, category: 'financial' },
@@ -754,6 +776,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Calculate Gross & Net Rental Yields, Capitalization Rate (Cap Rate), Net Operating Income (NOI), Cash-on-Cash ROI, and capital growth appreciation.',
     badge: 'Investors',
     keywords: ['cap rate', 'rental yield', 'noi', 'roi', 'cash on cash', 'investment', 'real estate', 'property'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Commercial Asset Valuation & Cap Rate Analyst',
     inputs: [
       { id: 'purchasePrice', label: 'Asset Acquisition Price', unit: '$', defaultValue: 360000, min: 10000, max: 20000000, step: 5000, category: 'financial' },
       { id: 'downPayment', label: 'Initial Cash Equity Invested', unit: '$', defaultValue: 72000, min: 1000, max: 20000000, step: 5000, category: 'financial' },
@@ -811,6 +835,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     iconName: 'BadgeDollarSign',
     shortDescription: 'Estimate your maximum home purchase price and loan ceiling using 28% front-end and 36% back-end debt ratios as a conventional planning benchmark.',
     keywords: ['affordability', 'maximum purchase', '28 36 rule', 'qualifying income', 'dti', 'debt to income', 'home buying'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Residential Lending & 28/36 Underwriting Lead',
     inputs: [
       { id: 'grossAnnualIncome', label: 'Gross Annual Household Income', unit: '$/yr', defaultValue: 115000, min: 10000, max: 2000000, step: 2500, category: 'financial' },
       { id: 'monthlyDebts', label: 'Existing Monthly Recurring Debts', unit: '$/mo', defaultValue: 450, min: 0, max: 20000, step: 50, category: 'financial' },
@@ -870,6 +896,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Calculate buyer conveyance transfer taxes, notary tariffs, title insurance, legal settlement fees, and total cash required at closing.',
     badge: 'Legal & Tax',
     keywords: ['closing costs', 'notary', 'transfer tax', 'stamp duty', 'title insurance', 'settlement', 'cash to close'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Conveyance Settlement & Notary Officer',
     inputs: [
       { id: 'propertyPrice', label: 'Property Transaction Price', unit: '$', defaultValue: 420000, min: 10000, max: 10000000, step: 5000, category: 'financial' },
       { id: 'transferTaxPct', label: 'Conveyance / Transfer Tax Rate', unit: '%', defaultValue: 3.5, min: 0, max: 12, step: 0.1, category: 'parameters' },
@@ -927,6 +955,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     iconName: 'RollerCoaster',
     shortDescription: 'Calculate wallpaper rolls accounting for vertical pattern repeat drops, usable drops per roll, trimming margins, and adhesive paste powder.',
     keywords: ['wallpaper', 'rolls', 'pattern repeat', 'drop match', 'paste', 'decorating', 'wall covering'],
+    personaImageUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=600&q=80',
+    personaRole: 'Interior Wallcovering & Pattern Estimator',
     inputs: [
       { id: 'wallWidth', label: 'Total Wall Width', unit: 'm', defaultValue: 4.8, min: 0.5, max: 50, step: 0.1, category: 'dimensions' },
       { id: 'wallHeight', label: 'Wall Height', unit: 'm', defaultValue: 2.6, min: 1.0, max: 10, step: 0.05, category: 'dimensions' },

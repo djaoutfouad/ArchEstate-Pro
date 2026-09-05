@@ -77,6 +77,8 @@ export interface CalculatorDefinition {
   shortDescription: string;
   badge?: string;
   keywords: string[];
+  personaImageUrl?: string;
+  personaRole?: string;
   inputs: InputFieldDefinition[];
   methodology: MethodologyData;
   faqs: FAQItem[];
