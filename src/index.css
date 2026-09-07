@@ -30,17 +30,166 @@
   );
 }
 
+@page {
+  margin: 12mm 15mm;
+  size: portrait;
+}
+
 @media print {
-  .no-print {
+  /* 1. Global Reset & Print Defaults */
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 2. Hide Non-Essential Elements (Hero images, ads, headers, footers, navigation) */
+  header,
+  footer,
+  aside,
+  nav,
+  button,
+  .no-print,
+  .hero-section,
+  #cookie-consent-banner,
+  #legal-modal-backdrop,
+  #print-sheet-btn,
+  #reset-inputs-btn,
+  #copy-summary-btn,
+  #related-calculators-section,
+  #faq-section,
+  ins.adsbygoogle,
+  [aria-label*="Advertisement"],
+  [class*="ad-"],
+  [id*="ad-"] {
     display: none !important;
   }
 
+  /* 3. Display Print-Only Document Headers */
   .print-only {
     display: block !important;
   }
 
-  body {
-    background: white !important;
-    color: black !important;
+  /* 4. Page Layout & Flow */
+  #calculator-execution-page {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Avoid unsightly page-breaks inside calculation cards and tables */
+  .rounded-2xl,
+  .rounded-xl,
+  section,
+  table,
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* 5. Restyle Hero Result Card into Clean Document Callout */
+  .calculator-result-hero {
+    background: #f8fafc !important;
+    border: 2px solid #0f172a !important;
+    border-radius: 8px !important;
+    padding: 16px 20px !important;
+    margin-bottom: 16px !important;
+    color: #0f172a !important;
+  }
+
+  .calculator-result-hero * {
+    color: #0f172a !important;
+  }
+
+  .calculator-result-hero .font-mono {
+    font-size: 26pt !important;
+    font-weight: 900 !important;
+    color: #047857 !important;
+  }
+
+  /* 6. Document-Ready Output & Breakdown Table */
+  .contractor-results-grid {
+    display: table !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: 8px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .contractor-results-grid > div {
+    display: table-row !important;
+  }
+
+  .contractor-results-grid > div > span:first-child {
+    display: table-cell !important;
+    padding: 6px 12px !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    width: 60% !important;
+  }
+
+  .contractor-results-grid > div > p {
+    display: table-cell !important;
+    padding: 6px 12px !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+    text-align: right !important;
+    font-weight: 800 !important;
+    font-family: monospace !important;
+    color: #0f172a !important;
+  }
+
+  /* 7. Comprehensive Table Styles (Amortization & Calculation Steps) */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: 10px !important;
+    margin-bottom: 16px !important;
+    font-size: 8.5pt !important;
+  }
+
+  th {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 7.5pt !important;
+    letter-spacing: 0.05em !important;
+    border: 1px solid #94a3b8 !important;
+    padding: 6px 8px !important;
+  }
+
+  td {
+    border: 1px solid #cbd5e1 !important;
+    padding: 5px 8px !important;
+    color: #1e293b !important;
+  }
+
+  /* Expand scrollable tables for complete page visibility */
+  .contractor-table-container,
+  .overflow-x-auto,
+  .overflow-y-auto {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* 8. Input Specification Formatting */
+  .contractor-input-spec input,
+  .contractor-input-spec select {
+    border: none !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    padding: 0 !important;
+    color: #0f172a !important;
   }
 }

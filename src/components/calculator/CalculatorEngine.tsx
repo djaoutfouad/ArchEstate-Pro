@@ -171,6 +171,27 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
         />
       </div>
 
+      {/* Printable Contractor Document Header (Print Only) */}
+      <div className="print-only hidden mb-6 pb-4 border-b-2 border-slate-900">
+        <div className="flex justify-between items-start">
+          <div>
+            <div className="text-[10px] font-bold tracking-widest text-slate-500 uppercase font-mono">
+              ArchEstate Pro &bull; Contractor Material Takeoff &amp; Specification Sheet
+            </div>
+            <h1 className="text-2xl font-black text-slate-900 mt-1 tracking-tight">
+              {calculator.title}
+            </h1>
+            <p className="text-xs text-slate-600 mt-0.5">
+              {calculator.subtitle} &bull; Classification: {calculator.categoryName}
+            </p>
+          </div>
+          <div className="text-right text-xs text-slate-600 font-mono">
+            <div>Date: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+            <div className="font-bold text-emerald-800 mt-0.5">Verified Calculation Benchmark</div>
+          </div>
+        </div>
+      </div>
+
       {/* Header Section */}
       <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
         <div className="space-y-1.5 max-w-3xl">
@@ -249,7 +270,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Input Controls Panel */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="rounded-2xl bg-white/95 border border-slate-200/90 p-6 shadow-xl shadow-slate-200/40 backdrop-blur-xl space-y-6">
+          <div className="rounded-2xl bg-white/95 border border-slate-200/90 p-6 shadow-xl shadow-slate-200/40 backdrop-blur-xl space-y-6 contractor-input-spec">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
                 <SlidersHorizontal className="w-4 h-4 text-emerald-700" />
@@ -378,7 +399,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
             </div>
 
             {/* VISUAL HERO: Primary Dominant Result */}
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950 p-6 sm:p-8 text-white shadow-xl shadow-emerald-950/20">
+            <div className="calculator-result-hero relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950 p-6 sm:p-8 text-white shadow-xl shadow-emerald-950/20">
               {/* Subtle background blueprint grid */}
               <div className="absolute inset-0 pointer-events-none opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
               
@@ -408,7 +429,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                 Detailed Material &amp; Metric Breakdown
               </h3>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="contractor-results-grid grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {results.secondaryResults.map((sec) => (
                   <div
                     key={sec.id}
@@ -474,7 +495,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                   </button>
                 </div>
 
-                <div className="rounded-xl border border-slate-200 overflow-x-auto max-h-[360px] overflow-y-auto">
+                <div className="contractor-table-container rounded-xl border border-slate-200 overflow-x-auto max-h-[360px] overflow-y-auto">
                   <table className="w-full text-left border-collapse text-xs">
                     <thead className="bg-slate-100 text-slate-700 font-bold sticky top-0 border-b border-slate-200">
                       <tr>

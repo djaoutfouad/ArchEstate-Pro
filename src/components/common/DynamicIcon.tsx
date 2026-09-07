@@ -80,7 +80,7 @@ const iconMap: Record<string, React.FC<LucideProps>> = {
   FileText,
   AlertCircle,
   ExternalLink,
-  SlidersHorizontal
+  SlidersHorizontal,
 };
 
 interface DynamicIconProps extends LucideProps {

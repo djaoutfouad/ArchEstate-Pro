@@ -19,16 +19,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   selectedCategory = 'all',
 }) => {
   return (
-    <section className="relative overflow-hidden pt-14 pb-16 border-b border-slate-800 bg-slate-950 text-white">
-      {/* High-Resolution Architectural Drafting & Blueprint Background */}
+    <section className="hero-section no-print relative overflow-hidden pt-14 pb-16 border-b border-slate-800 bg-slate-950 text-white">
+      {/* Realistic Construction Site Inspection Background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-25 scale-105 pointer-events-none"
+        className="absolute inset-0 bg-cover bg-center opacity-45 scale-105 pointer-events-none"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2000&q=80')`
+          backgroundImage: `url('https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=2000&q=80')`
         }}
       />
-      {/* Dark Vignette Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-900/95 to-slate-950 pointer-events-none" />
+      {/* Balanced Vignette Gradient for Perfect Text Legibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/75 to-slate-950/90 pointer-events-none" />
 
       {/* Background Architectural Grid Accents */}
       <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]" />

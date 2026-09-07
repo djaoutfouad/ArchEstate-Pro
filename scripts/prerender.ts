@@ -248,7 +248,7 @@ const homeHtml = `
                 <div class="rounded-2xl border border-slate-200 p-6 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
                   ${calc.personaImageUrl ? `
                     <div class="relative h-40 w-full overflow-hidden rounded-t-xl bg-slate-900 -mt-6 -mx-6 mb-4">
-                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" class="w-full h-full object-cover object-top" />
+                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" referrerPolicy="no-referrer" class="w-full h-full object-cover object-top" />
                       <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
                       ${calc.personaRole ? `<div class="absolute bottom-2 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2 py-0.5 rounded border border-emerald-500/30">${escapeHtml(calc.personaRole)}</span></div>` : ''}
                     </div>
@@ -333,7 +333,7 @@ for (const cat of CATEGORIES) {
                 <div class="rounded-2xl border border-slate-200 p-6 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
                   ${calc.personaImageUrl ? `
                     <div class="relative h-40 w-full overflow-hidden rounded-t-xl bg-slate-900 -mt-6 -mx-6 mb-4">
-                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" class="w-full h-full object-cover object-top" />
+                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" referrerPolicy="no-referrer" class="w-full h-full object-cover object-top" />
                       <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
                       ${calc.personaRole ? `<div class="absolute bottom-2 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2 py-0.5 rounded border border-emerald-500/30">${escapeHtml(calc.personaRole)}</span></div>` : ''}
                     </div>
