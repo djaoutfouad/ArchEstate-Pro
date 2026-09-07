@@ -222,16 +222,26 @@ const homeHtml = `
     </div>
   </header>
 
-  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-    <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
-      <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-        Precision Engineering &amp; <span class="text-emerald-700">PropTech Calculators</span>
+  <!-- 1. Full-Bleed Edge-to-Edge Hero Section -->
+  <section class="hero-section no-print relative overflow-hidden pt-14 pb-16 border-b border-slate-800 bg-slate-950 text-white w-full">
+    <div class="absolute inset-0 bg-cover bg-center opacity-45 scale-105 pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2400&q=85')"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/75 to-slate-950/90 pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
+        <span>Architecture • Construction • Real Estate</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        <span class="font-mono text-[11px] text-emerald-300">15 Real-Time Calculators</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+        Precision Engineering &amp; <span class="text-emerald-400">PropTech Calculators</span>
       </h1>
-      <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+      <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
         ${escapeHtml(homeDesc)}
       </p>
     </div>
+  </section>
 
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
     <div class="space-y-16">
       ${CATEGORIES.map(cat => {
         const calcs = CALCULATORS.filter(c => c.category === cat.id);
@@ -245,24 +255,26 @@ const homeHtml = `
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               ${calcs.map(calc => `
-                <div class="rounded-2xl border border-slate-200 p-6 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
+                <div class="rounded-2xl border border-slate-200 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
                   ${calc.personaImageUrl ? `
-                    <div class="relative h-40 w-full overflow-hidden rounded-t-xl bg-slate-900 -mt-6 -mx-6 mb-4">
-                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" referrerPolicy="no-referrer" class="w-full h-full object-cover object-top" />
-                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
-                      ${calc.personaRole ? `<div class="absolute bottom-2 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2 py-0.5 rounded border border-emerald-500/30">${escapeHtml(calc.personaRole)}</span></div>` : ''}
+                    <div class="relative h-44 sm:h-48 w-full overflow-hidden rounded-t-2xl bg-slate-950">
+                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" referrerPolicy="no-referrer" class="w-full h-full object-cover object-center" />
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+                      ${calc.personaRole ? `<div class="absolute bottom-2.5 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2.5 py-1 rounded-lg border border-emerald-500/30 truncate block">${escapeHtml(calc.personaRole)}</span></div>` : ''}
                     </div>
                   ` : ''}
-                  <div>
-                    <span class="text-[10px] font-mono font-bold uppercase text-slate-600 bg-slate-100 px-2 py-0.5 rounded">${escapeHtml(calc.categoryName)}</span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-2 mb-1">
-                      <a href="${getCalculatorPath(calc.slug)}" class="hover:text-emerald-700">${escapeHtml(calc.title)}</a>
-                    </h3>
-                    <p class="text-xs text-slate-600 mb-4">${escapeHtml(calc.shortDescription)}</p>
+                  <div class="p-6 flex flex-col justify-between flex-1">
+                    <div>
+                      <span class="text-[10px] font-mono font-bold uppercase text-slate-600 bg-slate-100 px-2 py-0.5 rounded">${escapeHtml(calc.categoryName)}</span>
+                      <h3 class="text-lg font-bold text-slate-900 mt-2 mb-1">
+                        <a href="${getCalculatorPath(calc.slug)}" class="hover:text-emerald-700">${escapeHtml(calc.title)}</a>
+                      </h3>
+                      <p class="text-xs text-slate-600 mb-4">${escapeHtml(calc.shortDescription)}</p>
+                    </div>
+                    <a href="${getCalculatorPath(calc.slug)}" class="w-full py-2.5 px-4 rounded-xl text-center font-bold text-xs bg-slate-900 text-white hover:bg-emerald-700 transition-colors mt-auto">
+                      Open Calculator &rarr;
+                    </a>
                   </div>
-                  <a href="${getCalculatorPath(calc.slug)}" class="w-full py-2.5 px-4 rounded-xl text-center font-bold text-xs bg-slate-900 text-white hover:bg-emerald-700 transition-colors">
-                    Open Calculator &rarr;
-                  </a>
                 </div>
               `).join('')}
             </div>
@@ -330,24 +342,26 @@ for (const cat of CATEGORIES) {
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               ${catCalcs.map(calc => `
-                <div class="rounded-2xl border border-slate-200 p-6 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
+                <div class="rounded-2xl border border-slate-200 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
                   ${calc.personaImageUrl ? `
-                    <div class="relative h-40 w-full overflow-hidden rounded-t-xl bg-slate-900 -mt-6 -mx-6 mb-4">
-                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" referrerPolicy="no-referrer" class="w-full h-full object-cover object-top" />
-                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
-                      ${calc.personaRole ? `<div class="absolute bottom-2 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2 py-0.5 rounded border border-emerald-500/30">${escapeHtml(calc.personaRole)}</span></div>` : ''}
+                    <div class="relative h-44 sm:h-48 w-full overflow-hidden rounded-t-2xl bg-slate-950">
+                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" referrerPolicy="no-referrer" class="w-full h-full object-cover object-center" />
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+                      ${calc.personaRole ? `<div class="absolute bottom-2.5 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2.5 py-1 rounded-lg border border-emerald-500/30 truncate block">${escapeHtml(calc.personaRole)}</span></div>` : ''}
                     </div>
                   ` : ''}
-                  <div>
-                    <span class="text-[10px] font-mono font-bold uppercase text-slate-600 bg-slate-100 px-2 py-0.5 rounded">${escapeHtml(calc.categoryName)}</span>
-                    <h2 class="text-lg font-bold text-slate-900 mt-2 mb-1">
-                      <a href="${getCalculatorPath(calc.slug)}" class="hover:text-emerald-700">${escapeHtml(calc.title)}</a>
-                    </h2>
-                    <p class="text-xs text-slate-600 mb-4">${escapeHtml(calc.shortDescription)}</p>
+                  <div class="p-6 flex flex-col justify-between flex-1">
+                    <div>
+                      <span class="text-[10px] font-mono font-bold uppercase text-slate-600 bg-slate-100 px-2 py-0.5 rounded">${escapeHtml(calc.categoryName)}</span>
+                      <h2 class="text-lg font-bold text-slate-900 mt-2 mb-1">
+                        <a href="${getCalculatorPath(calc.slug)}" class="hover:text-emerald-700">${escapeHtml(calc.title)}</a>
+                      </h2>
+                      <p class="text-xs text-slate-600 mb-4">${escapeHtml(calc.shortDescription)}</p>
+                    </div>
+                    <a href="${getCalculatorPath(calc.slug)}" class="w-full py-2.5 px-4 rounded-xl text-center font-bold text-xs bg-slate-900 text-white hover:bg-emerald-700 transition-colors mt-auto">
+                      Open Calculator &rarr;
+                    </a>
                   </div>
-                  <a href="${getCalculatorPath(calc.slug)}" class="w-full py-2.5 px-4 rounded-xl text-center font-bold text-xs bg-slate-900 text-white hover:bg-emerald-700 transition-colors">
-                    Open Calculator &rarr;
-                  </a>
                 </div>
               `).join('')}
       </div>

@@ -19,12 +19,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   selectedCategory = 'all',
 }) => {
   return (
-    <section className="hero-section no-print relative overflow-hidden pt-14 pb-16 border-b border-slate-800 bg-slate-950 text-white">
-      {/* Realistic Construction Site Inspection Background */}
+    <section className="hero-section no-print relative overflow-hidden pt-14 pb-16 border-b border-slate-800 bg-slate-950 text-white w-full">
+      {/* High-Resolution Professional Craftsman with Spirit Level Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-45 scale-105 pointer-events-none"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=2000&q=80')`
+          backgroundImage: `url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2400&q=85')`
         }}
       />
       {/* Balanced Vignette Gradient for Perfect Text Legibility */}

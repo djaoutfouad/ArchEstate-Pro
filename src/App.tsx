@@ -44,6 +44,9 @@ export default function App() {
   // Determine if current view is a legal or informational route
   const isLegalRoute = Boolean(legalType) || ['/contact', '/privacy', '/terms', '/about', '/methodology'].includes(pathname);
 
+  // Advertisements active flag: Disabled to prevent empty aside margin reservations
+  const ADS_ENABLED = false;
+
   // Categories to display on dashboard
   const displayedCategories = activeCategory 
     ? [activeCategory]
@@ -68,10 +71,19 @@ export default function App() {
         onOpenLegal={navigateToLegal}
       />
 
-      {/* Global 3-Column Layout Container (Left Rail, Main Content, Right Rail) */}
+      {/* 1. Full-Bleed Edge-to-Edge Hero Section (100% Full-Width directly after Header) */}
+      {!activeCalculator && !isLegalRoute && (
+        <HeroSection
+          selectedCategory={activeCategory ? activeCategory.id : 'all'}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
+      )}
+
+      {/* Global Layout Container (Content Centered with No Empty Aside Margins) */}
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-center gap-6 lg:gap-8 relative flex-1">
-        {/* Left Rail: Vertical Skyscraper Ad Slot (160x600) - Sticky on xl+ */}
-        {!isLegalRoute && (
+        {/* Left Rail: Vertical Skyscraper Ad Slot (160x600) - Only rendered when ads are active */}
+        {!isLegalRoute && ADS_ENABLED && (
           <aside 
             aria-label="Sidebar Advertisement Left"
             className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-24 self-start no-print"
@@ -92,10 +104,10 @@ export default function App() {
             />
           ) : (
             // Main Dashboard or Category Filter View
-            <div className="space-y-8 animate-in fade-in duration-300">
+            <div className="space-y-8 animate-in fade-in duration-300 py-8">
               {/* Category Breadcrumbs if on dedicated Category URL */}
               {activeCategory && (
-                <div className="pt-4">
+                <div className="pb-2">
                   <Breadcrumbs
                     categoryName={activeCategory.name}
                     categoryId={activeCategory.id}
@@ -103,16 +115,9 @@ export default function App() {
                 </div>
               )}
 
-              {/* Hero Section */}
-              <HeroSection
-                selectedCategory={activeCategory ? activeCategory.id : 'all'}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-              />
-
               <div className="max-w-5xl mx-auto space-y-12">
                 {/* 1. ADVERTISEMENT: Below Hero Safe Zone Leaderboard (728x90) */}
-                {!isLegalRoute && (
+                {!isLegalRoute && ADS_ENABLED && (
                   <div className="no-print">
                     <AdvertisementPlaceholder variant="leaderboard" slotId="home-hero-bottom" />
                   </div>
@@ -140,8 +145,8 @@ export default function App() {
           )}
         </main>
 
-        {/* Right Rail: Vertical Skyscraper Ad Slot (160x600) - Sticky on xl+ */}
-        {!isLegalRoute && (
+        {/* Right Rail: Vertical Skyscraper Ad Slot (160x600) - Only rendered when ads are active */}
+        {!isLegalRoute && ADS_ENABLED && (
           <aside 
             aria-label="Sidebar Advertisement Right"
             className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-24 self-start no-print"
@@ -152,7 +157,7 @@ export default function App() {
       </div>
 
       {/* Pre-Footer Banner (728x90) */}
-      {!isLegalRoute && (
+      {!isLegalRoute && ADS_ENABLED && (
         <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-8 no-print">
           <AdvertisementPlaceholder variant="leaderboard" slotId="pre-footer-leaderboard" />
         </div>
