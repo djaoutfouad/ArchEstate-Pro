@@ -87,12 +87,14 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
 
     try {
       const publicKey = getEmailJsPublicKey();
-      console.info('[EmailJS Diagnostic] Sending contact form payload...', {
-        serviceId: EMAILJS_SERVICE_ID,
-        templateId: EMAILJS_TEMPLATE_ID,
-        hasPublicKey: Boolean(publicKey),
-        paramsKeys: Object.keys(templateParams)
-      });
+      if (import.meta.env.DEV) {
+        console.info('[EmailJS Diagnostic] Sending contact form payload...', {
+          serviceId: EMAILJS_SERVICE_ID,
+          templateId: EMAILJS_TEMPLATE_ID,
+          hasPublicKey: Boolean(publicKey),
+          paramsKeys: Object.keys(templateParams)
+        });
+      }
 
       const response = await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -101,10 +103,12 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
         { publicKey }
       );
 
-      console.info('[EmailJS Success]', {
-        status: response?.status,
-        text: response?.text
-      });
+      if (import.meta.env.DEV) {
+        console.info('[EmailJS Success]', {
+          status: response?.status,
+          text: response?.text
+        });
+      }
 
       setIsSubmitted(true);
       setContactName('');
@@ -112,16 +116,18 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose })
       setContactMessage('');
       setErrorMessage(null);
     } catch (err: unknown) {
-      console.error('[EmailJS Failure]', err);
-      if (err && typeof err === 'object') {
-        const errorObj = err as Record<string, unknown>;
-        console.error('[EmailJS Failure Details]', {
-          status: errorObj.status,
-          text: errorObj.text,
-          message: errorObj.message,
-          serviceId: EMAILJS_SERVICE_ID,
-          templateId: EMAILJS_TEMPLATE_ID
-        });
+      if (import.meta.env.DEV) {
+        console.error('[EmailJS Failure]', err);
+        if (err && typeof err === 'object') {
+          const errorObj = err as Record<string, unknown>;
+          console.error('[EmailJS Failure Details]', {
+            status: errorObj.status,
+            text: errorObj.text,
+            message: errorObj.message,
+            serviceId: EMAILJS_SERVICE_ID,
+            templateId: EMAILJS_TEMPLATE_ID
+          });
+        }
       }
       setErrorMessage(
         'Unable to send your message right now. Please try again or contact us directly at contact15archestate@gmail.com.'

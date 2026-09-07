@@ -709,7 +709,7 @@ export const CALCULATORS: CalculatorDefinition[] = [
     shortDescription: 'Calculate total monthly housing payments (PITI plus HOA dues), loan principal vs. interest breakdown, total lifetime borrowing costs, and interactive monthly amortization schedule table.',
     badge: 'Underwriting',
     keywords: ['mortgage', 'piti', 'amortization', 'loan', 'interest', 'real estate', 'financing', 'property tax'],
-    personaImageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80',
+    personaImageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
     personaRole: 'Real Estate Underwriter & Mortgage Specialist',
     inputs: [
       { id: 'purchasePrice', label: 'Purchase Price', unit: '$', defaultValue: 450000, min: 10000, max: 10000000, step: 5000, category: 'financial' },
