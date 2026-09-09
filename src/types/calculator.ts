@@ -66,6 +66,34 @@ export interface AmortizationRow {
   balance: number;
 }
 
+export interface InputExplanation {
+  fieldId: string;
+  label: string;
+  purpose: string;
+  howToMeasure: string;
+}
+
+export interface WorkedExample {
+  scenarioTitle: string;
+  inputsDescription: string;
+  stepByStepMath: string[];
+  finalOutputSummary: string;
+}
+
+export interface EducationalContent {
+  whatItDoes: string;
+  whenToUse: string[];
+  inputExplanations: InputExplanation[];
+  workedExample: WorkedExample;
+  plainLanguageFormula: string;
+  assumptionsAndDefaults: string[];
+  roundingAndUnits: string;
+  whatResultExcludes: string[];
+  commonMistakes: string[];
+  whenToConsultProfessional: string;
+  lastReviewed: string;
+}
+
 export interface CalculatorDefinition {
   id: string;
   slug: string;
@@ -83,6 +111,7 @@ export interface CalculatorDefinition {
   methodology: MethodologyData;
   faqs: FAQItem[];
   relatedCalculatorIds: string[];
+  educationalContent?: EducationalContent;
   calculate: (inputs: Record<string, number>) => {
     primaryResult: ResultItem;
     secondaryResults: ResultItem[];

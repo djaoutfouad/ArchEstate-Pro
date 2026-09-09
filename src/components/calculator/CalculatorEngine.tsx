@@ -25,6 +25,7 @@ import { AdvertisementPlaceholder } from '../common/AdvertisementPlaceholder';
 import { CALCULATORS } from '../../data/calculatorsData';
 import { SITE_URL, CONTACT_EMAIL, getCalculatorPath } from '../../config/site';
 import { Link } from '../../utils/router';
+import { CalculatorEducationalGuide } from './CalculatorEducationalGuide';
 
 interface CalculatorEngineProps {
   calculator: CalculatorDefinition;
@@ -614,93 +615,12 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
         </div>
       </section>
 
-      {/* Section 4: Frequently Asked Questions (FAQ) */}
-      <section 
-        className="mt-8 rounded-2xl bg-white border border-slate-200/90 p-6 sm:p-8 shadow-lg shadow-slate-200/40 space-y-6"
-        id="faq-section"
-      >
-        <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
-          <div className="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center">
-            <HelpCircle className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-              Frequently Asked Questions (FAQ)
-            </h2>
-            <p className="text-xs text-slate-500">
-              Expert answers regarding technical formulas, tolerance margins, and installation best practices
-            </p>
-          </div>
-        </div>
-
-        <div className="divide-y divide-slate-200/80">
-          {calculator.faqs.map((faq, index) => {
-            const isOpen = !!openFaqs[index];
-
-            return (
-              <div key={index} className="py-4 space-y-2">
-                <button
-                  type="button"
-                  onClick={() => toggleFaq(index)}
-                  id={`faq-toggle-${index}`}
-                  aria-expanded={isOpen}
-                  className="w-full flex items-center justify-between text-left group focus:outline-hidden focus:ring-2 focus:ring-emerald-600 rounded p-1"
-                >
-                  <span className="text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition-colors pr-4">
-                    {faq.question}
-                  </span>
-                  <div className="w-6 h-6 rounded-full bg-slate-100 group-hover:bg-emerald-100 flex items-center justify-center text-slate-600 group-hover:text-emerald-800 shrink-0 transition-colors">
-                    {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                  </div>
-                </button>
-
-                {isOpen && (
-                  <div className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-1 pt-1 animate-in fade-in">
-                    <p>{faq.answer}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Related Calculators Recommendations */}
-      {relatedCalculators.length > 0 && (
-        <section className="mt-12 space-y-4 no-print" id="related-calculators-section">
-          <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-              <DynamicIcon name="Compass" className="w-4 h-4 text-emerald-700" />
-              Related Engineering &amp; Property Tools
-            </h2>
-            <span className="text-xs text-slate-500">Recommended Next Step</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {relatedCalculators.map((rel) => (
-              <Link
-                key={rel.id}
-                to={getCalculatorPath(rel.slug)}
-                id={`related-calc-btn-${rel.id}`}
-                className="p-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-300 hover:shadow-md text-left transition-all group flex items-start justify-between"
-              >
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono uppercase text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
-                    {rel.categoryName}
-                  </span>
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                    {rel.title}
-                  </h3>
-                  <p className="text-[11px] text-slate-600 line-clamp-1">
-                    {rel.subtitle}
-                  </p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-1 transition-all shrink-0 mt-1" />
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Comprehensive 12-Dimension Educational & Engineering Guide */}
+      <CalculatorEducationalGuide
+        calculator={calculator}
+        relatedCalculators={relatedCalculators}
+        onSelectCalculator={(rel) => onSelectRelated(rel.id)}
+      />
     </div>
   );
 };

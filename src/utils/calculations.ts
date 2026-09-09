@@ -962,7 +962,7 @@ export const calculateACSize = (inputs: Record<string, number>) => {
 export const calculateMortgagePITI = (inputs: Record<string, number>) => {
   const purchasePrice = Math.max(1000, inputs.purchasePrice ?? 450000);
   const downPayment = Math.max(0, Math.min(purchasePrice, inputs.downPayment ?? 90000));
-  const interestRate = Math.max(0.01, inputs.interestRate ?? 6.5); // %
+  const interestRate = Math.max(0, inputs.interestRate ?? 6.5); // % (supports 0% interest loans)
   const loanTermYears = Math.max(1, inputs.loanTerm ?? 30);
   const propertyTaxPct = Math.max(0, inputs.propertyTaxRate ?? 1.2); // % per year
   const annualInsurance = Math.max(0, inputs.annualInsurance ?? 1400);
@@ -1177,7 +1177,7 @@ export const calculateRentalYield = (inputs: Record<string, number>) => {
 export const calculateAffordability = (inputs: Record<string, number>) => {
   const grossIncome = Math.max(1000, inputs.grossAnnualIncome ?? 115000);
   const monthlyDebts = Math.max(0, inputs.monthlyDebts ?? 450);
-  const interestRate = Math.max(0.1, inputs.interestRate ?? 6.5);
+  const interestRate = Math.max(0, inputs.interestRate ?? 6.5);
   const loanTermYears = Math.max(5, inputs.loanTerm ?? 30);
   const downPayment = Math.max(0, inputs.downPayment ?? 65000);
   const propertyTaxPct = Math.max(0, inputs.propertyTaxRate ?? 1.2);
@@ -1204,8 +1204,10 @@ export const calculateAffordability = (inputs: Record<string, number>) => {
   const monthlyRate = (interestRate / 100) / 12;
   const totalMonths = loanTermYears * 12;
   
-  // P&I factor per dollar of loan
-  const piFactor = (monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+  // P&I factor per dollar of loan (handles 0% interest safely)
+  const piFactor = monthlyRate > 0 
+    ? (monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1)
+    : (1 / totalMonths);
   
   // Solve for Max Purchase Price:
   // MaxHousingPayment = (Price - DownPayment) * piFactor + (Price * TaxRate / 12) + Insurance/12 + HOA

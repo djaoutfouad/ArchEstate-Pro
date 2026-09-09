@@ -16,20 +16,26 @@ interface SEOHeadProps {
   category?: CategoryInfo | null;
   legalType?: 'contact' | 'privacy' | 'terms' | 'about' | 'methodology' | null;
   pathname?: string;
+  is404?: boolean;
 }
 
 export const SEOHead: React.FC<SEOHeadProps> = ({ 
   calculator, 
   category, 
   legalType, 
-  pathname = '/' 
+  pathname = '/',
+  is404 = false,
 }) => {
   // Determine title, description, and canonical
   let pageTitle = `${SITE_NAME} — ${SITE_TAGLINE}`;
   let metaDesc = SITE_DESCRIPTION;
   let canonicalUrl = getCanonicalUrl(pathname);
 
-  if (calculator) {
+  if (is404) {
+    pageTitle = `Page Not Found — ${SITE_NAME}`;
+    metaDesc = 'The requested calculator or page could not be located on ArchEstate Pro. Browse our 15 architectural and real estate calculation suites.';
+    canonicalUrl = getCanonicalUrl(pathname);
+  } else if (calculator) {
     pageTitle = `${calculator.title} — ${SITE_NAME}`;
     metaDesc = `${calculator.shortDescription} Accurate materials, quantities, and financial formulas on ArchEstate Pro.`;
     canonicalUrl = getCanonicalUrl(getCalculatorPath(calculator.slug));
@@ -71,6 +77,19 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     }
     canonicalLink.setAttribute('href', canonicalUrl);
 
+    // Robots meta tag handling
+    let robotsMeta = document.querySelector('meta[name="robots"]');
+    if (is404) {
+      if (!robotsMeta) {
+        robotsMeta = document.createElement('meta');
+        robotsMeta.setAttribute('name', 'robots');
+        document.head.appendChild(robotsMeta);
+      }
+      robotsMeta.setAttribute('content', 'noindex, follow');
+    } else if (robotsMeta) {
+      robotsMeta.setAttribute('content', 'index, follow, max-image-preview:large');
+    }
+
     // OpenGraph
     const updateMeta = (attr: string, val: string, content: string) => {
       let elem = document.querySelector(`meta[${attr}="${val}"]`);
@@ -88,10 +107,10 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     updateMeta('property', 'og:site_name', SITE_NAME);
     updateMeta('name', 'twitter:title', pageTitle);
     updateMeta('name', 'twitter:description', metaDesc);
-  }, [pageTitle, metaDesc, canonicalUrl]);
+  }, [pageTitle, metaDesc, canonicalUrl, is404]);
 
   // Generate JSON-LD SoftwareApplication / WebApplication Schema
-  const webAppSchema = {
+  const webAppSchema = !is404 ? {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     'name': calculator ? `${calculator.title} | ${SITE_NAME}` : `${SITE_NAME} Computational Suite`,
@@ -100,18 +119,14 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     'browserRequirements': 'Requires JavaScript. Requires HTML5.',
     'url': canonicalUrl,
     'description': metaDesc,
-    'offers': {
-      '@type': 'Offer',
-      'price': '0',
-      'priceCurrency': 'USD',
-    },
+    'isAccessibleForFree': true,
     'author': {
       '@type': 'Organization',
       'name': SITE_NAME,
       'email': CONTACT_EMAIL,
       'url': SITE_URL,
     },
-  };
+  } : null;
 
   // BreadcrumbList Schema for SEO crawlability
   const breadcrumbSchema = calculator ? {
@@ -171,10 +186,12 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
-      />
+      {webAppSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+        />
+      )}
       {breadcrumbSchema && (
         <script
           type="application/ld+json"

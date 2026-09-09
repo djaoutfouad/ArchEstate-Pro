@@ -20,6 +20,7 @@ import {
   calculateClosingCosts,
   calculateWallpaper
 } from '../utils/calculations';
+import { CALCULATOR_EDUCATIONAL_CONTENT } from './calculatorEducationalContent';
 
 export const CATEGORIES: CategoryInfo[] = [
   {
@@ -54,7 +55,7 @@ export const CATEGORIES: CategoryInfo[] = [
   },
 ];
 
-export const CALCULATORS: CalculatorDefinition[] = [
+const BASE_CALCULATORS: CalculatorDefinition[] = [
   // 1. BA13 Drywall Ceiling Calculator
   {
     id: 'ba13-drywall-ceiling',
@@ -1003,3 +1004,8 @@ export const CALCULATORS: CalculatorDefinition[] = [
     calculate: calculateWallpaper,
   },
 ];
+
+export const CALCULATORS: CalculatorDefinition[] = BASE_CALCULATORS.map((calc) => ({
+  ...calc,
+  educationalContent: CALCULATOR_EDUCATIONAL_CONTENT[calc.id],
+}));

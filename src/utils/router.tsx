@@ -1,16 +1,18 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { CATEGORY_ROUTES, ROUTE_TO_CATEGORY_ID } from '../config/site';
+import { CATEGORY_ROUTES, ROUTE_TO_CATEGORY_ID, isValidCalculatorSlug } from '../config/site';
 
 export interface RouteState {
   pathname: string;
   calculatorSlug: string | null;
   categoryId: string | null;
   legalType: 'contact' | 'privacy' | 'terms' | 'about' | 'methodology' | null;
+  is404: boolean;
 }
 
 export function parsePath(pathname: string): RouteState {
-  // Normalize path
-  let path = (pathname || '/').trim();
+  // Normalize path: strip query string and hash, trim whitespace
+  const rawPath = (pathname || '/').split('?')[0].split('#')[0].trim();
+  let path = rawPath;
   if (path.length > 1 && path.endsWith('/')) {
     path = path.slice(0, -1);
   }
@@ -22,6 +24,18 @@ export function parsePath(pathname: string): RouteState {
       calculatorSlug: null,
       categoryId: null,
       legalType: null,
+      is404: false,
+    };
+  }
+
+  // Explicit 404 page
+  if (path === '/404' || path === '/404.html') {
+    return {
+      pathname: '/404',
+      calculatorSlug: null,
+      categoryId: null,
+      legalType: null,
+      is404: true,
     };
   }
 
@@ -29,37 +43,52 @@ export function parsePath(pathname: string): RouteState {
   if (path.startsWith('/calculators/')) {
     const slug = path.replace('/calculators/', '');
     
-    // Check if it's a category slug
+    // Check if it's a valid category slug
     if (ROUTE_TO_CATEGORY_ID[slug]) {
       return {
         pathname: path,
         calculatorSlug: null,
         categoryId: ROUTE_TO_CATEGORY_ID[slug],
         legalType: null,
+        is404: false,
       };
     }
 
-    // Otherwise it's a calculator slug
+    // Check if it's a valid calculator slug
+    if (isValidCalculatorSlug(slug)) {
+      return {
+        pathname: path,
+        calculatorSlug: slug,
+        categoryId: null,
+        legalType: null,
+        is404: false,
+      };
+    }
+
+    // Invalid slug under /calculators/ -> 404
     return {
       pathname: path,
-      calculatorSlug: slug,
+      calculatorSlug: null,
       categoryId: null,
       legalType: null,
+      is404: true,
     };
   }
 
   // Legal routes
-  if (path === '/contact') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'contact' };
-  if (path === '/privacy') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'privacy' };
-  if (path === '/terms') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'terms' };
-  if (path === '/about') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'about' };
-  if (path === '/methodology') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'methodology' };
+  if (path === '/contact') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'contact', is404: false };
+  if (path === '/privacy') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'privacy', is404: false };
+  if (path === '/terms') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'terms', is404: false };
+  if (path === '/about') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'about', is404: false };
+  if (path === '/methodology') return { pathname: path, calculatorSlug: null, categoryId: null, legalType: 'methodology', is404: false };
 
+  // Unknown path -> 404
   return {
     pathname: path,
     calculatorSlug: null,
     categoryId: null,
     legalType: null,
+    is404: true,
   };
 }
 

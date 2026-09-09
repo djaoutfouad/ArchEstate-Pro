@@ -6,7 +6,12 @@ import { CategorySection } from './components/dashboard/CategorySection';
 import { CalculatorEngine } from './components/calculator/CalculatorEngine';
 import { AdvertisementPlaceholder } from './components/common/AdvertisementPlaceholder';
 import { SEOHead } from './components/common/SEOHead';
-import { LegalModal } from './components/common/LegalModals';
+import { NotFoundPage } from './components/common/NotFoundPage';
+import { AboutPage } from './components/pages/AboutPage';
+import { ContactPage } from './components/pages/ContactPage';
+import { PrivacyPage } from './components/pages/PrivacyPage';
+import { TermsPage } from './components/pages/TermsPage';
+import { MethodologyPage } from './components/pages/MethodologyPage';
 import { Breadcrumbs } from './components/common/Breadcrumbs';
 import { CALCULATORS, CATEGORIES } from './data/calculatorsData';
 import { useRouter } from './utils/router';
@@ -17,6 +22,7 @@ export default function App() {
     calculatorSlug, 
     categoryId, 
     legalType, 
+    is404,
     navigateToHome, 
     navigateToCategory, 
     navigateToCalculator, 
@@ -60,6 +66,7 @@ export default function App() {
         category={activeCategory} 
         legalType={legalType} 
         pathname={pathname}
+        is404={is404}
       />
 
       {/* Global Application Header */}
@@ -71,8 +78,8 @@ export default function App() {
         onOpenLegal={navigateToLegal}
       />
 
-      {/* 1. Full-Bleed Edge-to-Edge Hero Section (100% Full-Width directly after Header) */}
-      {!activeCalculator && !isLegalRoute && (
+      {/* 1. Full-Bleed Edge-to-Edge Hero Section (100% Full-Width directly after Header) - Only on home/category dashboard */}
+      {!activeCalculator && !isLegalRoute && !is404 && (
         <HeroSection
           selectedCategory={activeCategory ? activeCategory.id : 'all'}
           searchQuery={searchQuery}
@@ -83,7 +90,7 @@ export default function App() {
       {/* Global Layout Container (Content Centered with No Empty Aside Margins) */}
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-center gap-6 lg:gap-8 relative flex-1">
         {/* Left Rail: Vertical Skyscraper Ad Slot (160x600) - Only rendered when ads are active */}
-        {!isLegalRoute && ADS_ENABLED && (
+        {!isLegalRoute && !is404 && ADS_ENABLED && (
           <aside 
             aria-label="Sidebar Advertisement Left"
             className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-24 self-start no-print"
@@ -94,7 +101,25 @@ export default function App() {
 
         {/* Main Center Content: Fluid max-w-5xl */}
         <main className="flex-1 max-w-5xl mx-auto w-full min-w-0" id="main-content">
-          {activeCalculator ? (
+          {is404 ? (
+            // 404 Not Found Page
+            <NotFoundPage />
+          ) : legalType === 'about' ? (
+            // Dedicated About Page
+            <AboutPage />
+          ) : legalType === 'contact' ? (
+            // Dedicated Working Contact Page
+            <ContactPage />
+          ) : legalType === 'privacy' ? (
+            // Dedicated Privacy Policy & Cookie Page
+            <PrivacyPage />
+          ) : legalType === 'terms' ? (
+            // Dedicated Terms of Service Page
+            <TermsPage />
+          ) : legalType === 'methodology' ? (
+            // Dedicated Methodology Documentation Page
+            <MethodologyPage />
+          ) : activeCalculator ? (
             // Single Calculator Execution View
             <CalculatorEngine
               calculator={activeCalculator}
@@ -117,7 +142,7 @@ export default function App() {
 
               <div className="max-w-5xl mx-auto space-y-12">
                 {/* 1. ADVERTISEMENT: Below Hero Safe Zone Leaderboard (728x90) */}
-                {!isLegalRoute && ADS_ENABLED && (
+                {ADS_ENABLED && (
                   <div className="no-print">
                     <AdvertisementPlaceholder variant="leaderboard" slotId="home-hero-bottom" />
                   </div>
@@ -146,7 +171,7 @@ export default function App() {
         </main>
 
         {/* Right Rail: Vertical Skyscraper Ad Slot (160x600) - Only rendered when ads are active */}
-        {!isLegalRoute && ADS_ENABLED && (
+        {!isLegalRoute && !is404 && ADS_ENABLED && (
           <aside 
             aria-label="Sidebar Advertisement Right"
             className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-24 self-start no-print"
@@ -157,18 +182,11 @@ export default function App() {
       </div>
 
       {/* Pre-Footer Banner (728x90) */}
-      {!isLegalRoute && ADS_ENABLED && (
+      {!isLegalRoute && !is404 && ADS_ENABLED && (
         <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-8 no-print">
           <AdvertisementPlaceholder variant="leaderboard" slotId="pre-footer-leaderboard" />
         </div>
       )}
-
-      {/* Legal & Informational Modals */}
-      <LegalModal
-        isOpen={legalType !== null}
-        type={legalType}
-        onClose={() => navigateToLegal(null)}
-      />
 
       {/* Comprehensive Application Footer */}
       <Footer

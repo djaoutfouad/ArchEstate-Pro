@@ -194,11 +194,7 @@ const homeSchema = [
     'name': `${SITE_NAME} Computational Suite`,
     'applicationCategory': 'UtilitiesApplication',
     'operatingSystem': 'All',
-    'offers': {
-      '@type': 'Offer',
-      'price': '0',
-      'priceCurrency': 'USD',
-    },
+    'isAccessibleForFree': true,
   },
 ];
 
@@ -405,11 +401,7 @@ for (const calc of CALCULATORS) {
       'operatingSystem': 'All',
       'url': calcCanonical,
       'description': calcDesc,
-      'offers': {
-        '@type': 'Offer',
-        'price': '0',
-        'priceCurrency': 'USD',
-      },
+      'isAccessibleForFree': true,
       'author': {
         '@type': 'Organization',
         'name': SITE_NAME,
@@ -991,6 +983,64 @@ for (const route of routes) {
 
   fs.writeFileSync(targetFile, html, 'utf-8');
 }
+
+// 5.5 Generate static 404.html for Cloudflare Pages
+console.log('Generating static 404.html for Cloudflare Pages SPA fallback...');
+let notFoundHtml = baseTemplate;
+notFoundHtml = notFoundHtml.replace(/<title>[\s\S]*?<\/title>/i, `<title>Page Not Found — ${SITE_NAME}</title>`);
+if (notFoundHtml.includes('<meta name="description"')) {
+  notFoundHtml = notFoundHtml.replace(/<meta name="description"[^>]*>/i, `<meta name="description" content="The requested page or calculator could not be found on ArchEstate Pro. Browse our 15 architectural and real estate calculation suites." />`);
+} else {
+  notFoundHtml = notFoundHtml.replace('</head>', `  <meta name="description" content="The requested page or calculator could not be found on ArchEstate Pro. Browse our 15 architectural and real estate calculation suites." />\n</head>`);
+}
+// Add noindex meta tag to 404
+notFoundHtml = notFoundHtml.replace('</head>', `  <meta name="robots" content="noindex, follow" />\n</head>`);
+
+const notFoundPrerender = `
+<div class="min-h-screen flex flex-col bg-white text-slate-900 font-sans">
+  <header class="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/90 shadow-xs">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-bold">AP</div>
+        <div>
+          <span class="text-xl font-extrabold text-slate-900">${SITE_NAME}</span>
+          <p class="text-[11px] text-slate-600 font-medium">Architecture • Construction • Real Estate</p>
+        </div>
+      </a>
+      <nav class="flex items-center gap-3 text-xs font-semibold">
+        <a href="/" class="text-slate-600 hover:text-emerald-700">&larr; Return Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono font-semibold text-slate-700">
+      <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+      HTTP 404 — Resource Not Located
+    </div>
+    <div class="space-y-3">
+      <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">Page Not Found</h1>
+      <p class="text-base text-slate-600 max-w-lg mx-auto leading-relaxed">
+        The requested calculator, page, or document URL does not exist or has been relocated.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+      <a href="/" class="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm shadow-md transition-all">
+        Return to All 15 Calculators
+      </a>
+      <a href="/methodology" class="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-semibold text-sm transition-all">
+        Calculation Methodology
+      </a>
+    </div>
+  </main>
+
+  ${getStaticFooterHtml()}
+</div>
+`;
+
+notFoundHtml = notFoundHtml.replace('<div id="root"></div>', `<div id="root">${notFoundPrerender}</div>`);
+fs.writeFileSync(path.join(DIST_DIR, '404.html'), notFoundHtml, 'utf-8');
+fs.writeFileSync(path.join(PUBLIC_DIR, '404.html'), notFoundHtml, 'utf-8');
 
 // 6. Generate sitemap.xml
 const sitemapUrls = routes.map(r => {
