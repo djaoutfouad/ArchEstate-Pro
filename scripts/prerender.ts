@@ -260,7 +260,7 @@ const homeHtml = `
                 <div class="rounded-2xl border border-slate-200 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
                   ${calc.personaImageUrl ? `
                     <div class="relative h-44 sm:h-48 w-full overflow-hidden rounded-t-2xl bg-slate-950">
-                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" referrerPolicy="no-referrer" class="w-full h-full object-cover object-center" />
+                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.imageAlt || calc.title)}" width="${calc.imageWidth || 640}" height="${calc.imageHeight || 360}" loading="lazy" decoding="async" class="w-full h-full object-cover object-center" />
                       <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
                       ${calc.personaRole ? `<div class="absolute bottom-2.5 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2.5 py-1 rounded-lg border border-emerald-500/30 truncate block">${escapeHtml(calc.personaRole)}</span></div>` : ''}
                     </div>
@@ -347,7 +347,7 @@ for (const cat of CATEGORIES) {
                 <div class="rounded-2xl border border-slate-200 bg-white shadow-xs flex flex-col justify-between overflow-hidden">
                   ${calc.personaImageUrl ? `
                     <div class="relative h-44 sm:h-48 w-full overflow-hidden rounded-t-2xl bg-slate-950">
-                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.personaRole || calc.title)}" loading="lazy" referrerPolicy="no-referrer" class="w-full h-full object-cover object-center" />
+                      <img src="${calc.personaImageUrl}" alt="${escapeHtml(calc.imageAlt || calc.title)}" width="${calc.imageWidth || 640}" height="${calc.imageHeight || 360}" loading="lazy" decoding="async" class="w-full h-full object-cover object-center" />
                       <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
                       ${calc.personaRole ? `<div class="absolute bottom-2.5 left-3 right-3"><span class="text-[11px] font-medium text-emerald-300 bg-slate-950/85 px-2.5 py-1 rounded-lg border border-emerald-500/30 truncate block">${escapeHtml(calc.personaRole)}</span></div>` : ''}
                     </div>

@@ -30,9 +30,11 @@ export const CalculatorCard: React.FC<CalculatorCardProps> = ({
         {!imageError && calculator.personaImageUrl ? (
           <img
             src={calculator.personaImageUrl}
-            alt={calculator.personaRole || calculator.title}
+            alt={calculator.imageAlt || calculator.title}
+            width={calculator.imageWidth || 640}
+            height={calculator.imageHeight || 360}
             loading="lazy"
-            referrerPolicy="no-referrer"
+            decoding="async"
             onError={() => setImageError(true)}
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
           />

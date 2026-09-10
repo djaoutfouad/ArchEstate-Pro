@@ -147,6 +147,50 @@ if (fs.existsSync(robotsPath)) {
   );
 }
 
+// 6. Verify calculator local images & metadata
+const seenImagePaths = new Set<string>();
+for (const calc of CALCULATORS) {
+  assert(
+    Boolean(calc.personaImageUrl && calc.personaImageUrl.startsWith('/images/calculators/')),
+    `[${calc.slug}] has local self-hosted image path (${calc.personaImageUrl})`,
+    `[${calc.slug}] missing local self-hosted image path`
+  );
+
+  if (calc.personaImageUrl) {
+    seenImagePaths.add(calc.personaImageUrl);
+    const publicImgPath = path.join(process.cwd(), 'public', calc.personaImageUrl.replace(/^\//, ''));
+    const distImgPath = path.join(DIST_DIR, calc.personaImageUrl.replace(/^\//, ''));
+    assert(
+      fs.existsSync(publicImgPath),
+      `[${calc.slug}] image file exists in public: ${calc.personaImageUrl}`,
+      `[${calc.slug}] image file MISSING in public: ${publicImgPath}`
+    );
+    assert(
+      fs.existsSync(distImgPath),
+      `[${calc.slug}] image file copied to dist: ${calc.personaImageUrl}`,
+      `[${calc.slug}] image file MISSING in dist: ${distImgPath}`
+    );
+  }
+
+  assert(
+    Boolean(calc.imageAlt && calc.imageAlt.trim().length > 15),
+    `[${calc.slug}] has descriptive imageAlt: "${calc.imageAlt}"`,
+    `[${calc.slug}] missing or too short imageAlt`
+  );
+
+  assert(
+    Boolean(calc.imageWidth && calc.imageWidth > 0 && calc.imageHeight && calc.imageHeight > 0),
+    `[${calc.slug}] has explicit image dimensions (${calc.imageWidth}x${calc.imageHeight})`,
+    `[${calc.slug}] missing image dimensions`
+  );
+}
+
+assert(
+  seenImagePaths.size === 15,
+  `All 15 calculators have unique, dedicated images (found ${seenImagePaths.size})`,
+  `Expected 15 unique images across 15 calculators, but found ${seenImagePaths.size}`
+);
+
 // Summary Output
 console.log('\n--- Verification Results ---');
 console.log(`Passed: ${passes.length}`);

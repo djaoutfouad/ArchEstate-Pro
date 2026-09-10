@@ -107,6 +107,9 @@ export interface CalculatorDefinition {
   keywords: string[];
   personaImageUrl?: string;
   personaRole?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   inputs: InputFieldDefinition[];
   methodology: MethodologyData;
   faqs: FAQItem[];
