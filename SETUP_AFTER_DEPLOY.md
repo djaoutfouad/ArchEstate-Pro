@@ -83,12 +83,14 @@ Before pushing future modifications, execute the local audit pipeline:
 # 1. Type checking and syntax audit
 npm run lint
 
-# 2. Mathematical calculation engine tests
-npx tsx scripts/test-calculations.ts
-
-# 3. Full production build and static site generation
+# 2. Full production build and static site generation (24 static pages)
 npm run build
 
-# 4. End-to-end post-build verification (234 checks)
+# 3. Comprehensive post-build verification (1,098 checks across 4 test suites)
 npm run verify
 ```
+This runs all 4 automated suites in sequence:
+- `scripts/verify-build.ts` (310 checks: 24 SSG pages, 13 sections per calculator, sitemap, robots, canonicals)
+- `scripts/verify-images.ts` (152 checks: local existence, binary headers, 640x360 dimensions, no hotlinking, unique images)
+- `scripts/verify-numbers.ts` (61 checks: ASCII Latin 0-9 digits across formatters, HTML, and calculations)
+- `scripts/verify-calculators.ts` (575 checks: inputs, boundaries, negative handling, max bounds, NaN/Infinity prevention)

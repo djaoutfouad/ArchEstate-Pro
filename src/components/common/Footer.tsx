@@ -117,10 +117,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCookieSettings }) => {
               <li>
                 <button
                   type="button"
+                  id="footer-cookie-settings"
                   onClick={handleOpenCookies}
                   className="hover:text-emerald-700 hover:underline transition-colors text-slate-600 text-left cursor-pointer flex items-center gap-1.5"
                 >
-                  Cookie Preferences &amp; Consent
+                  Cookie Settings
                 </button>
               </li>
             </ul>

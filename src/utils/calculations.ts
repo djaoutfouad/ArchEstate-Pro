@@ -5,32 +5,47 @@ import {
 } from '../types/calculator';
 
 /**
+ * Normalizes any Arabic-Indic [٠-٩] or Eastern Arabic-Indic / Persian [۰-۹] digits
+ * to standard ASCII Latin digits [0-9].
+ */
+export const normalizeToAsciiDigits = (val: string): string => {
+  if (!val) return '';
+  return val
+    .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06F0));
+};
+
+/**
  * Utility helper to safely format currencies, numbers, and percentages
+ * strictly using Latin ASCII digits (0-9).
  */
 export const formatCurrency = (val: number): string => {
   if (isNaN(val) || !isFinite(val)) return '$0';
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-US-u-nu-latn', {
     style: 'currency',
     currency: 'USD',
     maximumFractionDigits: 0,
+    numberingSystem: 'latn',
   }).format(val);
 };
 
 export const formatCurrencyExact = (val: number): string => {
   if (isNaN(val) || !isFinite(val)) return '$0.00';
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-US-u-nu-latn', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
+    numberingSystem: 'latn',
   }).format(val);
 };
 
 export const formatNumber = (val: number, decimals: number = 2): string => {
   if (isNaN(val) || !isFinite(val)) return '0';
-  return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: decimals === 0 ? 0 : 0,
+  return new Intl.NumberFormat('en-US-u-nu-latn', {
+    minimumFractionDigits: 0,
     maximumFractionDigits: decimals,
+    numberingSystem: 'latn',
   }).format(val);
 };
 

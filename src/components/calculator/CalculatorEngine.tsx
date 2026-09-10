@@ -25,6 +25,7 @@ import { AdvertisementPlaceholder } from '../common/AdvertisementPlaceholder';
 import { CALCULATORS } from '../../data/calculatorsData';
 import { SITE_URL, CONTACT_EMAIL, getCalculatorPath } from '../../config/site';
 import { Link } from '../../utils/router';
+import { normalizeToAsciiDigits } from '../../utils/calculations';
 import { CalculatorEducationalGuide } from './CalculatorEducationalGuide';
 
 interface CalculatorEngineProps {
@@ -76,9 +77,11 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
     }));
   };
 
-  // Safe input handler with min/max bounds and validation
+  // Safe input handler with min/max bounds, ASCII normalization, and validation
   const handleInputChange = (field: InputFieldDefinition, rawValue: string | number) => {
-    const num = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
+    let rawStr = typeof rawValue === 'string' ? rawValue : String(rawValue);
+    rawStr = normalizeToAsciiDigits(rawStr.trim());
+    const num = parseFloat(rawStr);
     if (isNaN(num)) {
       setInputs((prev) => ({ ...prev, [field.id]: field.min }));
       return;
@@ -114,7 +117,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
   const handleCopySummary = () => {
     const textLines = [
       `=== ${calculator.title} — ArchEstate Pro Specification ===`,
-      `Date: ${new Date().toLocaleDateString()}`,
+      `Date: ${new Date().toLocaleDateString('en-US-u-nu-latn', { year: 'numeric', month: 'short', day: 'numeric', numberingSystem: 'latn' })}`,
       `Category: ${calculator.categoryName}`,
       '',
       '--- INPUT PARAMETERS ---',
@@ -187,7 +190,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
             </p>
           </div>
           <div className="text-right text-xs text-slate-600 font-mono">
-            <div>Date: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+            <div>Date: {new Date().toLocaleDateString('en-US-u-nu-latn', { year: 'numeric', month: 'short', day: 'numeric', numberingSystem: 'latn' })}</div>
             <div className="font-bold text-emerald-800 mt-0.5">Verified Calculation Benchmark</div>
           </div>
         </div>
@@ -340,8 +343,11 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                             min={field.min}
                             max={field.max}
                             step={field.step}
+                            lang="en"
+                            dir="ltr"
+                            inputMode="decimal"
                             onChange={(e) => handleInputChange(field, e.target.value)}
-                            className="flex-1 px-3 py-1.5 bg-white text-center text-sm font-mono font-bold text-slate-900 border border-slate-300 rounded-lg focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-hidden transition-all"
+                            className="flex-1 px-3 py-1.5 bg-white text-center text-sm font-mono font-bold text-slate-900 border border-slate-300 rounded-lg focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-hidden transition-all [font-variant-numeric:lining-nums]"
                           />
 
                           <button
@@ -497,7 +503,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                 </div>
 
                 <div className="contractor-table-container rounded-xl border border-slate-200 overflow-x-auto max-h-[360px] overflow-y-auto">
-                  <table className="w-full text-left border-collapse text-xs">
+                  <table className="w-full text-left border-collapse text-xs [font-variant-numeric:lining-nums]" lang="en" dir="ltr">
                     <thead className="bg-slate-100 text-slate-700 font-bold sticky top-0 border-b border-slate-200">
                       <tr>
                         <th className="py-2.5 px-3">Mo #</th>
@@ -508,7 +514,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                         <th className="py-2.5 px-3">Balance</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 font-mono">
+                    <tbody className="divide-y divide-slate-100 font-mono [font-variant-numeric:lining-nums]" lang="en" dir="ltr">
                       {(showFullSchedule 
                         ? results.amortizationSchedule 
                         : results.amortizationSchedule.slice(0, 12)

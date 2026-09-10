@@ -8,7 +8,11 @@
     "build": "vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
-    "verify": "tsx scripts/verify-build.ts",
+    "verify": "tsx scripts/verify-build.ts && tsx scripts/verify-images.ts && tsx scripts/verify-numbers.ts && tsx scripts/verify-calculators.ts",
+    "verify:build": "tsx scripts/verify-build.ts",
+    "verify:images": "tsx scripts/verify-images.ts",
+    "verify:numbers": "tsx scripts/verify-numbers.ts",
+    "verify:calculators": "tsx scripts/verify-calculators.ts",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

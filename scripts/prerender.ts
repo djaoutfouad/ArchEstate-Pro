@@ -1020,4 +1020,14 @@ Sitemap: ${SITE_URL}/sitemap.xml
 fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt, 'utf-8');
 fs.writeFileSync(path.join(PUBLIC_DIR, 'robots.txt'), robotsTxt, 'utf-8');
 
+// 8. Ensure _worker.js and _headers exist in dist
+const workerSrc = path.join(PUBLIC_DIR, '_worker.js');
+if (fs.existsSync(workerSrc)) {
+  fs.copyFileSync(workerSrc, path.join(DIST_DIR, '_worker.js'));
+}
+const headersSrc = path.join(PUBLIC_DIR, '_headers');
+if (fs.existsSync(headersSrc)) {
+  fs.copyFileSync(headersSrc, path.join(DIST_DIR, '_headers'));
+}
+
 console.log(`✓ SSG generation complete: ${routes.length} static HTML pages, sitemap.xml, and robots.txt created successfully.`);
