@@ -3,13 +3,18 @@
  * Single source of truth for domain, brand, metadata, and routing
  */
 
-export const SITE_URL = (
-  (typeof process !== 'undefined' && process.env?.SITE_URL)
-    ? process.env.SITE_URL
+const rawSiteUrl = (
+  (typeof process !== 'undefined' && (process.env?.VITE_SITE_URL || process.env?.SITE_URL))
+    ? (process.env.VITE_SITE_URL || process.env.SITE_URL)!
     : (typeof import.meta !== 'undefined' && (import.meta as unknown as { env?: { VITE_SITE_URL?: string } }).env?.VITE_SITE_URL)
       ? (import.meta as unknown as { env?: { VITE_SITE_URL?: string } }).env!.VITE_SITE_URL!
       : 'https://archestatepro.com'
 ).trim().replace(/\/+$/, '');
+
+// Do not leave temporary test subdomains (such as *.workers.dev or localhost) in canonical or sitemap URLs
+export const SITE_URL = (rawSiteUrl.includes('workers.dev') || rawSiteUrl.includes('localhost') || !rawSiteUrl)
+  ? 'https://archestatepro.com'
+  : rawSiteUrl;
 
 export const SITE_NAME = 'ArchEstate Pro';
 export const SITE_TAGLINE = 'Architectural, Construction & Real Estate Calculators';
@@ -40,20 +45,20 @@ export const LEGAL_ROUTES = [
 
 export const VALID_CALCULATOR_SLUGS = [
   'ba13-drywall-ceiling',
-  'pvc-suspended-ceiling',
-  'acoustic-grid-ceiling-60x60',
-  'cove-light-perimeter-bulkhead',
-  'gypsum-cornice-plaster-staff',
-  'wall-paint-primer',
-  'tile-grout-flooring',
-  'reinforced-concrete-volume',
-  'brick-block-masonry-mortar',
-  'hvac-cooling-btu-load',
-  'mortgage-piti-amortization',
-  'rental-yield-cap-rate-roi',
-  'home-affordability-debt-ratio',
-  'closing-costs-notary-fee',
-  'wallpaper-rolls-pattern-repeat',
+  'pvc-panel-ceiling',
+  'acoustic-grid-ceiling',
+  'cove-ceiling',
+  'plaster-staff-ceiling',
+  'paint-primer',
+  'tiles-estimator',
+  'concrete-volume',
+  'bricks-blocks',
+  'ac-btu-size',
+  'mortgage-piti',
+  'rental-yield',
+  'affordability-calc',
+  'closing-costs',
+  'wallpaper-roll',
 ] as const;
 
 export type CalculatorSlug = typeof VALID_CALCULATOR_SLUGS[number];

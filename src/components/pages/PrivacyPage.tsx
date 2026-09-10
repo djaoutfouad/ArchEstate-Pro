@@ -20,7 +20,7 @@ export const PrivacyPage: React.FC = () => {
           Effective Date: March 1, 2026 • Last Reviewed: March 2026
         </p>
         <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-          At ArchEstate Pro, we prioritize data minimization and user privacy. This policy outlines how our web calculators operate, what information is collected, and how advertising and analytics cookies are handled in compliance with applicable global privacy standards (including GDPR, CCPA/CPRA, and Google AdSense publisher policies).
+          At ArchEstate Pro, we prioritize data minimization and user privacy. This policy outlines how our web calculators operate, what information is collected, and how preferences and potential cookies are handled, designed to align with standard privacy practices and transparent consent principles (such as GDPR and CCPA/CPRA guidelines).
         </p>
       </header>
 

@@ -164,7 +164,7 @@ export const ContactPage: React.FC = () => {
           </div>
           <div className="pt-2 border-t border-slate-200 text-[11px] text-slate-700 flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
-            <span>No marketing spam guaranteed</span>
+            <span>Direct correspondence only, no marketing spam</span>
           </div>
         </div>
       </div>
@@ -331,7 +331,7 @@ export const ContactPage: React.FC = () => {
       <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-start gap-3">
         <HelpCircle className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          Please do not include confidential passwords, personal banking credentials, or proprietary blueprints in public contact submissions. All incoming correspondence is handled in compliance with our{' '}
+          Please do not include confidential passwords, personal banking credentials, or proprietary blueprints in public contact submissions. All incoming correspondence is handled in accordance with our{' '}
           <a href="/privacy" className="text-emerald-700 font-semibold underline">
             Privacy Policy
           </a>.

@@ -31,12 +31,12 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
 
   return (
     <div className="mt-12 space-y-10 border-t border-slate-200 pt-10 text-slate-800" id="educational-guide">
-      {/* 1. Header & What It Does */}
-      <section aria-labelledby="section-guide-title" className="space-y-4">
+      {/* 1. What This Calculator Does */}
+      <section aria-labelledby="section-what-it-does" className="space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200">
             <BookOpen className="w-3.5 h-3.5" />
-            <span>Comprehensive Architectural & Engineering Guide</span>
+            <span>Comprehensive Architectural &amp; Planning Guide</span>
           </div>
           <div className="flex items-center gap-1.5 text-xs text-slate-700">
             <Calendar className="w-3.5 h-3.5" />
@@ -44,15 +44,16 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
           </div>
         </div>
 
-        <h2 id="section-guide-title" className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+        <h2 id="section-what-it-does" className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
           Understanding the {calculator.title}
         </h2>
+        <h3 className="text-lg font-bold text-slate-900">What This Calculator Does</h3>
         <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-4xl">
           {content.whatItDoes}
         </p>
       </section>
 
-      {/* 2. When To Use It */}
+      {/* 2. When to Use This Tool */}
       <section aria-labelledby="section-when-to-use" className="bg-slate-50 border border-slate-200 rounded-xl p-6 sm:p-7 space-y-4">
         <h3 id="section-when-to-use" className="text-lg font-bold text-slate-900 flex items-center gap-2">
           <CheckCircle2 className="w-5 h-5 text-emerald-600" />
@@ -68,11 +69,11 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
         </ul>
       </section>
 
-      {/* 3. Input-by-Input Explanation */}
+      {/* 3. Input Parameters and Measurement Guidelines */}
       <section aria-labelledby="section-inputs-guide" className="space-y-4">
         <h3 id="section-inputs-guide" className="text-xl font-bold text-slate-900 flex items-center gap-2">
           <Info className="w-5 h-5 text-slate-600" />
-          Input Parameters & Measurement Guidelines
+          Input Parameters and Measurement Guidelines
         </h3>
         <p className="text-sm text-slate-600">
           Accurate outputs depend on verified field measurements. Review each parameter's engineering purpose and recommended measuring method below:
@@ -105,11 +106,11 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
         </div>
       </section>
 
-      {/* 4. Worked Realistic Example */}
+      {/* 4. Worked Engineering or Planning Example */}
       <section aria-labelledby="section-worked-example" className="bg-emerald-950/5 border border-emerald-900/10 rounded-xl p-6 sm:p-7 space-y-4">
         <div className="flex items-center gap-2 text-emerald-800 font-bold text-lg" id="section-worked-example">
           <Calculator className="w-5 h-5 text-emerald-700" />
-          <h3>Worked Engineering Example</h3>
+          <h3 className="text-lg font-bold text-emerald-900">Worked Engineering or Planning Example</h3>
         </div>
         <div className="space-y-3">
           <h4 className="font-semibold text-slate-900 text-base">
@@ -132,9 +133,9 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
         </div>
       </section>
 
-      {/* 5. Plain Language Formula & Assumptions */}
+      {/* 5, 6 & 7. Plain-Language Formula, Assumptions & Rounding Rules */}
       <div className="grid md:grid-cols-2 gap-6">
-        <section aria-labelledby="section-formula" className="border border-slate-200 rounded-xl p-6 bg-white space-y-3">
+        <section aria-labelledby="section-formula" className="border border-slate-200 rounded-xl p-6 bg-white space-y-4">
           <h3 id="section-formula" className="font-bold text-slate-900 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-emerald-600" />
             Plain-Language Formula
@@ -142,15 +143,18 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
           <p className="text-sm text-slate-700 leading-relaxed font-mono bg-slate-50 p-3 rounded-lg border border-slate-200">
             {content.plainLanguageFormula}
           </p>
-          <p className="text-xs text-slate-700">
-            {content.roundingAndUnits}
-          </p>
+          <div>
+            <h4 className="text-sm font-bold text-slate-900 mb-1">Rounding Rules and Units</h4>
+            <p className="text-xs text-slate-700 leading-relaxed">
+              {content.roundingAndUnits}
+            </p>
+          </div>
         </section>
 
         <section aria-labelledby="section-assumptions" className="border border-slate-200 rounded-xl p-6 bg-white space-y-3">
           <h3 id="section-assumptions" className="font-bold text-slate-900 flex items-center gap-2">
             <Layers className="w-4 h-4 text-slate-600" />
-            Key Assumptions & Standards
+            Assumptions and Default Values
           </h3>
           <ul className="space-y-2 text-sm text-slate-700">
             {content.assumptionsAndDefaults.map((assumption, idx) => (
@@ -163,7 +167,7 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
         </section>
       </div>
 
-      {/* 8 & 9. Scope Boundaries & Common Mistakes */}
+      {/* 8 & 9. What the Result Does Not Include & Common Mistakes */}
       <div className="grid md:grid-cols-2 gap-6">
         <section aria-labelledby="section-exclusions" className="border border-amber-200 bg-amber-50/50 rounded-xl p-6 space-y-3">
           <h3 id="section-exclusions" className="font-bold text-amber-900 flex items-center gap-2">
@@ -183,7 +187,7 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
         <section aria-labelledby="section-mistakes" className="border border-rose-200 bg-rose-50/50 rounded-xl p-6 space-y-3">
           <h3 id="section-mistakes" className="font-bold text-rose-900 flex items-center gap-2">
             <ShieldAlert className="w-4 h-4 text-rose-600" />
-            Common Pitfalls to Avoid
+            Common Mistakes
           </h3>
           <ul className="space-y-2 text-sm text-rose-950/80">
             {content.commonMistakes.map((mistake, idx) => (
@@ -196,26 +200,36 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
         </section>
       </div>
 
-      {/* 10. When to Consult Professional */}
+      {/* 10. When to Consult a Qualified Professional */}
       <section aria-labelledby="section-consult-pro" className="bg-slate-900 text-white rounded-xl p-6 sm:p-7 space-y-3">
         <h3 id="section-consult-pro" className="text-lg font-bold flex items-center gap-2 text-white">
           <ShieldAlert className="w-5 h-5 text-emerald-400" />
-          Professional Verification & Local Building Code Notice
+          When to Consult a Qualified Professional
         </h3>
         <p className="text-sm text-slate-300 leading-relaxed">
           {content.whenToConsultProfessional}
         </p>
-        <p className="text-xs text-slate-700 border-t border-slate-800 pt-3">
-          Notice: All computational outputs on ArchEstate Pro represent preliminary planning estimates. Actual field conditions, seismic requirements, structural spans, and local jurisdiction building codes must be verified by a licensed professional engineer, architect, or general contractor before construction or financial commitment.
+        <p className="text-xs text-slate-400 border-t border-slate-800 pt-3">
+          Professional Notice: All computational outputs on ArchEstate Pro represent preliminary planning estimators. Actual field conditions, structural loads, seismic ratings, and municipal building codes must be verified by a qualified professional before ordering materials or signing contracts.
         </p>
       </section>
 
-      {/* 11. Tool-Specific Frequently Asked Questions */}
+      {/* 11. Last Reviewed Date Section */}
+      <section aria-labelledby="section-reviewed-date" className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+        <h4 id="section-reviewed-date" className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+          Last Reviewed Date
+        </h4>
+        <p className="text-xs text-slate-700">
+          This planning methodology and formula set was last reviewed on <strong>{content.lastReviewed}</strong>.
+        </p>
+      </section>
+
+      {/* 12. Frequently Asked Questions */}
       {calculator.faqs && calculator.faqs.length > 0 && (
         <section aria-labelledby="section-faqs" className="space-y-4">
           <h3 id="section-faqs" className="text-xl font-bold text-slate-900 flex items-center gap-2">
             <HelpCircle className="w-5 h-5 text-emerald-600" />
-            Frequently Asked Questions: {calculator.title}
+            Frequently Asked Questions
           </h3>
           <div className="space-y-3">
             {calculator.faqs.map((faq, idx) => (
@@ -237,14 +251,14 @@ export const CalculatorEducationalGuide: React.FC<CalculatorEducationalGuideProp
         </section>
       )}
 
-      {/* 12. Related Architectural & PropTech Calculators */}
+      {/* 13. Related Calculators */}
       {relatedCalculators.length > 0 && (
         <section aria-labelledby="section-related" className="space-y-4 pt-4 border-t border-slate-200">
           <h3 id="section-related" className="text-xl font-bold text-slate-900">
-            Related Architectural & Construction Calculators
+            Related Calculators
           </h3>
           <p className="text-sm text-slate-600">
-            Continue planning your project specifications with complementary engineering tools:
+            Continue planning your project specifications with complementary tools:
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {relatedCalculators.map((related) => (

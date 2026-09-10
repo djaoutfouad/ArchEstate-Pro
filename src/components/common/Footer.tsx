@@ -8,9 +8,16 @@ interface FooterProps {
   onSelectCategory?: (categoryId: string) => void;
   onNavigateHome?: () => void;
   onOpenLegal?: (type: 'contact' | 'privacy' | 'terms' | 'about' | 'methodology') => void;
+  onOpenCookieSettings?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = () => {
+export const Footer: React.FC<FooterProps> = ({ onOpenCookieSettings }) => {
+  const handleOpenCookies = (e: React.MouseEvent) => {
+    if (onOpenCookieSettings) {
+      e.preventDefault();
+      onOpenCookieSettings();
+    }
+  };
   return (
     <footer className="mt-20 border-t border-slate-200 bg-slate-50/90 text-slate-600 transition-colors">
       {/* Top Banner */}
@@ -106,6 +113,15 @@ export const Footer: React.FC<FooterProps> = () => {
                 >
                   Contact Us
                 </Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={handleOpenCookies}
+                  className="hover:text-emerald-700 hover:underline transition-colors text-slate-600 text-left cursor-pointer flex items-center gap-1.5"
+                >
+                  Cookie Preferences &amp; Consent
+                </button>
               </li>
             </ul>
           </div>

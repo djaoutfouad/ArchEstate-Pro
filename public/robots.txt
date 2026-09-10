@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://archestate-pro.djaoutfouad19762321.workers.dev/sitemap.xml
+Sitemap: https://archestatepro.com/sitemap.xml

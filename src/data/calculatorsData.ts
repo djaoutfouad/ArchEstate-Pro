@@ -38,7 +38,7 @@ export const CATEGORIES: CategoryInfo[] = [
     name: 'Construction & Finishing',
     shortName: 'Construction & Finishes',
     tagline: 'Structural Slabs, Masonry, Paint, Tiles & HVAC',
-    description: 'Engineering-grade estimators for concrete volumes, masonry units, tiling grids, surface coatings, and thermal BTU cooling requirements.',
+    description: 'Practical planning estimators for concrete volumes, masonry units, tiling grids, surface coatings, and thermal BTU cooling requirements based on stated material standards.',
     badge: '6 Calculators',
     iconName: 'Building2',
     count: 6,
@@ -92,7 +92,7 @@ const BASE_CALCULATORS: CalculatorDefinition[] = [
       ],
       importantAssumptions: [
         'Default drywall sheet is standard European/International BA13 (12.5mm thickness, 2500 × 1200 mm).',
-        'Furring channels are spaced at 500mm (0.50m) on-center, compliant with standard transverse board fixing.',
+        'Furring channels are spaced at 500mm (0.50m) on-center, based on standard transverse board installation conventions; verify against manufacturer guidelines and local building codes.',
         'Primary suspension points are calculated along channel lines every 1000mm (1.0m).',
         'Perimeter wall angles run continuously along all 4 boundary walls with a 5% overlap allowance.',
       ],

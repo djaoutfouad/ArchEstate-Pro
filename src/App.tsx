@@ -13,6 +13,7 @@ import { PrivacyPage } from './components/pages/PrivacyPage';
 import { TermsPage } from './components/pages/TermsPage';
 import { MethodologyPage } from './components/pages/MethodologyPage';
 import { Breadcrumbs } from './components/common/Breadcrumbs';
+import { CookieSettingsModal } from './components/common/CookieSettingsModal';
 import { CALCULATORS, CATEGORIES } from './data/calculatorsData';
 import { useRouter } from './utils/router';
 
@@ -31,6 +32,7 @@ export default function App() {
 
   // Search filter query state
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isCookieSettingsOpen, setIsCookieSettingsOpen] = useState<boolean>(false);
 
   // Active calculator object matching the route slug
   const activeCalculator = calculatorSlug 
@@ -193,6 +195,13 @@ export default function App() {
         onSelectCategory={navigateToCategory}
         onNavigateHome={navigateToHome}
         onOpenLegal={navigateToLegal}
+        onOpenCookieSettings={() => setIsCookieSettingsOpen(true)}
+      />
+
+      {/* Cookie Preferences Modal */}
+      <CookieSettingsModal
+        isOpen={isCookieSettingsOpen}
+        onClose={() => setIsCookieSettingsOpen(false)}
       />
     </div>
   );

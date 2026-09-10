@@ -69,8 +69,8 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
     lastReviewed: '2026-03-01'
   },
 
-  // 2. PVC Suspended Ceiling Calculator
-  'pvc-suspended-ceiling': {
+  // 2. PVC Panel Ceiling Calculator
+  'pvc-panel-ceiling': {
     whatItDoes: 'Calculates the required quantity of waterproof PVC tongue-and-groove ceiling slats, perimeter finishing U-trim moulding, battens/furring rails, and corrosion-resistant fasteners for moisture-prone areas.',
     whenToUse: [
       'Estimating ceiling finishing materials for bathrooms, commercial kitchens, laundries, covered patios, and basements.',
@@ -134,7 +134,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 3. Acoustic 60x60 Grid Ceiling Calculator
-  'acoustic-grid-ceiling-60x60': {
+  'acoustic-grid-ceiling': {
     whatItDoes: 'Determines the quantities of exposed T-bar grid components (Main Runners 3.6m, Cross Tees 1.2m, Cross Tees 0.6m, Wall Angle 3.0m) and 600mm × 600mm mineral fiber acoustic ceiling tiles.',
     whenToUse: [
       'Office fit-outs, educational facilities, healthcare clinics, and retail commercial spaces.',
@@ -193,7 +193,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 4. Cove Light Perimeter Bulkhead
-  'cove-light-perimeter-bulkhead': {
+  'cove-ceiling': {
     whatItDoes: 'Calculates the structural framing studs, tracks, gypsum fascia, horizontal soffit boards, and LED strip lighting lengths required for dropped perimeter light coves.',
     whenToUse: [
       'Designing modern architectural indirect ceiling lighting details in residential salons, suites, and hotel lobbies.',
@@ -250,7 +250,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 5. Gypsum Cornice & Plaster Staff
-  'gypsum-cornice-plaster-staff': {
+  'plaster-staff-ceiling': {
     whatItDoes: 'Calculates the linear meters of ornamental plaster cornices, corner miter joints, adhesive bonding compound, and acrylic painter caulk needed for classical ceiling trim.',
     whenToUse: [
       'Specifying decorative crown mouldings, staff plaster mouldings, and perimeter transitions between walls and ceilings.'
@@ -298,7 +298,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 6. Wall Paint & Primer
-  'wall-paint-primer': {
+  'paint-primer': {
     whatItDoes: 'Calculates the volume of primer/undercoat and finish wall paint required based on wall surface area, coat count, door/window subtractions, and paint spread rate.',
     whenToUse: [
       'Budgeting and ordering interior or exterior paint supplies for room renovations and new builds.'
@@ -358,7 +358,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 7. Tile & Grout Flooring
-  'tile-grout-flooring': {
+  'tiles-estimator': {
     whatItDoes: 'Calculates the number of ceramic or porcelain floor tiles, cardboard packaging boxes, adhesive mortar bags, and cementitious grout powder required for floor or wall tiling.',
     whenToUse: [
       'Procuring floor tiles, adhesive thin-set mortar, and grout for bathroom, kitchen, or living room projects.'
@@ -420,7 +420,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 8. Reinforced Concrete Volume
-  'reinforced-concrete-volume': {
+  'concrete-volume': {
     whatItDoes: 'Calculates the volume of concrete in cubic meters (m³) and cubic yards (yd³) for structural foundation slabs, footing pads, or suspended floors, including ready-mix batching and premix bag estimates.',
     whenToUse: [
       'Ordering ready-mix concrete trucks for patio slabs, driveways, house footings, or basement floors.',
@@ -481,7 +481,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 9. Brick & Block Masonry
-  'brick-block-masonry-mortar': {
+  'bricks-blocks': {
     whatItDoes: 'Calculates the number of standard masonry bricks or hollow concrete blocks, mortar volume, sand weight, and cement bags required for building single-skin walls.',
     whenToUse: [
       'Planning boundary perimeter walls, room partition walls, or structural blockwork.'
@@ -536,7 +536,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 10. HVAC Cooling BTU Load
-  'hvac-cooling-btu-load': {
+  'ac-btu-size': {
     whatItDoes: 'Estimates cooling capacity requirements in BTU/hour and refrigeration tons using thermal heat gain factors including room volume, sun orientation, window exposure, and occupant load.',
     whenToUse: [
       'Sizing ductless split air conditioners, portable AC units, or window AC units for residential and light commercial rooms.'
@@ -603,7 +603,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 11. Mortgage PITI & Amortization
-  'mortgage-piti-amortization': {
+  'mortgage-piti': {
     whatItDoes: 'Calculates the complete monthly mortgage payment (PITI: Principal, Interest, Property Taxes, Homeowners Insurance, and HOA dues), total interest cost over the loan term, and full amortization schedule.',
     whenToUse: [
       'Budgeting home purchases, evaluating refinancing offers, and analyzing true monthly homeownership carrying costs.'
@@ -667,7 +667,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 12. Rental Yield & Cap Rate
-  'rental-yield-cap-rate-roi': {
+  'rental-yield': {
     whatItDoes: 'Calculates Gross Rental Yield, Capitalization Rate (Cap Rate), Net Operating Income (NOI), and leveraged Cash-on-Cash Return for investment real estate.',
     whenToUse: [
       'Screening buy-to-let residential properties, multifamily acquisitions, and commercial real estate investments.'
@@ -729,7 +729,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 13. Home Affordability & Debt Ratio
-  'home-affordability-debt-ratio': {
+  'affordability-calc': {
     whatItDoes: 'Calculates maximum affordable home purchase price and loan amount based on conventional 28% front-end and 36% back-end debt-to-income (DTI) underwriting guidelines.',
     whenToUse: [
       'Determining realistic home purchasing power before house hunting or applying for pre-approval.'
@@ -791,7 +791,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 14. Real Estate Closing Costs
-  'closing-costs-notary-fee': {
+  'closing-costs': {
     whatItDoes: 'Estimates property buyer transaction settlement costs, including government transfer taxes, stamp duty, notary/legal conveyance fees, title insurance, and recording charges.',
     whenToUse: [
       'Calculating total liquid cash required to close a property purchase beyond the down payment.'
@@ -848,7 +848,7 @@ export const CALCULATOR_EDUCATIONAL_CONTENT: Record<string, EducationalContent> 
   },
 
   // 15. Wallpaper Rolls & Pattern Repeat
-  'wallpaper-rolls-pattern-repeat': {
+  'wallpaper-roll': {
     whatItDoes: 'Calculates the number of wallpaper rolls required for a room wall, accounting for roll width, roll length, trimming margins, and pattern repeat match drop wastage.',
     whenToUse: [
       'Ordering European or American standard wallpaper rolls for feature accent walls or full room papering.'

@@ -11,6 +11,7 @@ import {
   getCalculatorPath, 
   getCategoryPath 
 } from '../src/config/site';
+import { renderEducationalGuideHtml } from '../src/utils/renderEducationalGuideHtml';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 const PUBLIC_DIR = path.resolve(process.cwd(), 'public');
@@ -127,6 +128,11 @@ function getStaticFooterHtml(): string {
             <li>
               <a href="/contact" class="hover:text-emerald-700 hover:underline transition-colors font-semibold text-emerald-800">
                 Contact Us
+              </a>
+            </li>
+            <li>
+              <a href="/privacy#cookies" class="hover:text-emerald-700 hover:underline transition-colors text-slate-600">
+                Cookie Preferences &amp; Consent
               </a>
             </li>
           </ul>
@@ -530,70 +536,8 @@ for (const calc of CALCULATORS) {
         </div>
       </section>
 
-      <!-- Technical Guide & Methodology (4-Section Standard) -->
-      <section class="mb-12 rounded-2xl border border-slate-200 p-6 sm:p-8 bg-white shadow-xs space-y-6">
-        <h2 class="text-xl font-bold text-slate-900 border-b border-slate-200 pb-3">
-          Technical Specifications &amp; Engineering Methodology
-        </h2>
-
-        <div class="space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-          <div>
-            <h3 class="font-bold text-slate-900 mb-1">1. How the Model Works</h3>
-            <p>${escapeHtml(calc.methodology.howItWorks)}</p>
-          </div>
-
-          <div>
-            <h3 class="font-bold text-slate-900 mb-1">2. Included Components &amp; Bill of Materials</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              ${calc.methodology.whatIsIncluded.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="font-bold text-slate-900 mb-1">3. Important Engineering Assumptions</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              ${calc.methodology.importantAssumptions.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
-            </ul>
-          </div>
-
-          <div class="p-4 bg-amber-50 rounded-xl border border-amber-200 text-amber-950">
-            <span class="font-bold uppercase text-[10px] text-amber-800 block mb-1">Professional Field Note</span>
-            <p>${escapeHtml(calc.methodology.professionalNote)}</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Frequently Asked Questions (FAQ) -->
-      <section class="mb-12 rounded-2xl border border-slate-200 p-6 sm:p-8 bg-white shadow-xs space-y-6">
-        <h2 class="text-xl font-bold text-slate-900 border-b border-slate-200 pb-3">
-          Frequently Asked Questions (FAQ)
-        </h2>
-
-        <div class="divide-y divide-slate-100 space-y-4">
-          ${calc.faqs.map(faq => `
-            <div class="pt-4 space-y-1.5">
-              <h3 class="text-sm font-bold text-slate-900">${escapeHtml(faq.question)}</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(faq.answer)}</p>
-            </div>
-          `).join('')}
-        </div>
-      </section>
-
-      <!-- Related Calculators -->
-      ${relatedCalcs.length > 0 ? `
-        <section class="mb-12 space-y-4">
-          <h2 class="text-base font-bold text-slate-900">Related Planning Tools</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            ${relatedCalcs.map(rel => `
-              <a href="${getCalculatorPath(rel.slug)}" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-300 transition-colors block bg-white">
-                <span class="text-[10px] font-mono uppercase text-slate-500">${escapeHtml(rel.categoryName)}</span>
-                <h3 class="text-xs font-bold text-slate-900 mt-1">${escapeHtml(rel.title)}</h3>
-                <p class="text-[11px] text-slate-600 line-clamp-1">${escapeHtml(rel.subtitle)}</p>
-              </a>
-            `).join('')}
-          </div>
-        </section>
-      ` : ''}
+      <!-- 13 Comprehensive Educational & Planning Sections (SSG) -->
+      ${renderEducationalGuideHtml(calc, relatedCalcs)}
     </main>
 
     ${getStaticFooterHtml()}
