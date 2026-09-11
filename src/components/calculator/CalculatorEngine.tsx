@@ -25,7 +25,7 @@ import { AdvertisementPlaceholder } from '../common/AdvertisementPlaceholder';
 import { CALCULATORS } from '../../data/calculatorsData';
 import { SITE_URL, CONTACT_EMAIL, getCalculatorPath } from '../../config/site';
 import { Link } from '../../utils/router';
-import { normalizeToAsciiDigits } from '../../utils/calculations';
+import { normalizeToAsciiDigits, normalizeInputDigits } from '../../utils/calculations';
 import { CalculatorEducationalGuide } from './CalculatorEducationalGuide';
 
 interface CalculatorEngineProps {
@@ -41,7 +41,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
   onNavigateCategory,
   onSelectRelated,
 }) => {
-  // Initialize state with default input values
+  // Numeric state for computational execution
   const [inputs, setInputs] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
     calculator.inputs.forEach((field) => {
@@ -50,13 +50,25 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
     return initial;
   });
 
+  // String state for display in text inputs (always strictly Latin ASCII text)
+  const [inputText, setInputText] = useState<Record<string, string>>(() => {
+    const initial: Record<string, string> = {};
+    calculator.inputs.forEach((field) => {
+      initial[field.id] = String(field.defaultValue);
+    });
+    return initial;
+  });
+
   // Reset inputs when calculator changes
   useEffect(() => {
-    const initial: Record<string, number> = {};
+    const initialInputs: Record<string, number> = {};
+    const initialText: Record<string, string> = {};
     calculator.inputs.forEach((field) => {
-      initial[field.id] = field.defaultValue;
+      initialInputs[field.id] = field.defaultValue;
+      initialText[field.id] = String(field.defaultValue);
     });
-    setInputs(initial);
+    setInputs(initialInputs);
+    setInputText(initialText);
     setCopied(false);
     setShowFullSchedule(false);
   }, [calculator.id]);
@@ -77,26 +89,90 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
     }));
   };
 
-  // Safe input handler with min/max bounds, ASCII normalization, and validation
-  const handleInputChange = (field: InputFieldDefinition, rawValue: string | number) => {
-    let rawStr = typeof rawValue === 'string' ? rawValue : String(rawValue);
-    rawStr = normalizeToAsciiDigits(rawStr.trim());
-    const num = parseFloat(rawStr);
-    if (isNaN(num)) {
-      setInputs((prev) => ({ ...prev, [field.id]: field.min }));
+  // Live text input change: normalizes Arabic/Persian digits and allows in-progress typing
+  const handleTextChange = (field: InputFieldDefinition, rawValue: string) => {
+    const normalized = normalizeInputDigits(rawValue);
+    
+    // Filter out invalid characters, allowing only ASCII digits, dot, and minus if min < 0
+    const allowed = field.min < 0 
+      ? normalized.replace(/[^0-9.-]/g, '') 
+      : normalized.replace(/[^0-9.]/g, '');
+    
+    // Prevent multiple decimal points
+    const parts = allowed.split('.');
+    const sanitized = parts.length > 2 ? `${parts[0]}.${parts.slice(1).join('')}` : allowed;
+
+    // Immediately update text state so the user can type freely (e.g. "12.", "", "0")
+    setInputText((prev) => ({ ...prev, [field.id]: sanitized }));
+
+    // If valid finite number, update computation inputs live
+    const parsed = parseFloat(sanitized);
+    if (!isNaN(parsed) && isFinite(parsed)) {
+      setInputs((prev) => ({ ...prev, [field.id]: parsed }));
+    }
+  };
+
+  // Blur handler: clamps to bounds, restores safe fallback if empty/invalid, re-syncs text
+  const handleTextBlur = (field: InputFieldDefinition) => {
+    const currentText = inputText[field.id] ?? '';
+    const parsed = parseFloat(currentText);
+
+    if (isNaN(parsed) || !isFinite(parsed) || currentText.trim() === '') {
+      const fallback = field.defaultValue;
+      setInputText((prev) => ({ ...prev, [field.id]: String(fallback) }));
+      setInputs((prev) => ({ ...prev, [field.id]: fallback }));
       return;
     }
-    const clamped = Math.max(field.min, Math.min(field.max, num));
-    setInputs((prev) => ({ ...prev, [field.id]: clamped }));
+
+    // Clamp within min and max
+    const clamped = Math.max(field.min, Math.min(field.max, parsed));
+    const stepDecimals = (field.step.toString().split('.')[1] || '').length;
+    const rounded = stepDecimals > 0 ? parseFloat(clamped.toFixed(stepDecimals)) : clamped;
+
+    setInputText((prev) => ({ ...prev, [field.id]: String(rounded) }));
+    setInputs((prev) => ({ ...prev, [field.id]: rounded }));
+  };
+
+  // Stepper handler (+ / - buttons)
+  const handleStep = (field: InputFieldDefinition, delta: number) => {
+    const current = inputs[field.id] ?? field.defaultValue;
+    const target = current + delta;
+    const clamped = Math.max(field.min, Math.min(field.max, target));
+    const stepDecimals = (field.step.toString().split('.')[1] || '').length;
+    const rounded = stepDecimals > 0 ? parseFloat(clamped.toFixed(stepDecimals)) : clamped;
+
+    setInputs((prev) => ({ ...prev, [field.id]: rounded }));
+    setInputText((prev) => ({ ...prev, [field.id]: String(rounded) }));
+  };
+
+  // Range slider change handler
+  const handleSliderChange = (field: InputFieldDefinition, rawValue: string) => {
+    const num = parseFloat(rawValue);
+    if (!isNaN(num) && isFinite(num)) {
+      setInputs((prev) => ({ ...prev, [field.id]: num }));
+      setInputText((prev) => ({ ...prev, [field.id]: String(num) }));
+    }
+  };
+
+  // Select dropdown change handler
+  const handleSelectChange = (field: InputFieldDefinition, rawValue: string) => {
+    const num = parseFloat(rawValue);
+    if (!isNaN(num) && isFinite(num)) {
+      setInputs((prev) => ({ ...prev, [field.id]: num }));
+      setInputText((prev) => ({ ...prev, [field.id]: String(num) }));
+    }
   };
 
   // Reset to default values
   const handleReset = () => {
-    const initial: Record<string, number> = {};
+    const initialInputs: Record<string, number> = {};
+    const initialText: Record<string, string> = {};
     calculator.inputs.forEach((field) => {
-      initial[field.id] = field.defaultValue;
+      initialInputs[field.id] = field.defaultValue;
+      initialText[field.id] = String(field.defaultValue);
     });
-    setInputs(initial);
+    setInputs(initialInputs);
+    setInputText(initialText);
   };
 
   // Run calculation deterministically
@@ -313,8 +389,10 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                     {field.options ? (
                       <select
                         id={`input-${field.id}`}
-                        value={val}
-                        onChange={(e) => handleInputChange(field, e.target.value)}
+                        value={inputs[field.id] ?? field.defaultValue}
+                        onChange={(e) => handleSelectChange(field, e.target.value)}
+                        lang="en"
+                        dir="ltr"
                         className="w-full px-3 py-2 bg-white text-xs sm:text-sm font-medium text-slate-900 border border-slate-300 rounded-lg focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-hidden transition-all"
                       >
                         {field.options.map((opt) => (
@@ -329,7 +407,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
-                            onClick={() => handleInputChange(field, val - field.step)}
+                            onClick={() => handleStep(field, -field.step)}
                             id={`step-down-${field.id}`}
                             className="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center focus:outline-hidden active:scale-95 transition-transform"
                           >
@@ -337,22 +415,22 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                           </button>
                           
                           <input
-                            type="number"
+                            type="text"
                             id={`input-${field.id}`}
-                            value={val}
-                            min={field.min}
-                            max={field.max}
-                            step={field.step}
+                            value={inputText[field.id] ?? String(field.defaultValue)}
+                            inputMode="decimal"
                             lang="en"
                             dir="ltr"
-                            inputMode="decimal"
-                            onChange={(e) => handleInputChange(field, e.target.value)}
+                            pattern="[0-9]*[.]?[0-9]*"
+                            autoComplete="off"
+                            onChange={(e) => handleTextChange(field, e.target.value)}
+                            onBlur={() => handleTextBlur(field)}
                             className="flex-1 px-3 py-1.5 bg-white text-center text-sm font-mono font-bold text-slate-900 border border-slate-300 rounded-lg focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-hidden transition-all [font-variant-numeric:lining-nums]"
                           />
 
                           <button
                             type="button"
-                            onClick={() => handleInputChange(field, val + field.step)}
+                            onClick={() => handleStep(field, field.step)}
                             id={`step-up-${field.id}`}
                             className="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center focus:outline-hidden active:scale-95 transition-transform"
                           >
@@ -366,12 +444,12 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                           min={field.min}
                           max={field.max}
                           step={field.step}
-                          value={val}
-                          onChange={(e) => handleInputChange(field, e.target.value)}
+                          value={inputs[field.id] ?? field.defaultValue}
+                          onChange={(e) => handleSliderChange(field, e.target.value)}
                           className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 focus:outline-hidden"
                         />
 
-                        <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+                        <div className="flex justify-between text-[10px] text-slate-500 font-mono" dir="ltr">
                           <span>Min: {field.min} {field.unit}</span>
                           <span>Max: {field.max} {field.unit}</span>
                         </div>

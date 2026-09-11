@@ -6,14 +6,19 @@ import {
 
 /**
  * Normalizes any Arabic-Indic [٠-٩] or Eastern Arabic-Indic / Persian [۰-۹] digits
- * to standard ASCII Latin digits [0-9].
+ * and arabic decimal/thousands separators to standard ASCII Latin digits [0-9] and dot [.].
  */
-export const normalizeToAsciiDigits = (val: string): string => {
-  if (!val) return '';
-  return val
-    .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660))
-    .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06F0));
-};
+export function normalizeInputDigits(value: string): string {
+  if (!value) return '';
+  return value
+    .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x06F0))
+    .replace(/[٫]/g, '.')
+    .replace(/[٬]/g, '')
+    .replace(/,/g, '');
+}
+
+export const normalizeToAsciiDigits = normalizeInputDigits;
 
 /**
  * Utility helper to safely format currencies, numbers, and percentages

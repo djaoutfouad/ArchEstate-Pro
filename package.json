@@ -8,11 +8,14 @@
     "build": "vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
-    "verify": "tsx scripts/verify-build.ts && tsx scripts/verify-images.ts && tsx scripts/verify-numbers.ts && tsx scripts/verify-calculators.ts",
+    "verify": "tsx scripts/verify-build.ts && tsx scripts/verify-images.ts && tsx scripts/verify-numbers.ts && tsx scripts/verify-calculators.ts && tsx scripts/verify-input-display.ts",
     "verify:build": "tsx scripts/verify-build.ts",
     "verify:images": "tsx scripts/verify-images.ts",
     "verify:numbers": "tsx scripts/verify-numbers.ts",
     "verify:calculators": "tsx scripts/verify-calculators.ts",
+    "verify:input-display": "tsx scripts/verify-input-display.ts",
+    "test:calculations": "tsx scripts/test-calculations.ts",
+    "test:browser": "tsx scripts/test-browser-inputs.ts",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
@@ -27,9 +30,11 @@
     "vite": "^6.2.3"
   },
   "devDependencies": {
+    "@types/jsdom": "^30.0.0",
     "@types/node": "^22.14.0",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.0",
+    "jsdom": "^30.0.1",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
