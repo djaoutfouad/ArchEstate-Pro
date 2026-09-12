@@ -226,7 +226,7 @@ const homeHtml = `
 
   <!-- 1. Full-Bleed Edge-to-Edge Hero Section -->
   <section class="hero-section no-print relative overflow-hidden pt-14 pb-16 border-b border-slate-800 bg-slate-950 text-white w-full">
-    <div class="absolute inset-0 bg-cover bg-center opacity-45 scale-105 pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2400&q=85')"></div>
+    <div class="absolute inset-0 bg-cover bg-center opacity-45 scale-105 pointer-events-none" style="background-image: url('/images/hero-construction-blueprint.jpg')"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/75 to-slate-950/90 pointer-events-none"></div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
@@ -486,9 +486,12 @@ for (const calc of CALCULATORS) {
                     ${escapeHtml(field.label)} (${escapeHtml(field.unit)})
                   </label>
                   <input 
-                    type="number" 
+                    type="text" 
+                    inputmode="decimal"
+                    lang="en"
+                    dir="ltr"
                     value="${field.defaultValue}" 
-                    class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg"
+                    class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg font-mono [font-variant-numeric:lining-nums]"
                     readonly
                   />
                 </div>

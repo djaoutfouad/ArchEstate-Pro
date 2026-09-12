@@ -24,7 +24,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-45 scale-105 pointer-events-none"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2400&q=85')`
+          backgroundImage: `url('/images/hero-construction-blueprint.jpg')`
         }}
       />
       {/* Balanced Vignette Gradient for Perfect Text Legibility */}
