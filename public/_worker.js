@@ -70,6 +70,26 @@ export default {
       }
     };
 
+    // Special handling for /ads.txt: Must NEVER return HTML
+    if (normalizedPath === '/ads.txt') {
+      try {
+        const adsResponse = await env.ASSETS.fetch(request);
+        const ct = adsResponse.headers.get('Content-Type') || '';
+        if (adsResponse.status === 200 && !ct.includes('text/html')) {
+          return adsResponse;
+        }
+      } catch {}
+      return new Response('# No active ads.txt entries configured yet.\n', {
+        status: 404,
+        statusText: 'Not Found',
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, follow',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        },
+      });
+    }
+
     // If path is an HTML navigation and NOT in the valid routes set -> immediate genuine 404
     if (!isStaticAsset && normalizedPath !== '/404.html' && !VALID_ROUTES.has(normalizedPath)) {
       return return404();

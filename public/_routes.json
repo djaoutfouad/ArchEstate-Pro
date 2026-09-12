@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/assets/*",
+    "/images/*",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/favicon.ico"
+  ]
+}

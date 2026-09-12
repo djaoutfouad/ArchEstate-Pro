@@ -917,18 +917,19 @@ for (const route of routes) {
   }
 
   // Determine output directory & file path
-  let targetFile: string;
   if (route.path === '/' || route.path === '') {
-    targetFile = path.join(DIST_DIR, 'index.html');
+    const targetFile = path.join(DIST_DIR, 'index.html');
+    fs.writeFileSync(targetFile, html, 'utf-8');
   } else {
-    const routeSubDir = path.join(DIST_DIR, route.path.replace(/^\//, ''));
+    const cleanRelative = route.path.replace(/^\//, '');
+    const routeSubDir = path.join(DIST_DIR, cleanRelative);
     if (!fs.existsSync(routeSubDir)) {
       fs.mkdirSync(routeSubDir, { recursive: true });
     }
-    targetFile = path.join(routeSubDir, 'index.html');
+    fs.writeFileSync(path.join(routeSubDir, 'index.html'), html, 'utf-8');
+    // Also write direct .html file for edge servers/clean URLs
+    fs.writeFileSync(path.join(DIST_DIR, `${cleanRelative}.html`), html, 'utf-8');
   }
-
-  fs.writeFileSync(targetFile, html, 'utf-8');
 }
 
 // 5.5 Generate static 404.html for Cloudflare Pages
@@ -1023,7 +1024,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
 fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt, 'utf-8');
 fs.writeFileSync(path.join(PUBLIC_DIR, 'robots.txt'), robotsTxt, 'utf-8');
 
-// 8. Ensure _worker.js and _headers exist in dist
+// 8. Ensure _worker.js, _headers, and _routes.json exist in dist
 const workerSrc = path.join(PUBLIC_DIR, '_worker.js');
 if (fs.existsSync(workerSrc)) {
   fs.copyFileSync(workerSrc, path.join(DIST_DIR, '_worker.js'));
@@ -1031,6 +1032,10 @@ if (fs.existsSync(workerSrc)) {
 const headersSrc = path.join(PUBLIC_DIR, '_headers');
 if (fs.existsSync(headersSrc)) {
   fs.copyFileSync(headersSrc, path.join(DIST_DIR, '_headers'));
+}
+const routesJsonSrc = path.join(PUBLIC_DIR, '_routes.json');
+if (fs.existsSync(routesJsonSrc)) {
+  fs.copyFileSync(routesJsonSrc, path.join(DIST_DIR, '_routes.json'));
 }
 
 console.log(`✓ SSG generation complete: ${routes.length} static HTML pages, sitemap.xml, and robots.txt created successfully.`);

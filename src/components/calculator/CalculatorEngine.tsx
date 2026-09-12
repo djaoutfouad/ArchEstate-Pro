@@ -409,6 +409,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                             type="button"
                             onClick={() => handleStep(field, -field.step)}
                             id={`step-down-${field.id}`}
+                            aria-label={`Decrease ${field.label}`}
                             className="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center focus:outline-hidden active:scale-95 transition-transform"
                           >
                             -
@@ -432,6 +433,7 @@ export const CalculatorEngine: React.FC<CalculatorEngineProps> = ({
                             type="button"
                             onClick={() => handleStep(field, field.step)}
                             id={`step-up-${field.id}`}
+                            aria-label={`Increase ${field.label}`}
                             className="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center focus:outline-hidden active:scale-95 transition-transform"
                           >
                             +

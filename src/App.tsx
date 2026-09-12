@@ -44,9 +44,11 @@ export default function App() {
     ? CATEGORIES.find((cat) => cat.id === categoryId) || null
     : null;
 
-  // Scroll to top on route change
+  // Scroll to top on route change & mark client hydration
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.body.setAttribute('data-hydrated', 'true');
+    (window as unknown as { __HYDRATED__?: boolean }).__HYDRATED__ = true;
   }, [pathname]);
 
   // Determine if current view is a legal or informational route

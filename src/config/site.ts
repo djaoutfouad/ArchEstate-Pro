@@ -61,6 +61,13 @@ export const VALID_CALCULATOR_SLUGS = [
   'wallpaper-roll',
 ] as const;
 
+export const ALL_CANONICAL_ROUTES: readonly string[] = [
+  '/',
+  ...LEGAL_ROUTES.map(r => r.path),
+  ...Object.values(CATEGORY_ROUTES),
+  ...VALID_CALCULATOR_SLUGS.map(s => `/calculators/${s}`),
+] as const;
+
 export type CalculatorSlug = typeof VALID_CALCULATOR_SLUGS[number];
 
 export const isValidCalculatorSlug = (slug: string): slug is CalculatorSlug => {
